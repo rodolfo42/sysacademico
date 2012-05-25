@@ -8,24 +8,17 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h3>Usuarios</h3>
-<table>
-	<thead>
-		<tr>
-			<th>Id</th>
-			<th>Nome</th>
-			<th>Login</th>
-		</tr>
-	</thead>
-<tbody>
-<c:forEach items="${usuarioList}" var="usuario">
-	<tr>
-		<td>${usuario.id }</td>
-		<td>${usuario.nome }</td>
-		<td>${usuario.login }</td>
-	</tr>
-</c:forEach>
-</tbody>
-</table>
+<form action="<c:url value="/usuario/login"/>" method="POST">
+	<fieldset>
+		<legend>Login</legend>
+		<label for="login">Login:</label>
+		<input id="login" name="usuario.login" value="" />
+		<br />
+		<label for="senha">Senha:</label>
+		<input id="senha" type="password" name="usuario.senha" value=""/>
+		<br />
+		<button type="submit">Log-in</button>
+	</fieldset>
+</form>
 </body>
 </html>

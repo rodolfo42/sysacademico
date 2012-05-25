@@ -8,24 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h3>Usuarios</h3>
-<table>
-	<thead>
-		<tr>
-			<th>Id</th>
-			<th>Nome</th>
-			<th>Login</th>
-		</tr>
-	</thead>
-<tbody>
-<c:forEach items="${usuarioList}" var="usuario">
-	<tr>
-		<td>${usuario.id }</td>
-		<td>${usuario.nome }</td>
-		<td>${usuario.login }</td>
-	</tr>
-</c:forEach>
-</tbody>
-</table>
+ERRO NO LOGIN
 </body>
 </html>

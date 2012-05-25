@@ -22,6 +22,10 @@ public class Dao<M> {
 		this.classePersistencia = (Class<M>) ((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 	
+	public Session getSession() {
+		return session;
+	}
+	
 
 	public void salva(M objeto) {
 		Transaction tx = session.beginTransaction();

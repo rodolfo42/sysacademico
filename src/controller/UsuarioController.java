@@ -24,16 +24,39 @@ public class UsuarioController {
 	@Get @Path("/usuario/adicionar")
 	public void adicionar() {
 	}
-	
 	@Post @Path("/usuario/adicionar")
 	public void adicionar(Usuario usuario) {
+		usuario.setSenha(usuario.getEncryptedSenha());
 		dao.salva(usuario);
 		result.redirectTo(UsuarioController.class).listar();
 	}
 	
+	
+	
+	
 	@Get @Path("/usuario/listar")
 	public List<Usuario> listar(){
 		return dao.listaTudo();
+	}
+	
+	
+	@Get @Path("/usuario/login/erro")
+	public void erroLogin() {
+		
+	}
+	
+	
+	@Get @Path("/usuario/login")
+	public void login() {
+		
+	}
+	@Post @Path("/usuario/login")
+	public void login(Usuario usuario) {
+		if( dao.existeLoginSenha(usuario) ) {
+			result.redirectTo(getClass()).adicionar();
+		} else {
+			result.redirectTo(getClass()).erroLogin();
+		}
 	}
 	
 }
