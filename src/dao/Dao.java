@@ -11,15 +11,15 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 
 @SuppressWarnings("unchecked")
-public class Dao<M> {
+public class Dao<T> {
 
 	private final Session session;
-	private Class<M> classePersistencia;
+	private Class<T> classePersistencia;
 
 
 	public Dao(Session session) {
 		this.session = session;
-		this.classePersistencia = (Class<M>) ((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+		this.classePersistencia = (Class<T>) ((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 	
 	public Session getSession() {
@@ -27,7 +27,7 @@ public class Dao<M> {
 	}
 	
 
-	public void salva(M objeto) {
+	public void salva(T objeto) {
 		Transaction tx = session.beginTransaction();
 		session.save(objeto);
 		tx.commit();
@@ -35,32 +35,32 @@ public class Dao<M> {
 	
 	public void deleta(Long id){
 		Transaction tx = session.beginTransaction();
-		M objetoDelete = (M) session.load(getClassePersistencia(),id);
+		T objetoDelete = (T) session.load(getClassePersistencia(),id);
 		session.delete(objetoDelete);
 		tx.commit();
 	}
 	
-	public void atualiza(M objeto){
+	public void atualiza(T objeto){
 		Transaction tx = session.beginTransaction();
 		session.update(objeto);
 		tx.commit();
 	}
 	
-	public M carrega(Long id){
-		return (M) session.load(getClassePersistencia(),id);
+	public T carrega(Long id){
+		return (T) session.load(getClassePersistencia(),id);
 	}
 	
-	public final List<M> listaTudo() {
+	public final List<T> listaTudo() {
 		return session.createCriteria(getClassePersistencia()).list();
 	}
 
-	public List<M> busca(String nome) {
+	public List<T> busca(String textoDaBusca, String nomeDoCampo) {
 		return session.createCriteria(getClassePersistencia())
-				.add(Restrictions.ilike("nome", nome, MatchMode.ANYWHERE))
+				.add(Restrictions.ilike(nomeDoCampo, textoDaBusca, MatchMode.ANYWHERE))
 				.list();
 	}
 	
-	public List<M> lista(Criterion... criterion) {
+	public List<T> lista(Criterion... criterion) {
 		Criteria crit = session.createCriteria(getClassePersistencia());
 		for(Criterion c : criterion) {
 			crit.add(c);
@@ -69,7 +69,7 @@ public class Dao<M> {
 	}
 
 
-	public Class<M> getClassePersistencia() {
+	public Class<T> getClassePersistencia() {
 		return classePersistencia;
 	}
 }
