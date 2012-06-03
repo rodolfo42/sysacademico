@@ -15,6 +15,8 @@
 
 <!-- entidades -->
 <mapping class="modelo.entidade.Usuario" />
+<mapping class="modelo.entidade.Aluno" />
+<mapping class="modelo.entidade.Responsavel" />
 
 </session-factory>
 </hibernate-configuration>
