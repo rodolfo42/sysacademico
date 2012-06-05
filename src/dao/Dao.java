@@ -1,6 +1,7 @@
 package dao;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -15,7 +16,8 @@ public class Dao<T> {
 
 	private final Session session;
 	private Class<T> classePersistencia;
-
+	
+	private ArrayList<Criterion> criteriosBusca = new ArrayList<Criterion>();
 
 	public Dao(Session session) {
 		this.session = session;
@@ -50,17 +52,28 @@ public class Dao<T> {
 		return (T) session.load(getClassePersistencia(),id);
 	}
 	
+	
+	
+	
 	public final List<T> listaTudo() {
 		return session.createCriteria(getClassePersistencia()).list();
 	}
 
-	public List<T> busca(String textoDaBusca, String nomeDoCampo) {
-		return session.createCriteria(getClassePersistencia())
-				.add(Restrictions.ilike(nomeDoCampo, textoDaBusca, MatchMode.ANYWHERE))
-				.list();
-	}
 	
-	public List<T> lista(Criterion... criterion) {
+	
+	
+	protected Criterion getParametroBusca(String textoDaBusca, String nomeDoCampo) {
+		return Restrictions.ilike(nomeDoCampo, textoDaBusca, MatchMode.ANYWHERE);
+	}
+	protected void addCriterion(Criterion c) {
+		criteriosBusca.add(c);
+	}
+	public List<T> buscar() {
+		Criterion[] crits = (Criterion[]) criteriosBusca.toArray();
+		criteriosBusca.clear();
+		return buscar(crits);
+	}
+	public List<T> buscar(Criterion... criterion) {
 		Criteria crit = session.createCriteria(getClassePersistencia());
 		for(Criterion c : criterion) {
 			crit.add(c);
