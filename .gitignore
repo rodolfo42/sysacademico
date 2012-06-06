@@ -5,4 +5,7 @@
 *.war
 *.ear
 
+# Arquivos de backup do brModelo e outros #
+*.bak
+
 build/*
