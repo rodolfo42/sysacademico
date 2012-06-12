@@ -16,7 +16,6 @@ public class UsuarioDao extends Dao<Usuario> {
 	
 	
 	public boolean existeLoginSenha(Usuario usr) {
-		return lista(Restrictions.eq("login", usr.getLogin()), Restrictions.eq("senha", usr.getEncryptedSenha())).size() > 0;
+		return buscar(Restrictions.eq("login", usr.getLogin()), Restrictions.eq("senha", usr.getEncryptedSenha())).size() > 0;
 	}
-
 }
