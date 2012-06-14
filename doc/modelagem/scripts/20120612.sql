@@ -1,4 +1,6 @@
-﻿CREATE TABLE dia_semana (
+CREATE DATABASE IF NOT EXISTS sysacademico;
+
+CREATE TABLE dia_semana (
 cd_dia_semana INT PRIMARY KEY,
 nm_dia_semana VARCHAR(255)
 );
@@ -140,7 +142,7 @@ cd_cliente INT,
 cd_responsavel INT,
 cd_tipo_curso INT,
 cd_curso INT,
-FOREIGN KEY(cd_responsavel,,) REFERENCES cliente_responsavel (cd_cliente,cd_responsavel),
+FOREIGN KEY(cd_responsavel) REFERENCES responsavel (cd_responsavel),
 FOREIGN KEY(cd_tipo_curso) REFERENCES tipo_curso (cd_tipo_curso),
 FOREIGN KEY(cd_curso) REFERENCES curso (cd_curso)
 );
