@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -24,7 +25,7 @@ public class Responsavel {
 	private String celular;
 	private String email;
 	private Date dataConfirmacao;
-	@ManyToMany(mappedBy="listaResponsavel")
+	@ManyToMany(mappedBy="listaResponsavel",cascade=CascadeType.ALL)
 	private List<Aluno> listaAluno;
 	
 	public Responsavel(){
