@@ -19,7 +19,7 @@ public class Aluno {
 	private Long id;
 	private String nome;
 	private Date dataNascimento;
-	@ManyToMany(cascade={CascadeType.PERSIST,CascadeType.MERGE})
+	@ManyToMany(cascade={CascadeType.ALL})
 	private List<Responsavel> listaResponsavel;
 	
 	public Aluno(){
