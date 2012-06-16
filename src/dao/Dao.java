@@ -16,15 +16,17 @@ public class Dao<T> {
 
 	private final Session session;
 	private Class<T> classePersistencia;
-	
-	private ArrayList<Criterion> criteriosBusca = new ArrayList<Criterion>();
+	private List<Criterion> criteriosBusca;
+	private Criteria criteria;
 
 	public Dao(Session session) {
 		this.session = session;
 		this.classePersistencia = (Class<T>) ((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+		this.criteria = session.createCriteria(classePersistencia);
+		this.criteriosBusca = new ArrayList<Criterion>();
 	}
 	
-	public Session getSession() {
+	protected Session getSession() {
 		return session;
 	}
 	
@@ -37,7 +39,7 @@ public class Dao<T> {
 	
 	public void deleta(Long id){
 		Transaction tx = session.beginTransaction();
-		T objetoDelete = (T) session.load(getClassePersistencia(),id);
+		T objetoDelete = (T) session.load(classePersistencia,id);
 		session.delete(objetoDelete);
 		tx.commit();
 	}
@@ -49,40 +51,46 @@ public class Dao<T> {
 	}
 	
 	public T carrega(Long id){
-		return (T) session.load(getClassePersistencia(),id);
+		return (T) session.load(classePersistencia,id);
 	}
-	
-	
-	
 	
 	public final List<T> listaTudo() {
-		return session.createCriteria(getClassePersistencia()).list();
+		return session.createCriteria(classePersistencia).list();
 	}
 
-	
-	
-	
-	protected Criterion getParametroBusca(String textoDaBusca, String nomeDoCampo) {
+	protected Criterion getParametroBusca(String nomeDoCampo, String textoDaBusca) {
 		return Restrictions.ilike(nomeDoCampo, textoDaBusca, MatchMode.ANYWHERE);
 	}
+	
 	protected void addCriterion(Criterion c) {
 		criteriosBusca.add(c);
 	}
+	
 	public List<T> buscar() {
-		Criterion[] crits = (Criterion[]) criteriosBusca.toArray();
+		Criterion[] crits = {};
+		crits = criteriosBusca.toArray(crits);
 		criteriosBusca.clear();
 		return buscar(crits);
 	}
+	
 	public List<T> buscar(Criterion... criterion) {
-		Criteria crit = session.createCriteria(getClassePersistencia());
 		for(Criterion c : criterion) {
-			crit.add(c);
+			criteria.add(c);
 		}
-		return crit.list();
+		Criteria criteriaBackup = criteria;
+		criteria = session.createCriteria(classePersistencia);
+		return criteriaBackup.list();
 	}
 
-
-	public Class<T> getClassePersistencia() {
+	protected Class<T> getClassePersistencia() {
 		return classePersistencia;
+	}
+	
+	protected void adicionaCriteria(Criteria criteria){
+		this.criteria = criteria;
+	}
+	
+	protected Criteria getCriteria(){
+		return this.criteria;
 	}
 }
