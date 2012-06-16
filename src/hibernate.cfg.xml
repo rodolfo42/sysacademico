@@ -17,6 +17,8 @@
 <mapping class="modelo.entidade.Usuario" />
 <mapping class="modelo.entidade.Aluno" />
 <mapping class="modelo.entidade.Responsavel" />
+<mapping class="modelo.entidade.Curso" />
+<mapping class="modelo.entidade.Matricula" />
 
 </session-factory>
 </hibernate-configuration>
