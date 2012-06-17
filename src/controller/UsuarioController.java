@@ -19,7 +19,6 @@ public class UsuarioController {
 	public UsuarioController(UsuarioDao dao, Result result){
 		this.dao = dao;
 		this.result = result;
-		System.out.println(result.getClass().getName());
 	}
 	@Get @Path("/usuario/adicionar")
 	public void adicionar() {
@@ -46,16 +45,17 @@ public class UsuarioController {
 	}
 	
 	
-	@Get @Path("/usuario/login")
+	@Get @Path("/login")
 	public void login() {
-		
 	}
-	@Post @Path("/usuario/login")
+	
+	@Post @Path("/login")
 	public void login(Usuario usuario) {
 		if( dao.existeLoginSenha(usuario) ) {
-			result.redirectTo(getClass()).adicionar();
+			result.redirectTo(MenuController.class).inicio();
 		} else {
-			result.redirectTo(getClass()).erroLogin();
+			result.include("falha",true);
+			result.redirectTo(getClass()).login();
 		}
 	}
 	
