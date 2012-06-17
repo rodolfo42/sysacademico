@@ -1,0 +1,20 @@
+div#login{
+	position: absolute;
+	width: 300px;
+	height: 150px;
+	top:50%;
+	left:50%;
+	margin-left: -150px;
+	margin-top: -75px; 
+}
+
+div#menu {
+	float: right;
+	margin-right: 50px;
+}
+
+div#menu ul li{
+	display: inline;
+	cursor: pointer;
+	margin-left: 20px;
+}
