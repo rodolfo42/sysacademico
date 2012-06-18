@@ -10,14 +10,19 @@
 <body>
 <div id="menu">
 	<ul>
-		<li><img alt="Menu Principal" title="Menu Principal" src="<c:url value="/img/home.png"/>"> </li>
-		<li><img alt="Matricula" title="Matricula" src="<c:url value="/img/matricula.png"/>"> </li>
-		<li><img alt="Curso" title="Curso" src="<c:url value="/img/curso.png"/>"> </li>
-		<li><img alt="Aula" title="Aula" src="<c:url value="/img/aula.png"/>"> </li>
-		<li><img alt="Professor" title="Professor" src="<c:url value="/img/professor.png"/>"> </li>
-		<li><img alt="Configurações" title="Configurações" src="<c:url value="/img/configuracoes.png"/>"> </li>
+		<li><img id="btmenu" alt="Menu Principal" title="Menu Principal" src="<c:url value="/img/home.png"/>"></li>
+		<li><img id="btmatricula" alt="Matricula" title="Matricula" src="<c:url value="/img/matricula.png"/>"></li>
+		<li><img id="btcurso" alt="Curso" title="Curso" src="<c:url value="/img/curso.png"/>"></li>
+		<li><img id="btaula" alt="Aula" title="Aula" src="<c:url value="/img/aula.png"/>"></li>
+		<li><img id="btprofessor" alt="Professor" title="Professor" src="<c:url value="/img/professor.png"/>"></li>
+		<li><img id="btconfiguracoes" alt="Configurações" title="Configurações" src="<c:url value="/img/configuracoes.png"/>"></li>
 	</ul>
 </div>
 <%@include file="../principal.jsp" %>
+<script type="text/javascript">
+	$('#btmatricula').click(function(){
+		location.href = '<c:url value="/responsavel/adicionar"/>';
+	});
+</script>
 </body>
 </html>

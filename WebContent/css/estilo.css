@@ -18,3 +18,7 @@ div#menu ul li{
 	cursor: pointer;
 	margin-left: 20px;
 }
+
+.direita{
+	float: right;
+}
