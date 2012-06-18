@@ -1,23 +1,26 @@
+$(document).ready(function(){
+	$('input[type="text"][id^="data"]').each(function(){
+		validarFormato('data',$(this).attr('id'));
+	});
+});
+
 function validarFormato(formato,idCampo){
 	formato=formato.toUpperCase();
 	if(document.getElementById(idCampo)){
 		if(formato=="CPF"){
-			$("#"+idCampo).numeric();
 			$("#"+idCampo).mask("999.999.999-99");
 			return;
 		}
 		if(formato=="RG"){
 			$.mask.definitions.d="[xX0123456789]";
-			$("#"+idCampo).numeric();$("#"+idCampo).mask("99.999.999-d");
+			$("#"+idCampo).mask("99.999.999-d");
 			return;
 		}
 		if(formato=="DATA"){
-			$("#"+idCampo).numeric();
 			$("#"+idCampo).mask("99/99/9999");
 			return;
 		}
 		if(formato=="HORA"){
-			$("#"+idCampo).numeric();
 			$("#"+idCampo).mask("99:99");
 			return;
 		}
@@ -86,8 +89,26 @@ function carregaComboJson(url,dados,idCombo){
 			}
 		},
 		complete: function(){
-			$('#'+idCombo).attr('disabled','');
+			$('#'+idCombo).removeAttr('disabled');
 		}
+	});
+}
+
+function transfere(idComboOrigem, idComboDestino){
+	$('#'+idComboOrigem+' option:selected').each(function(){
+		$('#'+idComboDestino).append($(this));
+	});
+}
+
+function organizaCombo(idComboOrigem, idComboSelecionados){
+	var itemOrigem;
+	$('#'+idComboOrigem+' option').each(function(){
+		itemOrigem = $(this);
+		$('#'+idComboSelecionados+' option').each(function(){
+			if (itemOrigem.val() == $(this).val()){
+				itemOrigem.remove();
+			}
+		});
 	});
 }
 
