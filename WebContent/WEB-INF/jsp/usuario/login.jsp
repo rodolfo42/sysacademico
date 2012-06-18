@@ -16,10 +16,10 @@ O nome de usuário ou a senha inserido está incorreto!
 	<fieldset>
 		<legend>Login</legend>
 		<label for="login">Usuário:</label>
-		<input id="login" name="usuario.login" value="" />
+		<input id="login" type="text" name="usuario.login"/>
 		<br />
 		<label for="senha">Senha:</label>
-		<input id="senha" type="password" name="usuario.senha" value=""/>
+		<input id="senha" type="password" name="usuario.senha" />
 		<br />
 		<button type="submit" class="btn">Entrar</button>
 	</fieldset>
