@@ -8,12 +8,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form id="frmMatricula" action="<c:url value="/matricula/adicionar"/>" method="POST">
+<div class="span12">
+<form id="frmMatricula" action="<c:url value="/matricula/adicionar"/>" class="well" method="POST">
 	<fieldset>
-		<legend>Adicionar Matricula</legend>
+		<legend>Matrícula</legend>
 		
 		<label for="data">Data:</label>
-		<input id="data" type="text" name="matricula.data" />
+		<input id="data" class="input-small" type="text" name="matricula.data" />
 		
 		<label for="aluno">Aluno:</label>
 		<select name="matricula.aluno.id" id="aluno">
@@ -53,9 +54,17 @@
 			</c:forEach>
 		</select>
 		
+		
+		
 	</fieldset>
 	<button type="submit" class="btn">Enviar</button>
 </form>
+<div class="btn-group" data-toggle="buttons-checkbox">
+	<c:forEach items="${tipoAulaList }" var="tipoAula">
+		<button class="btn btn-warning">${tipoAula.nome }</button>
+	</c:forEach>
+</div>
+</div>
 <%@include file="../principal.jsp" %> 
 <script type="text/javascript">
 	

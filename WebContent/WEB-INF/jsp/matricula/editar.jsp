@@ -8,9 +8,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="<c:url value="/matricula/${matricula.id }"/>" method="POST">
+<div class="span12">
+<form action="<c:url value="/matricula/${matricula.id }"/>" class="well" method="POST">
 	<fieldset>
-		<legend>Alterar Matricula</legend>
+		<legend>Matrícula</legend>
 		
 		<label for="data">Data:</label>
 		<input id="data" type="text" name="matricula.data" value="${matricula.data }" />
@@ -55,7 +56,8 @@
 		
 	</fieldset>
 	<button type="submit" class="btn" name="_method" value="PUT">Alterar</button>
-	<button type="submit" class="btn" name="_method" value="DELETE">Excluir</button>
+	<button type="submit" class="btn btn-danger" name="_method" value="DELETE">Excluir</button>
 </form>
+</div>
 </body>
 </html>
