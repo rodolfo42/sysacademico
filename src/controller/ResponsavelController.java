@@ -4,9 +4,11 @@ import java.util.List;
 
 import modelo.entidade.Aluno;
 import modelo.entidade.Responsavel;
+import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
+import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import dao.AlunoDao;
@@ -34,16 +36,16 @@ public class ResponsavelController {
 	@Post @Path("/responsavel/adicionar")
 	public void adicionar(Responsavel responsavel) {
 		dao.salva(responsavel);
-		result.redirectTo(this).listar();
+		result.redirectTo(AlunoController.class).adicionar();
 	}
 	
-	@Path("/responsavel/{id}/editar")
+	@Get @Path("/responsavel/{id}")
 	public Responsavel editar(Long id){
 		incluirListaNaResult();
 		return dao.carrega(id);
 	}
 	
-	@Path("/responsavel/{responsavel.id}")
+	@Put @Path("/responsavel/{responsavel.id}")
 	public void alterar(Responsavel responsavel){
 		dao.atualiza(responsavel);
 		result.redirectTo(this).listar();
@@ -53,6 +55,12 @@ public class ResponsavelController {
 	@Get @Path("/responsavel/listar")
 	public List<Responsavel> listar(){
 		return dao.listaTudo();
+	}
+	
+	@Delete @Path("/responsavel/{id}")
+	public void deletar(Long id){
+		dao.deleta(id);
+		result.redirectTo(this).listar();
 	}
 	
 	private void incluirListaNaResult(){

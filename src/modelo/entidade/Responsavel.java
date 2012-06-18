@@ -25,7 +25,7 @@ public class Responsavel {
 	private String celular;
 	private String email;
 	private Date dataConfirmacao;
-	@ManyToMany(mappedBy="listaResponsavel",cascade=CascadeType.ALL)
+	@ManyToMany(mappedBy="listaResponsavel",cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	private List<Aluno> listaAluno;
 	
 	public Responsavel(){

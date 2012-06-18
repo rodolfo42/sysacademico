@@ -8,42 +8,83 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="<c:url value="/responsavel/adicionar"/>" method="POST">
+<div class="span12">
+<form action="<c:url value="/responsavel/adicionar"/>" class="well" method="POST">
 	<fieldset>
-		<legend>Adicionar Responsável</legend>
+		<legend>Responsável</legend>
 		
 		<label for="nome">Nome:</label>
 		<input id="nome" type="text" name="responsavel.nome" />
 		
 		<label for="cpf">CPF:</label>
-		<input id="cpf" name="responsavel.cpf" />
+		<input id="cpf" type="text" name="responsavel.cpf" />
 		
 		<label for="endereco">Endereço:</label>
-		<input id="endereco" name="responsavel.endereco" />
+		<input id="endereco" type="text" name="responsavel.endereco" />
 		
 		<label for="cep">CEP:</label>
-		<input id="cep" name="responsavel.cep" />
+		<input id="cep" type="text" name="responsavel.cep" />
 		
 		<label for="telefone">Telefone:</label>
-		<input id="telefone" name="responsavel.telefone" />
+		<input id="telefone" type="text" name="responsavel.telefone" />
 		
 		<label for="telefone">Celular:</label>
-		<input id="telefone" name="responsavel.celular" />
+		<input id="telefone" type="text" name="responsavel.celular" />
 		
 		<label for="email">Email:</label>
-		<input id="email" name="responsavel.email" />
+		<input id="email" type="text" name="responsavel.email" />
 		
 		<label for="dataConfirmacao">Data de Confirmação:</label>
-		<input id="dataConfirmacao" name="responsavel.dataConfirmacao" />
+		<input id="dataConfirmacao" class="input-small" type="text" name="responsavel.dataConfirmacao" />
 		
-		<label for="aluno">Aluno:</label>
-		<select name="responsavel.listaAluno.id" id="aluno">
-			<c:forEach items="${alunoList }" var="aluno">
-				<option value="${aluno.id }">${aluno.nome }</option>
-			</c:forEach>
-		</select>
+		<table>
+			<tr>
+				<th align="left"><label for="aluno">Alunos:</label></th>
+				<th>&nbsp;</th>
+				<th align="left"><label for="aluno_selecionado">Alunos Selecionados:</label></th>
+			</tr>
+			<tr>
+				<td>
+					<select name="listaAluno" id="aluno" multiple="multiple">
+						<c:forEach items="${alunoList }" var="aluno">
+							<option value="${aluno.id }">${aluno.nome }</option>
+						</c:forEach>
+					</select>
+				</td>
+				<td valign="middle">
+					<i class="icon-fast-backward"></i>
+					<i class="icon-fast-forward"></i>
+				</td>
+				<td>
+					<select name="responsavel.listaAluno.id" id="aluno_selecionado" multiple="multiple">
+					</select>
+				</td>
+			</tr>
+		</table>
 	</fieldset>
 	<button type="submit" class="btn">Enviar</button>
 </form>
+<a class="btn btn-warning direita" href="<c:url value="/aluno/adicionar"/>">
+	<i class="icon-forward"></i>
+	Pular Cadastro de Responsável
+</a>
+</div>
+<%@include file="../principal.jsp" %>
+<script type="text/javascript">
+	$('.icon-fast-backward').click(function(){
+		transfere('aluno_selecionado','aluno');
+	});
+	$('#aluno_selecionado').dblclick(function(){
+		$('.icon-fast-backward').click();
+	});
+	
+	
+	$('.icon-fast-forward').click(function(){
+		transfere('aluno','aluno_selecionado');
+	});
+	$('#aluno').dblclick(function(){
+		$('.icon-fast-forward').click();
+	});
+</script>
 </body>
 </html>

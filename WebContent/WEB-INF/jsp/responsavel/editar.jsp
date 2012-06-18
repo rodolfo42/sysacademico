@@ -8,9 +8,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="<c:url value="/responsavel/${responsavel.id }"/>" method="POST">
+<div class="span12">
+<form action="<c:url value="/responsavel/${responsavel.id }"/>" class="well" method="POST">
 	<fieldset>
-		<legend>Adicionar Responsável</legend>
+		<legend>Responsável</legend>
 		
 		<label for="nome">Nome:</label>
 		<input id="nome" type="text" name="responsavel.nome" value="${responsavel.nome }" />
@@ -36,15 +37,58 @@
 		<label for="dataConfirmacao">Data de Confirmação:</label>
 		<input id="dataConfirmacao" name="responsavel.dataConfirmacao" value="${responsavel.dataConfirmacao }" />
 		
-		<label for="aluno">Aluno:</label>
-		<select name="responsavel.listaAluno.id" id="aluno">
-			<c:forEach items="${alunoList }" var="aluno">
-				<option value="${aluno.id }">${aluno.nome }</option>
-			</c:forEach>
-		</select>
+		<table>
+			<tr>
+				<th align="left"><label for="aluno">Alunos:</label></th>
+				<th>&nbsp;</th>
+				<th align="left"><label for="aluno_selecionado">Alunos Selecionados:</label></th>
+			</tr>
+			<tr>
+				<td>
+					<select name="listaAluno" id="aluno" multiple="multiple">
+						<c:forEach items="${alunoList }" var="aluno">
+							<option value="${aluno.id }">${aluno.nome }</option>
+						</c:forEach>
+					</select>
+				</td>
+				<td valign="middle">
+					<i class="icon-fast-backward"></i>
+					<i class="icon-fast-forward"></i>
+				</td>
+				<td>
+					<select name="responsavel.listaAluno.id" id="aluno_selecionado" multiple="multiple">
+						<c:forEach items="${responsavel.listaAluno }" var="aluno">
+							<option value="${aluno.id }">${aluno.nome }</option>
+						</c:forEach>
+					</select>
+				</td>
+			</tr>
+		</table>
 	</fieldset>
 	<button type="submit" class="btn" name="_method" value="PUT">Alterar</button>
-	<button type="submit" class="btn" name="_method" value="DELETE">Excluir</button>
+	<button type="submit" class="btn btn-danger" name="_method" value="DELETE">Excluir</button>
 </form>
+</div>
+<%@include file="../principal.jsp" %>
+<script type="text/javascript">
+	$(document).ready(function(){
+		organizaCombo('aluno','aluno_selecionado');
+	});
+	
+	$('.icon-fast-backward').click(function(){
+		transfere('aluno_selecionado','aluno');
+	});
+	$('#aluno_selecionado').dblclick(function(){
+		$('.icon-fast-backward').click();
+	});
+	
+	
+	$('.icon-fast-forward').click(function(){
+		transfere('aluno','aluno_selecionado');
+	});
+	$('#aluno').dblclick(function(){
+		$('.icon-fast-forward').click();
+	});
+</script>
 </body>
 </html>
