@@ -8,24 +8,66 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="<c:url value="/aluno/adicionar"/>" method="POST">
+<div class="span12">
+<form action="<c:url value="/aluno/adicionar"/>" class="well" method="POST">
 	<fieldset>
-		<legend>Adicionar Aluno</legend>
+		<legend>Aluno</legend>
 		
 		<label for="nome">Nome:</label>
 		<input id="nome" type="text" name="aluno.nome" />
 		
 		<label for="data_nasc">Data de Nascimento:</label>
-		<input id="data_nasc" name="aluno.dataNascimento" />
+		<input id="data_nasc" class="input-small" type="text" name="aluno.dataNascimento" />
 		
-		<label for="listResponsavel">Responsáveis:</label>
-		<select name="aluno.listaResponsavel.id">
-			<c:forEach items="${responsavelList }" var="responsavel">
-				<option value="${responsavel.id }">${responsavel.nome }</option>
-			</c:forEach>
-		</select>
+		<table>
+			<tr>
+				<th align="left"><label for="aluno">Responsáveis:</label></th>
+				<th>&nbsp;</th>
+				<th align="left"><label for="aluno_selecionado">Responsáveis Selecionados:</label></th>
+			</tr>
+			<tr>
+				<td>
+					<select name="listaResponsavel" id="responsavel" multiple="multiple">
+						<c:forEach items="${responsavelList }" var="responsavel">
+							<option value="${responsavel.id }">${responsavel.nome }</option>
+						</c:forEach>
+					</select>
+				</td>
+				<td valign="middle">
+					<i class="icon-fast-backward"></i>
+					<i class="icon-fast-forward"></i>
+				</td>
+				<td>
+					<select name="aluno.listaResponsavel.id" id="responsavel_selecionado" multiple="multiple">
+					</select>
+				</td>
+			</tr>
+		</table>
+		
 	</fieldset>
 	<button type="submit" class="btn">Enviar</button>
 </form>
+<a class="btn btn-warning direita" href="<c:url value="/matricula/adicionar"/>">
+	<i class="icon-forward"></i>
+	Pular Cadastro de Aluno
+</a>
+</div>
+<%@include file="../principal.jsp" %>
+<script type="text/javascript">
+	$('.icon-fast-backward').click(function(){
+		transfere('responsavel_selecionado','responsavel');
+	});
+	$('#responsavel_selecionado').dblclick(function(){
+		$('.icon-fast-backward').click();
+	});
+	
+	
+	$('.icon-fast-forward').click(function(){
+		transfere('responsavel','responsavel_selecionado');
+	});
+	$('#responsavel').dblclick(function(){
+		$('.icon-fast-forward').click();
+	});
+</script>
 </body>
 </html>

@@ -37,7 +37,7 @@ public class AlunoController {
 	@Post @Path("/aluno/adicionar")
 	public void adicionar(Aluno aluno) {		
 		dao.salva(aluno);
-		result.redirectTo(this).listar();
+		result.redirectTo(MatriculaController.class).adicionar();
 	}
 	
 	@Get @Path("/aluno/{id}")
