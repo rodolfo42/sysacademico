@@ -1,5 +1,6 @@
 package modelo.entidade;
 
+import java.math.BigInteger;
 import java.security.MessageDigest;
 
 import javax.persistence.Entity;
@@ -43,13 +44,12 @@ public class Usuario {
 	public String getEncryptedSenha() {
 		byte[] bytes;
 		try {
-			bytes = getSenha().getBytes("ISO-8859-1");
+			bytes = getSenha().getBytes();
 			MessageDigest md = MessageDigest.getInstance("MD5");
-			byte[] md5 = md.digest(bytes);
-			
-			return new String(md5);
+			BigInteger md5 = new BigInteger(1, md.digest(bytes));
+			return md5.toString(16);
 		} catch (Exception e) {
-			
+			System.err.println("Erro no MD5 da senha");
 		}
 		return null;
 	}
