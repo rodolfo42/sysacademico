@@ -18,7 +18,7 @@
 	<input id="nome" type="text" name="aluno.nome" value="${aluno.nome }" />
 	
 	<label for="data_nasc">Data de Nascimento:</label>
-	<input id="data_nasc" name="aluno.dataNascimento" value="${aluno.dataNascimento }" />
+	<input id="data_nasc" type="text" name="aluno.dataNascimento" value="${aluno.dataNascimento }" />
 	
 	<table>
 		<tr>
@@ -41,7 +41,7 @@
 			<td>
 				<select name="aluno.listaResponsavel.id" id="responsavel_selecionado" multiple="multiple">
 					<c:forEach items="${aluno.listaResponsavel }" var="responsavel">
-						<option value="${responsavel.id }">${responsavel.nome }</option>
+						<option value="${responsavel.id }" selected="selected">${responsavel.nome }</option>
 					</c:forEach>
 				</select>
 			</td>
