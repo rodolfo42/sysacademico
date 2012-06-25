@@ -2,6 +2,19 @@ $(document).ready(function(){
 	$('input[type="text"][id^="data"]').each(function(){
 		validarFormato('data',$(this).attr('id'));
 	});
+	$('input[type="text"][id^="cpf"]').each(function(){
+		validarFormato('cpf',$(this).attr('id'));
+	});
+	$('input[type="text"][id^="tel"],input[type="text"][id^="cel"]').each(function(){
+		validarFormato('tel',$(this).attr('id'));
+	});
+	$('input[type="text"][id^="hora"]').each(function(){
+		validarFormato('hora',$(this).attr('id'));
+	});
+	$('input[type="text"][id^="cep"]').each(function(){
+		validarFormato('cep',$(this).attr('id'));
+	});
+	arrumaCssDeElementos();
 });
 
 function validarFormato(formato,idCampo){
@@ -22,6 +35,14 @@ function validarFormato(formato,idCampo){
 		}
 		if(formato=="HORA"){
 			$("#"+idCampo).mask("99:99");
+			return;
+		}
+		if(formato=="TEL"){
+			$("#"+idCampo).mask("(99)9999-9999");
+			return;
+		}
+		if(formato=="CEP"){
+			$("#"+idCampo).mask("99999-999");
 			return;
 		}
 		if(formato=="NUMEROVIRGULA"){
@@ -112,3 +133,9 @@ function organizaCombo(idComboOrigem, idComboSelecionados){
 	});
 }
 
+function arrumaCssDeElementos(){
+	$('#conteudo').css({
+		'width':$(document).width() - 270,
+		'min-height':$(document).height() - $('#menu').height() - 30 
+	});
+}
