@@ -12,6 +12,7 @@
 O nome de usuário ou a senha inserido está incorreto!
 </div>
 <div id="login">
+<img id="logoLogin" alt="Pri-si-lá" src="<c:url value="/img/logotipo_login.png" />" />
 <form action="<c:url value="/login"/>" method="POST" class="well">
 	<fieldset>
 		<legend>Login</legend>
