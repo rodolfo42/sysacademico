@@ -46,28 +46,25 @@
 				<option value="${curso.id }">${curso.nome }</option>
 			</c:forEach>
 		</select>
-		
-		<label for="tipoAula">Tipo de Aula:</label>
-		<select name="matricula.listaTipoAula" id="tipoAula">
-			<c:forEach items="${tipoAulaList }" var="tipoAula">
-				<option value="${tipoAula }">${tipoAula.nome }</option>
-			</c:forEach>
-		</select>
-		
+		<div class="control-group">
+            <label class="control-label">Tipo de Aula:</label>
+			<div class="btn-group" data-toggle="buttons-checkbox">
+				<c:forEach items="${tipoAulaList }" var="tipoAula">
+					<button class="btn btn-warning" name="btnTipoAula">${tipoAula.nome }</button>
+				</c:forEach>
+			</div>
+		</div>
 		
 		
 	</fieldset>
 	<button type="submit" class="btn">Enviar</button>
 </form>
-<div class="btn-group" data-toggle="buttons-checkbox">
-	<c:forEach items="${tipoAulaList }" var="tipoAula">
-		<button class="btn btn-warning">${tipoAula.nome }</button>
-	</c:forEach>
 </div>
-</div>
-<%@include file="../principal.jsp" %> 
-<script type="text/javascript">
-	
+<script type="text/javascript">	
+	$('div.btn-group .btn').click(function(){
+		$(this).button('toggle');
+		return false;
+	});
 	$('#aluno').change(function(){
 		carregaComboJson('<c:url value="/matricula/responsavel.json"/>','idAluno='+$(this).val(),'responsavel');
 	});

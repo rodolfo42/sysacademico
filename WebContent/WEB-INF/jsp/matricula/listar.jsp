@@ -1,4 +1,4 @@
-<%@include file="../tags.jsp" %>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -8,11 +8,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form>
+<div class="span12">
+<form class="well form-search">
+	<label for="aluno">Aluno:</label>
 	<input type="text" id="aluno" />
 </form>
-<h3>Matricula</h3>
-<table id="tabelaMatricula" width="100%" border="1">
+<h2>Matrículas</h2>
+<table id="tabelaMatricula" width="100%" class="table table-striped">
 	<thead>
 		<tr>
 			<th>Id</th>
@@ -42,7 +44,7 @@
 </c:forEach>
 </tbody>
 </table>
-<%@include file="../principal.jsp" %>
+</div>
 <script type="text/javascript">
 	$('#aluno').keyup(function(){
 		$.ajax({
@@ -61,7 +63,7 @@
 					tr += '<td>'+item.aluno.nome+'</td>';
 					tr += '<td>'+item.responsavel.nome+'</td>';
 					tr += '<td>'+item.tipoMatricula.nome+'</td>';
-					tr += '<td>'+item.curso+'</td>';
+					tr += '<td>'+item.curso.nome+'</td>';
 					tr += '<td>';
 					for (var ii=0;ii<item.listaTipoAula.length;ii++){
 						tr += item.listaTipoAula[ii].nome+'<br />';
