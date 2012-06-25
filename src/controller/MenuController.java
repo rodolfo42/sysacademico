@@ -3,33 +3,27 @@ package controller;
 import java.util.List;
 
 import modelo.entidade.Aluno;
-import modelo.entidade.Responsavel;
-import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
-import br.com.caelum.vraptor.Path;
-import br.com.caelum.vraptor.Post;
-import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 import dao.AlunoDao;
-import dao.ResponsavelDao;
 
 @Resource
 public class MenuController {
 	
-	private final AlunoDao dao;
-	private final ResponsavelDao responsavelDao;
+	private final AlunoDao alunoDao;
 	private final Result result;
-	private List<Responsavel> respList;
+	private List<Aluno> alunosList;
 
-	public MenuController(AlunoDao dao,ResponsavelDao responsavelDao, Result result){
-		this.dao = dao;
-		this.responsavelDao = responsavelDao;
+	public MenuController(AlunoDao alunoDao, Result result){
+		this.alunoDao = alunoDao;
 		this.result = result;
 	}
 	
 	@Get
 	public void inicio() {
+		alunosList = alunoDao.listaAniversariantes();
+		result.include("alunosList",alunosList);
 	}
 	
 }

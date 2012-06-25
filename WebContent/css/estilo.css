@@ -1,11 +1,11 @@
 div#login{
 	position: absolute;
 	width: 300px;
-	height: 150px;
+	height: 500px;
 	top:50%;
 	left:50%;
 	margin-left: -150px;
-	margin-top: -75px; 
+	margin-top: -250px; 
 }
 
 div#menu {
@@ -21,4 +21,29 @@ div#menu ul li{
 
 .direita{
 	float: right;
+}
+
+div#aniversarios{
+	position: absolute;
+	width: 300px;
+	height: 400px;
+	top: 50%;
+	margin-top: -200px;
+	right: 0;
+	overflow: visible;
+	background-color: #F3E4AA;
+}
+
+img#logo{
+	position: absolute;
+	left: 0;
+	margin-left: 20px;
+	top: 0;
+	margin-top: 20px;
+	background-color: transparent;
+}
+
+div#conteudo{
+	float: right;
+	margin-right: 50px;
 }

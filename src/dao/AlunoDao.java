@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.Calendar;
 import java.util.List;
 
 import modelo.entidade.Aluno;
@@ -32,4 +33,16 @@ public class AlunoDao extends Dao<Aluno> {
 				.setLong(0, responsavel.getId())
 				.list();
 	}
+	
+	public List<Aluno> listaAniversariantes (){
+	    Calendar calendario = Calendar.getInstance();
+	    StringBuffer qry = new StringBuffer();
+		qry.append("from Aluno ");
+		qry.append("where month(dataNascimento) = ?");
+		qry.append("order by day(dataNascimento)");
+			
+		return getSession().createQuery(qry.toString())
+				.setInteger(0, calendario.get(Calendar.MONTH) + 1)
+				.list();
+    }
 }
