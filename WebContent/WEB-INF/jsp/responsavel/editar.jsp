@@ -58,7 +58,7 @@
 				<td>
 					<select name="responsavel.listaAluno.id" id="aluno_selecionado" multiple="multiple">
 						<c:forEach items="${responsavel.listaAluno }" var="aluno">
-							<option value="${aluno.id }">${aluno.nome }</option>
+							<option value="${aluno.id }" selected="selected">${aluno.nome }</option>
 						</c:forEach>
 					</select>
 				</td>

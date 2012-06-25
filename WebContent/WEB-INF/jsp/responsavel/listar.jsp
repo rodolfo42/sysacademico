@@ -37,7 +37,7 @@
 		<td>${responsavel.email }</td>
 		<td>${responsavel.dataConfirmacao }</td>
 		<td>
-			<c:forEach items="${aluno.listaResponsavel }" var="responsavel">
+			<c:forEach items="${responsavel.listaAluno }" var="responsavel">
 				${responsavel.nome }<br />
 			</c:forEach>
 		</td>

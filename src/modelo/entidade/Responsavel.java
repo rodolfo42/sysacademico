@@ -93,7 +93,6 @@ public class Responsavel {
 		this.listaAluno.add(aluno);
 	}
 
-	@Deprecated
 	public void setListaAluno(List<Aluno> listaAluno) {
 		this.listaAluno = listaAluno;
 	}

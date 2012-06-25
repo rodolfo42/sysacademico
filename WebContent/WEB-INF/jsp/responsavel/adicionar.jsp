@@ -28,8 +28,8 @@
 		<label for="telefone">Telefone:</label>
 		<input id="telefone" type="text" name="responsavel.telefone" />
 		
-		<label for="telefone">Celular:</label>
-		<input id="telefone" type="text" name="responsavel.celular" />
+		<label for="celular">Celular:</label>
+		<input id="celular" type="text" name="responsavel.celular" />
 		
 		<label for="email">Email:</label>
 		<input id="email" type="text" name="responsavel.email" />
