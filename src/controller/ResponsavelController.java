@@ -36,6 +36,10 @@ public class ResponsavelController {
 	@Post @Path("/responsavel/adicionar")
 	public void adicionar(Responsavel responsavel) {
 		dao.salva(responsavel);
+		for (Aluno aluno : responsavel.getListaAluno()) {
+			aluno.adicionaVinculo(responsavel);
+			alunoDao.atualiza(aluno);
+		}
 		result.redirectTo(AlunoController.class).adicionar();
 	}
 	
@@ -48,6 +52,10 @@ public class ResponsavelController {
 	@Put @Path("/responsavel/{responsavel.id}")
 	public void alterar(Responsavel responsavel){
 		dao.atualiza(responsavel);
+		for (Aluno aluno : responsavel.getListaAluno()) {
+			aluno.adicionaVinculo(responsavel);
+			alunoDao.atualiza(aluno);
+		}
 		result.redirectTo(this).listar();
 	}
 		
