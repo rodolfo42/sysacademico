@@ -8,22 +8,22 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="<c:url value="/usuario/adicionar"/>" method="POST">
-	<fieldset>
-	
-	<legend>Adicionar Usuario</legend>
-	
-	<label for="nome">Nome:</label>
-	<input id="nome" type="text" name="usuario.nome" value="${usuario.nome }"/>
-	
-	<label for="login">Login:</label>
-	<input id="login" name="usuario.login" value="${usuario.login}" />
-	
-	<label for="senha">Senha:</label>
-	<input id="senha" type="text" name="usuario.senha" value="${usuario.senha}"/>
-	
-	<button type="submit">Enviar</button>
-	</fieldset>
-</form>
+	<form action="<c:url value="/usuario/adicionar"/>" method="POST">
+		<fieldset>
+		
+		<legend>Adicionar Usuario</legend>
+		
+		<label for="nome">Nome:</label>
+		<input id="nome" type="text" name="usuario.nome" value="${usuario.nome }"/>
+		
+		<label for="login">Login:</label>
+		<input id="login" name="usuario.login" value="${usuario.login}" />
+		
+		<label for="senha">Senha:</label>
+		<input id="senha" type="password" name="usuario.senha" value="${usuario.senha}"/>
+		
+		<button type="submit">Enviar</button>
+		</fieldset>
+	</form>
 </body>
 </html>

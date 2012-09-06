@@ -44,6 +44,9 @@ img#logo{
 }
 
 div#conteudo{
-	float: right;
-	margin-right: 50px;
+	margin-left: 250px;
+}
+
+.margemtop{
+	margin-top: 30px;
 }

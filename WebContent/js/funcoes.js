@@ -135,7 +135,8 @@ function organizaCombo(idComboOrigem, idComboSelecionados){
 
 function arrumaCssDeElementos(){
 	$('#conteudo').css({
-		'width':$(document).width() - 270,
-		'min-height':$(document).height() - $('#menu').height() - 30 
+		'width':$(document).width() - parseInt($('#conteudo').css('margin-left')) - 40,
+		'min-height':$(document).height()
 	});
+	$('embed#chrome-plugin-npapi-helper').css('position','absolute');
 }
