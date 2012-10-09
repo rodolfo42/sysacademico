@@ -2,7 +2,6 @@ package controller;
 
 import java.util.List;
 
-import modelo.entidade.Aluno;
 import modelo.entidade.Curso;
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
