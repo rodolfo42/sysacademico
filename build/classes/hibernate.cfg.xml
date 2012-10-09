@@ -17,6 +17,13 @@
 <mapping class="modelo.entidade.Usuario" />
 <mapping class="modelo.entidade.Aluno" />
 <mapping class="modelo.entidade.Responsavel" />
+<mapping class="modelo.entidade.Curso" />
+<mapping class="modelo.entidade.Matricula" />
+<mapping class="modelo.entidade.Professor" />
+<mapping class="modelo.entidade.AulaMatricula" />
+<mapping class="modelo.entidade.Aula" />
+<mapping class="modelo.entidade.HorarioProfessor" />
+<mapping class="modelo.entidade.Sala" />
 
 </session-factory>
 </hibernate-configuration>
