@@ -6,14 +6,13 @@ import java.util.List;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import modelo.constante.TipoAula;
-import modelo.constante.TipoMatricula;
 
 @Entity
 public class Matricula {
@@ -21,17 +20,17 @@ public class Matricula {
 	@Id
 	@GeneratedValue
 	private Long id;
+	@Temporal(TemporalType.DATE)
 	private Date data;
 	@ManyToOne
 	private Aluno aluno;
 	@ManyToOne
 	private Responsavel responsavel;
-	@Enumerated(EnumType.ORDINAL)
-	private TipoMatricula tipoMatricula;
 	@ManyToOne
 	private Curso curso;
 	@ElementCollection
 	private List<TipoAula> listaTipoAula;
+	private boolean ativo;
 	
 	public Matricula(){
 		this.listaTipoAula = new ArrayList<TipoAula>();
@@ -61,12 +60,6 @@ public class Matricula {
 	public void setResponsavel(Responsavel responsavel) {
 		this.responsavel = responsavel;
 	}
-	public TipoMatricula getTipoMatricula() {
-		return tipoMatricula;
-	}
-	public void setTipoMatricula(TipoMatricula tipoMatricula) {
-		this.tipoMatricula = tipoMatricula;
-	}
 	public Curso getCurso() {
 		return curso;
 	}
@@ -83,6 +76,14 @@ public class Matricula {
 	}
 	public void adicionaVinculo(TipoAula tipoAula) {
 		this.listaTipoAula.add(tipoAula);
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 }
