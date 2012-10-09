@@ -16,7 +16,7 @@ public class MatriculaDao extends Dao<Matricula> {
 	}
 	
 	public MatriculaDao buscarPorAluno(String nomeAluno){
-		adicionaCriteria(getCriteria().createAlias("aluno", "a", Criteria.INNER_JOIN, Restrictions.like("a.nome", "%"+nomeAluno+"%")));
+		adicionaCriteria(getCriteria().createAlias("aluno", "a", Criteria.INNER_JOIN, Restrictions.like("a.nome", "%".concat(nomeAluno).concat("%"))));
 		return this;
 	}
 }
