@@ -37,6 +37,7 @@ public class ResponsavelController {
 	public void adicionar(Responsavel responsavel) {
 		dao.salva(responsavel);
 		for (Aluno aluno : responsavel.getListaAluno()) {
+			aluno = alunoDao.carrega(aluno.getId());
 			aluno.adicionaVinculo(responsavel);
 			alunoDao.atualiza(aluno);
 		}
@@ -53,6 +54,7 @@ public class ResponsavelController {
 	public void alterar(Responsavel responsavel){
 		dao.atualiza(responsavel);
 		for (Aluno aluno : responsavel.getListaAluno()) {
+			aluno = alunoDao.carrega(aluno.getId());
 			aluno.adicionaVinculo(responsavel);
 			alunoDao.atualiza(aluno);
 		}
