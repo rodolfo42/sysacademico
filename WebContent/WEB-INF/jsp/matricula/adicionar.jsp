@@ -32,13 +32,6 @@
 				</c:forEach>
 			</select>
 			
-			<label for="tipoMatricula">Tipo de Matrícula:</label>
-			<select name="matricula.tipoMatricula" id="tipoMatricula">
-				<c:forEach items="${tipoMatriculaList }" var="tipoMatricula">
-					<option value="${tipoMatricula }">${tipoMatricula.nome }</option>
-				</c:forEach>
-			</select>
-			
 			<label for="curso">Curso:</label>
 			<select name="matricula.curso.id" id="curso">
 				<c:forEach items="${cursoList }" var="curso">
