@@ -14,23 +14,22 @@ import dao.UsuarioDao;
 
 @Resource
 public class UsuarioController {
-
+	
 	private final UsuarioDao dao;
 	private final Result result;
 	private final UsuarioLogado usuarioLogado;
-
-	public UsuarioController(UsuarioDao dao, Result result,
-			UsuarioLogado usuarioLogado) {
+	
+	public UsuarioController(UsuarioDao dao, Result result, UsuarioLogado usuarioLogado) {
 		this.dao = dao;
 		this.result = result;
 		this.usuarioLogado = usuarioLogado;
 	}
-
+	
 	@Get
 	@Path("/usuario/adicionar")
 	public void adicionar() {
 	}
-
+	
 	@Post
 	@Path("/usuario/adicionar")
 	public void adicionar(Usuario usuario) {
@@ -38,25 +37,25 @@ public class UsuarioController {
 		dao.salva(usuario);
 		result.redirectTo(UsuarioController.class).listar();
 	}
-
+	
 	@Get
 	@Path("/usuario/listar")
 	public List<Usuario> listar() {
 		return dao.listaTudo();
 	}
-
+	
 	@Get
 	@Path("/usuario/login/erro")
 	public void erroLogin() {
-
+		
 	}
-
+	
 	@Get
 	@Path("/login")
 	@Permitido
 	public void login() {
 	}
-
+	
 	@Post
 	@Path("/login")
 	@Permitido
@@ -69,5 +68,5 @@ public class UsuarioController {
 			result.redirectTo(getClass()).login();
 		}
 	}
-
+	
 }

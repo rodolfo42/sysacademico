@@ -11,27 +11,26 @@ import com.thoughtworks.xstream.XStream;
 @PrototypeScoped
 @Component
 public class CustomXStreamBuilder extends XStreamBuilderImpl {
-
-	public CustomXStreamBuilder(XStreamConverters converters,
-			TypeNameExtractor extractor) {
+	
+	public CustomXStreamBuilder(XStreamConverters converters, TypeNameExtractor extractor) {
 		super(converters, extractor);
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	// delega o construtor
-
+	
 	public XStream configure(XStream xstream) {
-
+		
 		super.configure(xstream);
-
+		
 		xstream.aliasSystemAttribute(null, "class");
-
+		
 		xstream.aliasSystemAttribute(null, "resolves-to");
-
+		
 		return xstream;
-
+		
 	}
-
+	
 	@Override
 	public XStream jsonInstance() {
 		XStream xstream = super.jsonInstance();
@@ -39,5 +38,5 @@ public class CustomXStreamBuilder extends XStreamBuilderImpl {
 		xstream.aliasSystemAttribute(null, "resolves-to");
 		return xstream;
 	}
-
+	
 }

@@ -16,7 +16,7 @@ import javax.persistence.ManyToMany;
 
 @Entity
 public class Aluno {
-
+	
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -25,51 +25,51 @@ public class Aluno {
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "aluno_responsavel", joinColumns = { @JoinColumn(name = "aluno_id") }, inverseJoinColumns = @JoinColumn(name = "responsavel_id"))
 	private List<Responsavel> listaResponsavel;
-
+	
 	public Aluno() {
 		this.listaResponsavel = new ArrayList<Responsavel>();
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
-
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
 	public String getNome() {
 		return nome;
 	}
-
+	
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
+	
 	public Date getDataNascimento() {
 		return dataNascimento;
 	}
-
+	
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
-
+	
 	public List<Responsavel> getListaResponsavel() {
 		return Collections.unmodifiableList(listaResponsavel);
 	}
-
+	
 	public void adicionaVinculo(Responsavel responsavel) {
 		this.listaResponsavel.add(responsavel);
 	}
-
+	
 	public void setListaResponsavel(List<Responsavel> listaResponsavel) {
 		this.listaResponsavel = listaResponsavel;
 	}
-
+	
 	public String getDiaAniversario() {
 		Calendar data = Calendar.getInstance();
 		data.setTime(dataNascimento);
 		return String.valueOf(data.get(Calendar.DAY_OF_MONTH));
 	}
-
+	
 }

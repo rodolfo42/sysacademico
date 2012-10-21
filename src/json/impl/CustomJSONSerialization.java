@@ -17,19 +17,18 @@ import com.thoughtworks.xstream.converters.collections.CollectionConverter;
 
 @Component
 public class CustomJSONSerialization extends XStreamJSONSerialization {
-
-	public CustomJSONSerialization(HttpServletResponse response,
-			TypeNameExtractor extractor, ProxyInitializer initializer,
-			XStreamBuilder builder) {
+	
+	public CustomJSONSerialization(HttpServletResponse response, TypeNameExtractor extractor,
+			ProxyInitializer initializer, XStreamBuilder builder) {
 		super(response, extractor, initializer, builder);
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	@Override
 	@SuppressWarnings("deprecation")
 	protected XStream getXStream() {
 		XStream xstream = super.getXStream();
-
+		
 		xstream.registerConverter(new CollectionConverter(xstream.getMapper()) {
 			@Override
 			@SuppressWarnings("rawtypes")
@@ -39,8 +38,8 @@ public class CustomJSONSerialization extends XStreamJSONSerialization {
 		});
 		xstream.registerConverter(new TipoAulaConverter());
 		xstream.registerConverter(new TipoMatriculaConverter());
-
+		
 		return xstream;
 	}
-
+	
 }

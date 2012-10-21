@@ -15,7 +15,7 @@ import modelo.constante.TipoAula;
 
 @Entity
 public class Aula {
-
+	
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -27,43 +27,43 @@ public class Aula {
 	private Calendar timestamp;
 	@Enumerated(EnumType.ORDINAL)
 	private TipoAula tipoAula;
-
+	
 	public Long getId() {
 		return id;
 	}
-
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
 	public Professor getProfessor() {
 		return professor;
 	}
-
+	
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
 	}
-
+	
 	public Sala getSala() {
 		return sala;
 	}
-
+	
 	public void setSala(Sala sala) {
 		this.sala = sala;
 	}
-
+	
 	public Calendar getTimestamp() {
 		return timestamp;
 	}
-
+	
 	public void setTimestamp(Calendar timestamp) {
 		this.timestamp = timestamp;
 	}
-
+	
 	public TipoAula getTipoAula() {
 		return tipoAula;
 	}
-
+	
 	public void setTipoAula(TipoAula tipoAula) {
 		this.tipoAula = tipoAula;
 	}

@@ -14,20 +14,18 @@ public class TipoMatriculaConverter implements Converter {
 	public boolean canConvert(Class type) {
 		return TipoMatricula.class.isAssignableFrom(type);
 	}
-
+	
 	@Override
-	public void marshal(Object value, HierarchicalStreamWriter writer,
-			MarshallingContext context) {
+	public void marshal(Object value, HierarchicalStreamWriter writer, MarshallingContext context) {
 		TipoMatricula tipoMatricula = (TipoMatricula) value;
 		writer.startNode("nome");
 		writer.setValue(tipoMatricula.getNome());
 		writer.endNode();
 	}
-
+	
 	@Override
-	public Object unmarshal(HierarchicalStreamReader reader,
-			UnmarshallingContext context) {
+	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
 		return null;
 	}
-
+	
 }
