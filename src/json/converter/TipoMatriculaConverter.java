@@ -10,21 +10,23 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 public class TipoMatriculaConverter implements Converter {
 	@Override
-    @SuppressWarnings("rawtypes")
-    public boolean canConvert(Class type) {
+	@SuppressWarnings("rawtypes")
+	public boolean canConvert(Class type) {
 		return TipoMatricula.class.isAssignableFrom(type);
-    }
-	 
-	@Override
-	public void marshal(Object value, HierarchicalStreamWriter writer,MarshallingContext context) {
-	    TipoMatricula tipoMatricula = (TipoMatricula) value;
-	    writer.startNode("nome");
-	    writer.setValue(tipoMatricula.getNome());
-	    writer.endNode();
-	 }
+	}
 
 	@Override
-	public Object unmarshal(HierarchicalStreamReader reader,UnmarshallingContext context) {
+	public void marshal(Object value, HierarchicalStreamWriter writer,
+			MarshallingContext context) {
+		TipoMatricula tipoMatricula = (TipoMatricula) value;
+		writer.startNode("nome");
+		writer.setValue(tipoMatricula.getNome());
+		writer.endNode();
+	}
+
+	@Override
+	public Object unmarshal(HierarchicalStreamReader reader,
+			UnmarshallingContext context) {
 		return null;
 	}
 

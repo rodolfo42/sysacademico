@@ -14,46 +14,51 @@ import dao.CursoDao;
 
 @Resource
 public class CursoController {
-	
+
 	private final CursoDao dao;
 	private final Result result;
 
-	public CursoController(CursoDao dao, Result result){
+	public CursoController(CursoDao dao, Result result) {
 		this.dao = dao;
 		this.result = result;
 	}
-	
-	@Get @Path("/curso/adicionar")
+
+	@Get
+	@Path("/curso/adicionar")
 	public void adicionar() {
 	}
-	
-	@Post @Path("/curso/adicionar")
-	public void adicionar(Curso curso) {		
+
+	@Post
+	@Path("/curso/adicionar")
+	public void adicionar(Curso curso) {
 		dao.salva(curso);
 		result.redirectTo(this).listar();
 	}
-	
-	@Get @Path("/curso/{id}")
-	public Curso editar(Long id){
+
+	@Get
+	@Path("/curso/{id}")
+	public Curso editar(Long id) {
 		return dao.carrega(id);
 	}
-	
-	@Put @Path("/curso/{curso.id}")
-	public void alterar(Curso curso){
+
+	@Put
+	@Path("/curso/{curso.id}")
+	public void alterar(Curso curso) {
 		dao.atualiza(curso);
 		result.redirectTo(this).listar();
 	}
-	
-	@Get @Path("/curso/listar")
-	public List<Curso> listar(){
+
+	@Get
+	@Path("/curso/listar")
+	public List<Curso> listar() {
 		return dao.listaTudo();
 	}
-	
-	@Delete @Path("/curso/{id}")
-	public void deletar(Long id){
+
+	@Delete
+	@Path("/curso/{id}")
+	public void deletar(Long id) {
 		dao.deleta(id);
 		result.redirectTo(this).listar();
 	}
-	
-	
+
 }

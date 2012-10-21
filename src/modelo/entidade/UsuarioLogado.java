@@ -8,20 +8,20 @@ import br.com.caelum.vraptor.ioc.SessionScoped;
 public class UsuarioLogado {
 
 	private Usuario logado;
-	
-	public void login(Usuario usuario){
+
+	public void login(Usuario usuario) {
 		this.logado = usuario;
 	}
-	
-	public boolean isLogado(){
+
+	public boolean isLogado() {
 		return logado != null;
 	}
-	
-	public String getNome(){
+
+	public String getNome() {
 		return logado.getNome();
 	}
-	
-	public void logout(){
+
+	public void logout() {
 		this.logado = null;
 	}
 }

@@ -1,8 +1,8 @@
 package dao;
 
-import org.hibernate.Session;
-
 import modelo.entidade.Sala;
+
+import org.hibernate.Session;
 
 public class SalaDao extends Dao<Sala> {
 

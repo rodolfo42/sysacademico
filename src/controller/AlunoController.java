@@ -16,53 +16,59 @@ import dao.ResponsavelDao;
 
 @Resource
 public class AlunoController {
-	
+
 	private final AlunoDao dao;
 	private final ResponsavelDao responsavelDao;
 	private final Result result;
 	private List<Responsavel> respList;
 
-	public AlunoController(AlunoDao dao,ResponsavelDao responsavelDao, Result result){
+	public AlunoController(AlunoDao dao, ResponsavelDao responsavelDao,
+			Result result) {
 		this.dao = dao;
 		this.responsavelDao = responsavelDao;
 		this.result = result;
 	}
-	
-	@Get @Path("/aluno/adicionar")
+
+	@Get
+	@Path("/aluno/adicionar")
 	public void adicionar() {
-		respList = responsavelDao.listaTudo(); 
+		respList = responsavelDao.listaTudo();
 		result.include("responsavelList", respList);
 	}
-	
-	@Post @Path("/aluno/adicionar")
-	public void adicionar(Aluno aluno) {		
+
+	@Post
+	@Path("/aluno/adicionar")
+	public void adicionar(Aluno aluno) {
 		dao.salva(aluno);
 		result.redirectTo(MatriculaController.class).adicionar();
 	}
-	
-	@Get @Path("/aluno/{id}")
-	public Aluno editar(Long id){
+
+	@Get
+	@Path("/aluno/{id}")
+	public Aluno editar(Long id) {
 		respList = responsavelDao.listaTudo();
 		result.include("responsavelList", respList);
 		return dao.carrega(id);
 	}
-	
-	@Put @Path("/aluno/{aluno.id}")
-	public void alterar(Aluno aluno){
+
+	@Put
+	@Path("/aluno/{aluno.id}")
+	public void alterar(Aluno aluno) {
 		dao.atualiza(aluno);
 		result.redirectTo(this).listar();
 	}
-	
-	@Get @Path("/aluno/listar")
-	public List<Aluno> listar(){
+
+	@Get
+	@Path("/aluno/listar")
+	public List<Aluno> listar() {
 		return dao.listaTudo();
 	}
-	
-	@Delete @Path("/aluno/{id}")
-	public void deletar(Long id){
+
+	@Delete
+	@Path("/aluno/{id}")
+	public void deletar(Long id) {
 		dao.deleta(id);
 		result.redirectTo(this).listar();
 	}
-	
-	
+
 }

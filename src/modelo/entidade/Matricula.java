@@ -16,7 +16,7 @@ import modelo.constante.TipoAula;
 
 @Entity
 public class Matricula {
-	
+
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -31,38 +31,47 @@ public class Matricula {
 	@ElementCollection
 	private List<TipoAula> listaTipoAula;
 	private boolean ativo;
-	
-	public Matricula(){
+
+	public Matricula() {
 		this.listaTipoAula = new ArrayList<TipoAula>();
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public Date getData() {
 		return data;
 	}
+
 	public void setData(Date data) {
 		this.data = data;
 	}
+
 	public Aluno getAluno() {
 		return aluno;
 	}
+
 	public void setAluno(Aluno aluno) {
 		this.aluno = aluno;
 	}
+
 	public Responsavel getResponsavel() {
 		return responsavel;
 	}
+
 	public void setResponsavel(Responsavel responsavel) {
 		this.responsavel = responsavel;
 	}
+
 	public Curso getCurso() {
 		return curso;
 	}
+
 	public void setCurso(Curso curso) {
 		this.curso = curso;
 	}
@@ -74,6 +83,7 @@ public class Matricula {
 	public void setListaTipoAula(List<TipoAula> listaTipoAula) {
 		this.listaTipoAula = listaTipoAula;
 	}
+
 	public void adicionaVinculo(TipoAula tipoAula) {
 		this.listaTipoAula.add(tipoAula);
 	}

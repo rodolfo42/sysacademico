@@ -1,8 +1,8 @@
 package dao;
 
-import org.hibernate.Session;
-
 import modelo.entidade.AulaMatricula;
+
+import org.hibernate.Session;
 
 public class AulaMatriculaDao extends Dao<AulaMatricula> {
 

@@ -1,8 +1,8 @@
 package dao;
 
-import org.hibernate.Session;
-
 import modelo.entidade.HorarioProfessor;
+
+import org.hibernate.Session;
 
 public class HorarioProfessorDao extends Dao<HorarioProfessor> {
 
