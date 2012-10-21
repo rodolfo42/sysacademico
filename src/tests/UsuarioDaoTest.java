@@ -11,12 +11,10 @@ public class UsuarioDaoTest extends TestCase {
 		usuario = new Usuario();
 	}
 	
-	
 	@Override
 	protected void tearDown() throws Exception {
 		usuario = null;
 	}
-	
 	
 	public void testSenhaMD5() {
 		usuario.setSenha("root");

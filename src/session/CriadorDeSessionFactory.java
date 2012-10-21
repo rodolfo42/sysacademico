@@ -12,8 +12,8 @@ import br.com.caelum.vraptor.ioc.ComponentFactory;
 
 @Component
 @ApplicationScoped
-public class CriadorDeSessionFactory implements ComponentFactory<SessionFactory>{
-
+public class CriadorDeSessionFactory implements ComponentFactory<SessionFactory> {
+	
 	private SessionFactory factory;
 	
 	@PostConstruct

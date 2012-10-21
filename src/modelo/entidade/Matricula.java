@@ -32,58 +32,68 @@ public class Matricula {
 	private List<TipoAula> listaTipoAula;
 	private boolean ativo;
 	
-	public Matricula(){
+	public Matricula() {
 		this.listaTipoAula = new ArrayList<TipoAula>();
 	}
 	
 	public Long getId() {
 		return id;
 	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
 	public Date getData() {
 		return data;
 	}
+	
 	public void setData(Date data) {
 		this.data = data;
 	}
+	
 	public Aluno getAluno() {
 		return aluno;
 	}
+	
 	public void setAluno(Aluno aluno) {
 		this.aluno = aluno;
 	}
+	
 	public Responsavel getResponsavel() {
 		return responsavel;
 	}
+	
 	public void setResponsavel(Responsavel responsavel) {
 		this.responsavel = responsavel;
 	}
+	
 	public Curso getCurso() {
 		return curso;
 	}
+	
 	public void setCurso(Curso curso) {
 		this.curso = curso;
 	}
-
+	
 	public List<TipoAula> getListaTipoAula() {
 		return listaTipoAula;
 	}
-
+	
 	public void setListaTipoAula(List<TipoAula> listaTipoAula) {
 		this.listaTipoAula = listaTipoAula;
 	}
+	
 	public void adicionaVinculo(TipoAula tipoAula) {
 		this.listaTipoAula.add(tipoAula);
 	}
-
+	
 	public boolean isAtivo() {
 		return ativo;
 	}
-
+	
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
-
+	
 }

@@ -11,7 +11,7 @@ import br.com.caelum.vraptor.ioc.ComponentFactory;
 
 @Component
 public class CriadorDeSession implements ComponentFactory<Session> {
-
+	
 	private final SessionFactory factory;
 	private Session session;
 	
@@ -32,5 +32,5 @@ public class CriadorDeSession implements ComponentFactory<Session> {
 	public void fecha() {
 		this.session.close();
 	}
-
+	
 }

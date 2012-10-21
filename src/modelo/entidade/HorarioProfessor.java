@@ -14,7 +14,7 @@ import modelo.constante.DiaDaSemana;
 
 @Entity
 public class HorarioProfessor {
-
+	
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -28,24 +28,31 @@ public class HorarioProfessor {
 	public Long getId() {
 		return id;
 	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
 	public Date getHoraInicio() {
 		return horaInicio;
 	}
+	
 	public void setHoraInicio(Date horaInicio) {
 		this.horaInicio = horaInicio;
 	}
+	
 	public Date getHoraFim() {
 		return horaFim;
 	}
+	
 	public void setHoraFim(Date horaFim) {
 		this.horaFim = horaFim;
 	}
+	
 	public DiaDaSemana getDiaDaSemana() {
 		return diaDaSemana;
 	}
+	
 	public void setDiaDaSemana(DiaDaSemana diaDaSemana) {
 		this.diaDaSemana = diaDaSemana;
 	}
