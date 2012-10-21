@@ -8,4 +8,4 @@
 # Arquivos de backup do brModelo e outros #
 *.bak
 
-build/*
+build/**/*

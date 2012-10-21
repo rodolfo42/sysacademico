@@ -27,8 +27,9 @@ public class CustomJSONSerialization extends XStreamJSONSerialization {
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
     protected XStream getXStream() {
-        XStream xstream = super.getXStream();
+		XStream xstream = super.getXStream();
 
         xstream.registerConverter(new CollectionConverter(xstream.getMapper()) {
             @Override
