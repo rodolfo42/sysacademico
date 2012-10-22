@@ -3,6 +3,7 @@
     <wb-module deploy-name="pri-si-la">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/config"/>
         <property name="context-root" value="pri-si-la"/>
         <property name="java-output-path" value="/pri-si-la/build/classes"/>
     </wb-module>
