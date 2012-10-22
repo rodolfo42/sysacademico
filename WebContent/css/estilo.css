@@ -1,11 +1,11 @@
-div#login{
+div#login {
 	position: absolute;
 	width: 300px;
 	height: 500px;
-	top:50%;
-	left:50%;
+	top: 50%;
+	left: 50%;
 	margin-left: -150px;
-	margin-top: -250px; 
+	margin-top: -250px;
 }
 
 div#menu {
@@ -13,17 +13,17 @@ div#menu {
 	margin-right: 50px;
 }
 
-div#menu ul li{
+div#menu ul li {
 	display: inline;
 	cursor: pointer;
 	margin-left: 20px;
 }
 
-.direita{
+.direita {
 	float: right;
 }
 
-div#aniversarios{
+div#aniversarios {
 	position: absolute;
 	width: 300px;
 	height: 400px;
@@ -34,7 +34,7 @@ div#aniversarios{
 	background-color: #F3E4AA;
 }
 
-img#logo{
+img#logo {
 	position: absolute;
 	left: 0;
 	margin-left: 20px;
@@ -43,10 +43,10 @@ img#logo{
 	background-color: transparent;
 }
 
-div#conteudo{
+div#conteudo {
 	margin-left: 250px;
 }
 
-.margemtop{
+.margemtop {
 	margin-top: 30px;
 }
