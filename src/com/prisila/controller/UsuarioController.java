@@ -36,7 +36,7 @@ public class UsuarioController {
 	@Post
 	@Path("/usuario/adicionar")
 	public void adicionar(Usuario usuario) {
-		usuario.setSenha(usuario.getEncryptedSenha());
+		usuario.setSenha(usuario.getSenhaEncriptada());
 		dao.salva(usuario);
 		result.redirectTo(UsuarioController.class).listar();
 	}
