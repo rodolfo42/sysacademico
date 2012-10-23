@@ -49,7 +49,7 @@ public class Usuario {
 		this.nome = nome;
 	}
 	
-	public String getEncryptedSenha() {
+	public String getSenhaEncriptada() {
 		byte[] bytes;
 		try {
 			bytes = getSenha().getBytes();
