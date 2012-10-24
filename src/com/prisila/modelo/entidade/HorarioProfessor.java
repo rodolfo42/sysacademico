@@ -1,5 +1,7 @@
 package com.prisila.modelo.entidade;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -7,13 +9,10 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.prisila.modelo.constante.DiaDaSemana;
-
-
-
+import com.prisila.util.UtString;
 
 @Entity
 public class HorarioProfessor {
@@ -21,12 +20,13 @@ public class HorarioProfessor {
 	@Id
 	@GeneratedValue
 	private Long id;
-	@Temporal(TemporalType.TIME)
-	private Date horaInicio;
-	@Temporal(TemporalType.TIME)
-	private Date horaFim;
+	private Long horaInicio;
+	private Long horaFim;
 	@Enumerated(EnumType.ORDINAL)
 	private DiaDaSemana diaDaSemana;
+	@Transient
+	private final int criterioHoraInicio = 1;
+	private final int criterioHoraFim = 2;
 	
 	public Long getId() {
 		return id;
@@ -36,20 +36,17 @@ public class HorarioProfessor {
 		this.id = id;
 	}
 	
-	public Date getHoraInicio() {
-		return horaInicio;
+	public String getHoraInicioTexto() {
+		return getHoraTexto(horaInicio);
 	}
-	
-	public void setHoraInicio(Date horaInicio) {
-		this.horaInicio = horaInicio;
+	public void setHoraInicioTexto(String horaInicio) {
+		setHoraTexto(horaInicio, criterioHoraInicio);
 	}
-	
-	public Date getHoraFim() {
-		return horaFim;
+	public String getHoraFimTexto() {
+		return getHoraTexto(horaFim);
 	}
-	
-	public void setHoraFim(Date horaFim) {
-		this.horaFim = horaFim;
+	public void setHoraFimTexto(String horaFim) {
+		setHoraTexto(horaFim, criterioHoraFim);
 	}
 	
 	public DiaDaSemana getDiaDaSemana() {
@@ -58,5 +55,34 @@ public class HorarioProfessor {
 	
 	public void setDiaDaSemana(DiaDaSemana diaDaSemana) {
 		this.diaDaSemana = diaDaSemana;
+	}
+	private String getHoraTexto(Long hora) {
+		if (hora == null){
+			return null;
+		}
+		Date date = new Date();
+		date.setTime(hora);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+		return simpleDateFormat.format(date);
+	}
+	private void setHoraTexto(String hora, int criterio) {
+		if (!UtString.isNullOrEmpty(hora)){
+			Date date;
+			long horaLong = 0;
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+			try {
+				date = simpleDateFormat.parse(hora);
+				horaLong = date.getTime();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			if (criterio == criterioHoraInicio){
+				this.horaInicio = horaLong;
+			}else{
+				if (criterio == criterioHoraFim){
+					this.horaFim = horaLong;
+				}
+			}
+		}
 	}
 }
