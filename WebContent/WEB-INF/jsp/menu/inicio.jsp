@@ -1,11 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <body>
 <%-- <div id="aniversarios" class="well">
 	<table id="tabelaAniversariantes" class="table table-condensed" width="100%">
 		<thead>
 			<tr>
-				<th><h3>Aniversariantes do Mês</h3></th>
+				<th><h3>Aniversariantes do MÃªs</h3></th>
 				<th><img alt="Bexigas" src="<c:url value="/img/bexigas.png"/>"></th>
 			</tr>
 			<tr>
