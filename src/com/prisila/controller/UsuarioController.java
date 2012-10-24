@@ -57,6 +57,10 @@ public class UsuarioController {
 	@Path("/login")
 	@Publico
 	public void login() {
+		// caso o usuario esteja logado, ir para o inicio
+		if(usuarioLogado.isLogado()) {
+			result.redirectTo(MenuController.class).inicio();
+		}
 	}
 	
 	@Post
@@ -67,9 +71,16 @@ public class UsuarioController {
 			usuarioLogado.login(usuario);
 			result.redirectTo(MenuController.class).inicio();
 		} else {
-			result.include("falha", true);
+			result.include("isError", true);
+			result.include("errorMessage", "Login ou senha inválidos");
 			result.redirectTo(getClass()).login();
 		}
 	}
 	
+	@Get
+	@Path("/logout")
+	public void logout() {
+		usuarioLogado.logout();
+		result.redirectTo(getClass()).login();
+	}
 }

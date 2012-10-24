@@ -7,10 +7,10 @@
 			<h2>Faça o login</h2>
 		</div>
 		<div class="row-fluid">
-			<c:if test="${falha}">
+			<c:if test="${isError}">
 				<div class="alert alert-error fade in">
 					<a data-dismiss="alert" class="close">&times;</a>
-					O nome de usuário ou a senha inserido está incorreto!
+					${errorMessage}
 				</div>
 			</c:if>
 		</div>

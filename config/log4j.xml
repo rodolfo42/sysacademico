@@ -9,22 +9,24 @@
 	</appender>
 
 	<!-- categories -->
+	<logger name="com.prisila" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="stdout" />
+	</logger>
+
+	<logger name="br.com.caelum.vraptor" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="stdout" />
+	</logger>
+
+	<logger name="org.springframework" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="stdout" />
+	</logger>
+	
+	<!-- root -->
 	<root>
-		<priority value="WARNING" />
+		<level value="WARNING" />
 		<appender-ref ref="stdout" />
 	</root>
-	<category name="com.prisila" additivity="false">
-		<priority value="DEBUG" />
-		<appender-ref ref="stdout" />
-	</category>
-
-	<category name="br.com.caelum.vraptor" additivity="false">
-		<priority value="INFO" />
-		<appender-ref ref="stdout" />
-	</category>
-
-	<category name="org.springframework" additivity="false">
-		<priority value="INFO" />
-		<appender-ref ref="stdout" />
-	</category>
 </log4j:configuration>
