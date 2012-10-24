@@ -6,10 +6,11 @@
 <head>
 	<title><decorator:title default="Sistema Pri-si-lá - Login" /></title>
 	<%@ include file="/layouts/head.jsp" %>
+	<link rel="stylesheet" type="text/css" href="<c:url value="/css/login.css" />" />
 	<decorator:head />
 </head>
 <body>
-	<div id="loginContainer" class="container">
+	<div id="loginContainer">
 		<decorator:body />
 	</div>
 </body>
