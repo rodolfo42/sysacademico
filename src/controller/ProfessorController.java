@@ -2,16 +2,17 @@ package controller;
 
 import java.util.List;
 
-import modelo.entidade.Curso;
-import modelo.entidade.HorarioProfessor;
-import modelo.entidade.Professor;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
-import br.com.caelum.vraptor.Validator;
-import dao.CursoDao;
-import dao.ProfessorDao;
+
+import com.prisila.dao.CursoDao;
+import com.prisila.dao.ProfessorDao;
+import com.prisila.modelo.entidade.Curso;
+import com.prisila.modelo.entidade.Professor;
+
+
 
 @Resource
 public class ProfessorController {
