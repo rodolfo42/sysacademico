@@ -2,12 +2,13 @@
 <decorators defaultdir="/layouts">
 	<decorator name="default" page="default.jsp">
 		<pattern>/*</pattern>
+		<excludes>
+			<pattern>/login</pattern>
+		</excludes>
 	</decorator>
-	<excludes>
-		<pattern>/login</pattern>
-	</excludes>
-	
+
 	<decorator name="login" page="login.jsp">
 		<pattern>/login</pattern>
+		<pattern>/sobre</pattern>
 	</decorator>
 </decorators>

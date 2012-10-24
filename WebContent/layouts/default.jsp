@@ -6,16 +6,22 @@
 <head>
 	<title><decorator:title default="Sistema Pri-si-lá" /></title>
 	<%@ include file="/layouts/head.jsp" %>
+	<link rel="stylesheet" type="text/css" href="<c:url value="/css/default.css" />" />
 	<decorator:head />
 </head>
 <body>
-	<div id="topNavBar" class="navbar navbar-fixed-top navbar-inverse">
+	<div id="topNavBar" class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<a class="brand" href="javascript:void(0);">Sistema pri-si-lá</a>
 			<ul class="nav">
-				<li><a rel="tooltip" data-placement="bottom" title="Ir para a página inicial" href="<c:url value="/" />">Início</a>
-				</li>
-				<li><a rel="tooltip" data-placement="bottom" title="Gerenciar e efetuar matrículas" href="<c:url value="/aluno/listar" />">Matrículas</a>
+				<li><a rel="tooltip" data-placement="bottom" title="Ir para a página inicial" href="<c:url value="/" />">Início</a></li>
+				<li class="dropdown">
+					<a rel="tooltip" data-placement="bottom" title="Gerenciar e efetuar matrículas" 
+						class="dropdown-toggle" href="javascript:void(0);">Matrículas</a>
+					<ul class="dropdown-menu">
+						<li><a href="<c:url value="/aluno/cadastrar" />">Nova matrícula</a></li>
+						<li><a href="<c:url value="/aluno/listar" />">Buscar matrícula</a></li>
+					</ul>
 				</li>
 				<li><a rel="tooltip" data-placement="bottom" title="Marcação de aulas" href="<c:url value="/aula/listar" />">Aulas</a>
 				</li>
@@ -25,7 +31,6 @@
 		</div>
 	</div>
 	<div id="mainContainer" class="container">
-	<input type="text" class="input-large"></input>
 		<decorator:body />
 	</div>
 </body>

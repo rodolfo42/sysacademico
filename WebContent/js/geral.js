@@ -1,5 +1,17 @@
 $(function() {
 	/**
+	 * fix para esconder a tooltip enquanto o menu está ativo para não
+	 * atrapalhar o usuário com tooltips aparecendo em cima do menu suspenso
+	 */
+	$('.dropdown-toggle[rel="tooltip"]').bind('click', function() {
+		$(this).tooltip("hide");
+	}).bind("mouseover", function(e){
+		if($(this).parents('.dropdown').is('.open')) {
+			e.stopImmediatePropagation();
+		}
+	});
+	
+	/**
 	 * Inicializa as tooltips
 	 * 
 	 * As tooltips serão aplicadas em qualquer elemento com 'rel=tooltip' que
@@ -11,8 +23,18 @@ $(function() {
 	 * data-placement="left" data-animation="true">texto link</a>
 	 */
 	$('body').tooltip({
-		selector : '[rel="tooltip"]'
+		selector : '[rel="tooltip"]:not([data-trigger])'
 	});
+	
+	/**
+	 * fix para tooltips não aparecendo em inputs com data-trigger="focus"
+	 */
+	$('[rel="tooltip"]').tooltip();
+
+	/**
+	 * ativar todos os dropdowns
+	 */
+	$('.dropdown-toggle').dropdown();
 
 	/**
 	 * Funcionalidade para restringir a entrada de caracteres inválidos usando
@@ -24,6 +46,8 @@ $(function() {
 	 * Ex: telefones celulares (considerando o nono digito para SP)
 	 * $('#MyInput').restrictToRegexp(/^[0-9]?[0-9]{4}-[0-9]{4}$/); aceitará:
 	 * "91234-1234" e "9123-1234"
+	 * 
+	 * @author rodolfo42
 	 */
 	$.fn.restrictToRegexp = function(regexp) {
 		if (!$(this).is(":input")) {
@@ -58,14 +82,14 @@ $(function() {
 	 * Restringe o input a receber apenas caracteres listados na string
 	 * fornecida
 	 * 
-	 * Ex: $('#MyInput').restrictToChars("abcxyz123");
+	 * Ex: $('#MyInput').restrictToChars("abcxyz123"); o input somente aceitará
+	 * os caracteres 'a', 'b', 'c', 'x' e assim por diante (em qualquer ordem)
 	 * 
-	 * o input somente aceitará os caracteres 'a', 'b', 'c', 'x' e assim em
-	 * diante.
+	 * @author rodolfo42
 	 */
 	$.fn.restrictToChars = function(chars) {
 		var sort = {}, i = 0, charString = "";
-		for ( var i = 0; i < chars.length; i++) {
+		for (i = 0; i < chars.length; i++) {
 			sort[chars[i]] = 1;
 		}
 		for (a in sort) {

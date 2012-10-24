@@ -17,7 +17,6 @@ public class MenuController {
 	
 	private final AlunoDao alunoDao;
 	private final Result result;
-	private List<Aluno> alunosList;
 	
 	public MenuController(AlunoDao alunoDao, Result result) {
 		this.alunoDao = alunoDao;
@@ -26,7 +25,7 @@ public class MenuController {
 	
 	@Get @Path("/")
 	public void inicio() {
-		alunosList = alunoDao.listaAniversariantes();
+		List<Aluno> alunosList = alunoDao.listaAniversariantes();
 		result.include("alunosList", alunosList);
 	}
 	
