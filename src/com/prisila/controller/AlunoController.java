@@ -18,7 +18,7 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 
 @Resource
-public class AlunoController {
+public class AlunoController extends Controller {
 	
 	private final AlunoDao dao;
 	private final ResponsavelDao responsavelDao;

@@ -13,7 +13,7 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 
 @Resource
-public class MenuController {
+public class MenuController extends Controller {
 	
 	private final AlunoDao alunoDao;
 	private final Result result;

@@ -4,15 +4,10 @@
 <body>
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<h2>Faça o login</h2>
+			<h2>Login</h2>
 		</div>
 		<div class="row-fluid">
-			<c:if test="${isError}">
-				<div class="alert alert-error fade in">
-					<a data-dismiss="alert" class="close">&times;</a>
-					${errorMessage}
-				</div>
-			</c:if>
+			<tag:alert />
 		</div>
 		<div class="row-fluid">
 			<form action="<c:url value="/login"/>" method="POST">
@@ -27,7 +22,7 @@
 						title="Mínimo de 8 caracteres" />
 				</div>
 				<div class="controls">
-					<button type="submit" class="span4 offset4 btn btn-primary">Entrar</button>
+					<button type="submit" class="span4 offset4 btn btn-primary">Login</button>
 				</div>
 			</form>
 		</div>

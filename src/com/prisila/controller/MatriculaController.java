@@ -25,7 +25,7 @@ import com.prisila.modelo.entidade.Responsavel;
 import com.prisila.util.UtString;
 
 @Resource
-public class MatriculaController {
+public class MatriculaController extends Controller {
 	
 	private final MatriculaDao dao;
 	private final AlunoDao alunoDao;

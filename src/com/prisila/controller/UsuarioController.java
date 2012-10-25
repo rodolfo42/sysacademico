@@ -2,21 +2,21 @@ package com.prisila.controller;
 
 import java.util.List;
 
-import com.prisila.annotation.Publico;
-import com.prisila.dao.UsuarioDao;
-import com.prisila.modelo.entidade.Usuario;
-import com.prisila.modelo.entidade.UsuarioLogado;
-
-
-
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 
+import com.prisila.annotation.Publico;
+import com.prisila.dao.UsuarioDao;
+import com.prisila.modelo.entidade.Usuario;
+import com.prisila.modelo.entidade.UsuarioLogado;
+import com.prisila.util.Mensagem;
+import com.prisila.util.Mensagem.TipoMensagem;
+
 @Resource
-public class UsuarioController {
+public class UsuarioController extends Controller {
 	
 	private final UsuarioDao dao;
 	private final Result result;
@@ -38,6 +38,7 @@ public class UsuarioController {
 	public void adicionar(Usuario usuario) {
 		usuario.setSenha(usuario.getSenhaEncriptada());
 		dao.salva(usuario);
+		setMensagem(result, new Mensagem(TipoMensagem.INFO, "Usuário adicionado com sucesso!"));
 		result.redirectTo(UsuarioController.class).listar();
 	}
 	
@@ -58,7 +59,7 @@ public class UsuarioController {
 	@Publico
 	public void login() {
 		// caso o usuario esteja logado, ir para o inicio
-		if(usuarioLogado.isLogado()) {
+		if (usuarioLogado.isLogado()) {
 			result.redirectTo(MenuController.class).inicio();
 		}
 	}
@@ -71,8 +72,7 @@ public class UsuarioController {
 			usuarioLogado.login(usuario);
 			result.redirectTo(MenuController.class).inicio();
 		} else {
-			result.include("isError", true);
-			result.include("errorMessage", "Login ou senha inválidos");
+			setMensagem(result, new Mensagem(TipoMensagem.ERROR, "Usuário ou senha inválidos"));
 			result.redirectTo(getClass()).login();
 		}
 	}
@@ -81,6 +81,7 @@ public class UsuarioController {
 	@Path("/logout")
 	public void logout() {
 		usuarioLogado.logout();
+		setMensagem(result, new Mensagem(TipoMensagem.INFO, "Você foi deslogado do sistema"));
 		result.redirectTo(getClass()).login();
 	}
 }

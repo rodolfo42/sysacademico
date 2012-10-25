@@ -16,7 +16,7 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 
 @Resource
-public class CursoController {
+public class CursoController extends Controller {
 	
 	private final CursoDao dao;
 	private final Result result;

@@ -52,6 +52,9 @@ public class Usuario implements Serializable{
 	}
 	
 	public String getSenhaEncriptada() {
+		if(getSenha() == null) {
+			return null;
+		}
 		byte[] bytes;
 		try {
 			bytes = getSenha().getBytes();

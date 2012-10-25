@@ -15,15 +15,15 @@ import com.prisila.modelo.entidade.Professor;
 
 
 @Resource
-public class ProfessorController {
+public class ProfessorController extends Controller {
 
 	private final Result result;
-	private final ProfessorDao dao;
+	private final ProfessorDao professorDao;
 	private final CursoDao cursoDao;
 	
 	public ProfessorController(Result result, ProfessorDao dao, CursoDao cursoDao ) {
 		this.result = result;
-		this.dao = dao;
+		this.professorDao = dao;
 		this.cursoDao = cursoDao;
 	}
 	
