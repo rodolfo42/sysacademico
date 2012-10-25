@@ -17,15 +17,23 @@
 				<li><a rel="tooltip" data-placement="bottom" title="Ir para a página inicial" href="<c:url value="/" />">Início</a></li>
 				<li class="dropdown">
 					<a rel="tooltip" data-placement="bottom" title="Gerenciar e efetuar matrículas" 
-						class="dropdown-toggle" href="javascript:void(0);">Matrículas</a>
+						class="dropdown-toggle" href="javascript:void(0);">Alunos</a>
 					<ul class="dropdown-menu">
-						<li><a href="<c:url value="/aluno/cadastrar" />">Nova matrícula</a></li>
-						<li><a href="<c:url value="/aluno/listar" />">Buscar matrícula</a></li>
+						<li><a href="<c:url value="/alunos/cadastrar" />">Cadastrar aluno</a></li>
+						<li><a href="<c:url value="/alunos/listar" />">Buscar aluno</a></li>
 					</ul>
 				</li>
-				<li><a rel="tooltip" data-placement="bottom" title="Marcação de aulas" href="<c:url value="/aula/listar" />">Aulas</a>
+				<li class="dropdown">
+					<a rel="tooltip" data-placement="bottom" title="Gerenciar e efetuar matrículas" 
+						class="dropdown-toggle" href="javascript:void(0);">Matrículas</a>
+					<ul class="dropdown-menu">
+						<li><a href="<c:url value="/alunos/cadastrar" />">Nova matrícula</a></li>
+						<li><a href="<c:url value="/alunos/listar" />">Buscar matrícula</a></li>
+					</ul>
 				</li>
-				<li><a rel="tooltip" data-placement="bottom" title="Cadastro de professores" href="<c:url value="/professor/listar" />">Professores</a>
+				<li><a rel="tooltip" data-placement="bottom" title="Marcação de aulas" href="<c:url value="/aulas" />">Aulas</a>
+				</li>
+				<li><a rel="tooltip" data-placement="bottom" title="Cadastro de professores" href="<c:url value="/professores" />">Professores</a>
 				</li>
 			</ul>
 		</div>

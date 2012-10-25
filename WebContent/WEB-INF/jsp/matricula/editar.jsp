@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="<c:url value="/matricula/${matricula.id }"/>" method="POST">
+	<form action="<c:url value="/matriculas/${matricula.id }"/>" method="POST">
 		<fieldset>
 			<legend>Matrícula</legend>
 			

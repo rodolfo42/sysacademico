@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form id="frmMatricula" action="<c:url value="/matricula/adicionar"/>" method="POST">
+	<form id="frmMatricula" action="<c:url value="/matriculas/adicionar"/>" method="POST">
 		<fieldset>
 			<legend>Matrícula</legend>
 			
@@ -57,7 +57,7 @@
 			return false;
 		});
 		$('#aluno').change(function(){
-			carregaComboJson('<c:url value="/matricula/responsavel.json"/>','idAluno='+$(this).val(),'responsavel');
+			carregaComboJson('<c:url value="/matriculas/responsavel.json"/>','idAluno='+$(this).val(),'responsavel');
 		});
 	</script>
 </body>

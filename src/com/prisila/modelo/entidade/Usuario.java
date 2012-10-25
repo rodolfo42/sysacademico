@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Usuario implements Serializable{
+public class Usuario implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -52,7 +52,7 @@ public class Usuario implements Serializable{
 	}
 	
 	public String getSenhaEncriptada() {
-		if(getSenha() == null) {
+		if (getSenha() == null) {
 			return null;
 		}
 		byte[] bytes;

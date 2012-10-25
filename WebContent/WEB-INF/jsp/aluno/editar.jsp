@@ -1,14 +1,7 @@
 <%@ include file="../taglibs.jsp" %>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-</head>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <body>
-	<form action="<c:url value="/aluno/${aluno.id }"/>" method="POST">
+	<form action="<c:url value="/alunos/${aluno.id }"/>" method="POST">
 		<fieldset>
 		
 		<legend>Aluno</legend>
@@ -20,11 +13,11 @@
 		<input id="data_nasc" type="text" name="aluno.dataNascimento" value="${aluno.dataNascimento }" />
 		
 		<tag:comboSelecionaESelecionado 
-			labelSeleciona="Responsáveis" 
+			labelSeleciona="ResponsÃ¡veis" 
 			idComboSeleciona="responsavel" 
 			nameSelecionado="aluno.listaResponsavel.id" 
 			listaSeleciona="${responsavelList }"
-			labelSelecionado="Responsáveis Selecionados" 
+			labelSelecionado="ResponsÃ¡veis Selecionados" 
 			idComboSelecionado="responsavel_selecionado"
 			listaSelecionado="${aluno.listaResponsavel }" />
 		
@@ -33,4 +26,3 @@
 		</fieldset>
 	</form>
 </body>
-</html>

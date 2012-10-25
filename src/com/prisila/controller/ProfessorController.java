@@ -12,33 +12,32 @@ import com.prisila.dao.ProfessorDao;
 import com.prisila.modelo.entidade.Curso;
 import com.prisila.modelo.entidade.Professor;
 
-
-
 @Resource
 public class ProfessorController extends Controller {
-
+	
 	private final Result result;
+	@SuppressWarnings("unused")
 	private final ProfessorDao professorDao;
 	private final CursoDao cursoDao;
 	
-	public ProfessorController(Result result, ProfessorDao dao, CursoDao cursoDao ) {
+	public ProfessorController(Result result, ProfessorDao dao, CursoDao cursoDao) {
 		this.result = result;
 		this.professorDao = dao;
 		this.cursoDao = cursoDao;
 	}
 	
 	@Get
-	public void adicionar(){
+	public void adicionar() {
 		incluirListasResult();
 	}
 	
 	@Post
-	public void adicionar(Professor professor){
-		//dao.salva(professor);
+	public void adicionar(Professor professor) {
+		// dao.salva(professor);
 		result.redirectTo(ProfessorController.class).adicionar();
 	}
 	
-	private void incluirListasResult(){
+	private void incluirListasResult() {
 		List<Curso> listaCurso = cursoDao.listaTudo();
 		result.include("cursoList", listaCurso);
 	}

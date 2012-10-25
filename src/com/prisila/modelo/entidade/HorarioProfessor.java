@@ -39,12 +39,15 @@ public class HorarioProfessor {
 	public String getHoraInicioTexto() {
 		return getHoraTexto(horaInicio);
 	}
+	
 	public void setHoraInicioTexto(String horaInicio) {
 		setHoraTexto(horaInicio, criterioHoraInicio);
 	}
+	
 	public String getHoraFimTexto() {
 		return getHoraTexto(horaFim);
 	}
+	
 	public void setHoraFimTexto(String horaFim) {
 		setHoraTexto(horaFim, criterioHoraFim);
 	}
@@ -56,8 +59,9 @@ public class HorarioProfessor {
 	public void setDiaDaSemana(DiaDaSemana diaDaSemana) {
 		this.diaDaSemana = diaDaSemana;
 	}
+	
 	private String getHoraTexto(Long hora) {
-		if (hora == null){
+		if (hora == null) {
 			return null;
 		}
 		Date date = new Date();
@@ -65,8 +69,9 @@ public class HorarioProfessor {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
 		return simpleDateFormat.format(date);
 	}
+	
 	private void setHoraTexto(String hora, int criterio) {
-		if (!UtString.isNullOrEmpty(hora)){
+		if (!UtString.isNullOrEmpty(hora)) {
 			Date date;
 			long horaLong = 0;
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
@@ -76,10 +81,10 @@ public class HorarioProfessor {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-			if (criterio == criterioHoraInicio){
+			if (criterio == criterioHoraInicio) {
 				this.horaInicio = horaLong;
-			}else{
-				if (criterio == criterioHoraFim){
+			} else {
+				if (criterio == criterioHoraFim) {
 					this.horaFim = horaLong;
 				}
 			}

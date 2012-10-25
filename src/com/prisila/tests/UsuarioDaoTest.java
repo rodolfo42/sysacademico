@@ -1,8 +1,8 @@
 package com.prisila.tests;
 
-import com.prisila.modelo.entidade.Usuario;
-
 import junit.framework.TestCase;
+
+import com.prisila.modelo.entidade.Usuario;
 
 public class UsuarioDaoTest extends TestCase {
 	

@@ -2,13 +2,8 @@ package com.prisila.modelo.constante;
 
 public enum DiaDaSemana {
 	
-	SEGUNDAFEIRA("Segunda-Feira"),
-	TERCAFEIRA("Terça-Feira"),
-	QUARTAFEIRA("Quarta-Feira"),
-	QUINTAFEIRA("Quinta-Feira"),
-	SEXTAFEIRA("Sexta-Feira"),
-	SABADO("Sábado"),
-	DOMINGO("Domingo");
+	SEGUNDAFEIRA("Segunda-Feira"), TERCAFEIRA("Terï¿½a-Feira"), QUARTAFEIRA("Quarta-Feira"), QUINTAFEIRA("Quinta-Feira"), SEXTAFEIRA(
+			"Sexta-Feira"), SABADO("Sï¿½bado"), DOMINGO("Domingo");
 	
 	private final String nome;
 	

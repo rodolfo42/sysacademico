@@ -2,15 +2,13 @@ package com.prisila.controller;
 
 import java.util.List;
 
-import com.prisila.dao.AlunoDao;
-import com.prisila.modelo.entidade.Aluno;
-
-
-
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
+
+import com.prisila.dao.AlunoDao;
+import com.prisila.modelo.entidade.Aluno;
 
 @Resource
 public class MenuController extends Controller {
@@ -23,7 +21,8 @@ public class MenuController extends Controller {
 		this.result = result;
 	}
 	
-	@Get @Path("/")
+	@Get
+	@Path("/")
 	public void inicio() {
 		List<Aluno> alunosList = alunoDao.listaAniversariantes();
 		result.include("alunosList", alunosList);

@@ -48,47 +48,47 @@ public class MatriculaController extends Controller {
 	}
 	
 	@Get
-	@Path("/matricula/adicionar")
+	@Path("/matriculas/adicionar")
 	public void adicionar() {
 		incluirListasNaResult();
 	}
 	
 	@Post
-	@Path("/matricula/adicionar")
+	@Path("/matriculas/adicionar")
 	public void adicionar(Matricula matricula) {
 		dao.salva(matricula);
 		result.redirectTo(this).listar();
 	}
 	
 	@Get
-	@Path("/matricula/{id}")
+	@Path("/matriculas/{id}")
 	public Matricula editar(Long id) {
 		incluirListasNaResult();
 		return dao.carrega(id);
 	}
 	
 	@Put
-	@Path("/matricula/{matricula.id}")
+	@Path("/matriculas/{matricula.id}")
 	public void alterar(Matricula matricula) {
 		dao.atualiza(matricula);
 		result.redirectTo(this).listar();
 	}
 	
 	@Delete
-	@Path("/matricula/{id}")
+	@Path("/matriculas/{id}")
 	public void deletar(Long id) {
 		dao.deleta(id);
 		result.redirectTo(this).listar();
 	}
 	
 	@Get
-	@Path("/matricula/listar")
+	@Path("/matriculas/listar")
 	public List<Matricula> listar() {
 		return dao.listaTudo();
 	}
 	
 	@Get
-	@Path("/matricula/busca.json")
+	@Path("/matriculas/busca.json")
 	public void buscaJson(String nomeAluno) {
 		if (!UtString.isNullOrEmpty(nomeAluno)) {
 			dao.buscarPorAluno(nomeAluno);
@@ -99,7 +99,7 @@ public class MatriculaController extends Controller {
 	}
 	
 	@Get
-	@Path("/matricula/aluno.json")
+	@Path("/matriculas/aluno.json")
 	public void alunoJson(String idResponsavel) {
 		if (!idResponsavel.equals("0")) {
 			Responsavel responsavel = new Responsavel();
@@ -111,7 +111,7 @@ public class MatriculaController extends Controller {
 	}
 	
 	@Get
-	@Path("/matricula/responsavel.json")
+	@Path("/matriculas/responsavel.json")
 	public void responsavelJson(String idAluno) {
 		if (!idAluno.equals("0")) {
 			Aluno aluno = new Aluno();

@@ -1,7 +1,5 @@
 package com.prisila.json.converter;
 
-
-
 import com.prisila.modelo.constante.TipoAula;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;

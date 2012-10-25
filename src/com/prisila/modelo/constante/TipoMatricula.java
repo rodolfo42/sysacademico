@@ -2,7 +2,7 @@ package com.prisila.modelo.constante;
 
 public enum TipoMatricula {
 	
-	//CURRICULAR("Curricular"),
+	// CURRICULAR("Curricular"),
 	PERSONAL("Personal");
 	
 	private final String nome;

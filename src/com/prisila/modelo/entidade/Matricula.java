@@ -14,9 +14,6 @@ import javax.persistence.TemporalType;
 
 import com.prisila.modelo.constante.TipoAula;
 
-
-
-
 @Entity
 public class Matricula {
 	

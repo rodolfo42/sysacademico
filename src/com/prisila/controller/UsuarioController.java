@@ -29,12 +29,12 @@ public class UsuarioController extends Controller {
 	}
 	
 	@Get
-	@Path("/usuario/adicionar")
+	@Path("/usuarios/adicionar")
 	public void adicionar() {
 	}
 	
 	@Post
-	@Path("/usuario/adicionar")
+	@Path("/usuarios/adicionar")
 	public void adicionar(Usuario usuario) {
 		usuario.setSenha(usuario.getSenhaEncriptada());
 		dao.salva(usuario);
@@ -43,13 +43,13 @@ public class UsuarioController extends Controller {
 	}
 	
 	@Get
-	@Path("/usuario/listar")
+	@Path("/usuarios/listar")
 	public List<Usuario> listar() {
 		return dao.listaTudo();
 	}
 	
 	@Get
-	@Path("/usuario/login/erro")
+	@Path("/usuarios/login/erro")
 	public void erroLogin() {
 		
 	}

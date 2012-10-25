@@ -8,7 +8,7 @@ import br.com.caelum.vraptor.ioc.SessionScoped;
 @Component
 @SessionScoped
 public class UsuarioLogado implements Serializable {
-
+	
 	private static final long serialVersionUID = 1L;
 	private Usuario logado;
 	

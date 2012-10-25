@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="<c:url value="/responsavel/adicionar"/>"  method="POST">
+	<form action="<c:url value="/responsaveis/adicionar"/>"  method="POST">
 		<fieldset>
 			<legend>Responsável</legend>
 			
@@ -46,7 +46,7 @@
 		
 		</fieldset>
 		<button type="submit" class="btn">Enviar</button>
-		<a class="btn btn-warning direita margemtop" href="<c:url value="/aluno/adicionar"/>">
+		<a class="btn btn-warning direita margemtop" href="<c:url value="/alunos/adicionar"/>">
 			<i class="icon-forward"></i>
 			Pular Cadastro de Responsável
 		</a>

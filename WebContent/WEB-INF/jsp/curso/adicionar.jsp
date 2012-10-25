@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="<c:url value="/curso/adicionar"/>" method="POST">
+	<form action="<c:url value="/cursos/adicionar"/>" method="POST">
 		<fieldset>
 			<legend>Adicionar Curso</legend>
 			

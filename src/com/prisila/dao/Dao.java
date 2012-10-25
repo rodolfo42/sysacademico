@@ -16,7 +16,7 @@ public class Dao<T> {
 	
 	private final Session session;
 	private Class<T> classePersistencia;
-	private List<Criterion> criteriosBusca;
+	private final List<Criterion> criteriosBusca;
 	private Criteria criteria;
 	
 	public Dao(Session session) {

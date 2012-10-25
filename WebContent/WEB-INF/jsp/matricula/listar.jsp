@@ -48,7 +48,7 @@
 <script type="text/javascript">
 	$('#aluno').keyup(function(){
 		$.ajax({
-			url:'<c:url value="/matricula/busca.json"/>',
+			url:'<c:url value="/matriculas/busca.json"/>',
 			dataType: 'json',
 			data: 'nomeAluno='+$('#aluno').val(),
 			cache:false,

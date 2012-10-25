@@ -5,11 +5,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Indica que um mÃ©todo do controller pode ser acessado sem necessidade de
+ * autenticaÃ§Ã£o
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-/**
- * Indica que o método do controller pode ser acessado sem necessidade de autenticação 
- */
 public @interface Publico {
 	
 }
