@@ -1,4 +1,4 @@
-package controller;
+package com.prisila.controller;
 
 import java.util.List;
 
