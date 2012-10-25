@@ -2,15 +2,12 @@ package com.prisila.dao;
 
 import java.util.List;
 
-
-
 import org.hibernate.Session;
+
+import br.com.caelum.vraptor.ioc.Component;
 
 import com.prisila.modelo.entidade.Aluno;
 import com.prisila.modelo.entidade.Responsavel;
-
-
-import br.com.caelum.vraptor.ioc.Component;
 
 @SuppressWarnings("unchecked")
 @Component
@@ -21,7 +18,7 @@ public class ResponsavelDao extends Dao<Responsavel> {
 	}
 	
 	public List<Aluno> listaPeloAluno(Aluno aluno) {
-		StringBuffer qry = new StringBuffer();
+		StringBuilder qry = new StringBuilder();
 		qry.append("from Responsavel r join fetch r.listaAluno a ");
 		qry.append("where a.id = ?");
 		

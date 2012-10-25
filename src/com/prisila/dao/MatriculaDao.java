@@ -1,15 +1,12 @@
 package com.prisila.dao;
 
-
-
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import com.prisila.modelo.entidade.Matricula;
-
-
 import br.com.caelum.vraptor.ioc.Component;
+
+import com.prisila.modelo.entidade.Matricula;
 
 @Component
 public class MatriculaDao extends Dao<Matricula> {
