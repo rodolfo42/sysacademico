@@ -12,14 +12,12 @@
 		<div class="row-fluid">
 			<form action="<c:url value="/login"/>" method="POST">
 				<div class="controls">
-					<input class="span12" type="text" name="usuario.login" placeholder="Nome de usuário"
-						rel="tooltip" data-placement="right" data-trigger="focus" 
-						title="Em minúsculo e sem espaços" />
+					<input class="span12" type="text" name="usuario.login" placeholder="Nome de usuário" rel="tooltip"
+						data-placement="right" data-trigger="focus" title="Em minúsculo e sem espaços" />
 				</div>
 				<div class="controls">
-					<input class="span12" type="password" name="usuario.senha" placeholder="Senha"
-						rel="tooltip" data-placement="right" data-trigger="focus" 
-						title="Mínimo de 8 caracteres" />
+					<input class="span12" type="password" name="usuario.senha" placeholder="Senha" rel="tooltip" data-placement="right"
+						data-trigger="focus" title="Mínimo de 8 caracteres" />
 				</div>
 				<div class="controls">
 					<button type="submit" class="span4 offset4 btn btn-primary">Login</button>

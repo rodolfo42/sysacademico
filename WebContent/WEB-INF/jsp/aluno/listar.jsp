@@ -17,11 +17,9 @@
 					<td>${aluno.id }</td>
 					<td>${aluno.nome }</td>
 					<td>${aluno.dataNascimento }</td>
-					<td>
-						<c:forEach items="${aluno.listaResponsavel }" var="responsavel">
+					<td><c:forEach items="${aluno.listaResponsavel }" var="responsavel">
 							${responsavel.nome }<br />
-						</c:forEach>
-					</td>
+						</c:forEach></td>
 				</tr>
 			</c:forEach>
 		</tbody>

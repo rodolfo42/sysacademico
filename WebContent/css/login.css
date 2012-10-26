@@ -14,17 +14,13 @@ body {
 	position: fixed;
 	top: 35%;
 	left: 38%;
-	
 	padding: 0 0 10px;
 	background-color: #FFFFFF;
 	border: 1px solid #DDDDDD;
-	
 	-webkit-border-radius: 2px;
-	   -moz-border-radius: 2px;
-	        border-radius: 2px;
-	
+	-moz-border-radius: 2px;
+	border-radius: 2px;
 	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	   -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
