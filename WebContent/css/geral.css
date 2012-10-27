@@ -1,3 +1,5 @@
+
+/* multifield.js */
 .mfItem {
 	border-bottom: 1px solid #DDD;
 	margin-top: 10px;
@@ -6,4 +8,14 @@
 
 .mfItem:last-child {
 	border-bottom: 0 !important;
+}
+
+
+/* classes gerais */
+.textCenter {
+	text-align: center;
+}
+
+.clear {
+	clear: both;
 }

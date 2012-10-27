@@ -9,3 +9,7 @@
 *.bak
 
 build/**/*
+
+.classpath
+.project
+.settings/*

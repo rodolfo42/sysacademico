@@ -2,7 +2,10 @@
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <decorator:usePage id="thePage" />
-<% String[] usuario = thePage.getProperty("meta.usuario"); %>
+<%
+String nomeUsuario = thePage.getProperty("meta.usuario.nome");
+String loginUsuario = thePage.getProperty("meta.usuario.login");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +43,7 @@
 			</ul>
 			<ul class="nav pull-right">
 				<li><p class="navbar-text" rel="tooltip" data-placement="bottom" 
-					data-title="Este é seu nome de usuario "><i class="icon-user"></i> <%= usuario %></p></li>
+					data-title="Você está logado como <%= nomeUsuario %>"><i class="icon-user"></i> <%= loginUsuario %></p></li>
 				<li class="divider-vertical"></li>
 				<li><a href="<c:url value="/logout" />"><i class="icon-off"></i> Logout</a></li>
 			</ul>
