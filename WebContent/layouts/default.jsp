@@ -1,11 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<decorator:usePage id="thePage" />
+<% String[] usuario = thePage.getProperty("meta.usuario"); %>
+<!DOCTYPE html>
 <html>
 <head>
-<title><decorator:title default="Sistema Pri-si-lá" />
-</title>
+<title><decorator:title default="Sistema Pri-si-lá" /></title>
 <%@ include file="/layouts/head.jsp"%>
 <link rel="stylesheet" type="text/css" href="<c:url value="/css/default.css" />" />
 <decorator:head />
@@ -20,23 +21,28 @@
 				<li class="dropdown"><a rel="tooltip" data-placement="bottom" title="Gerenciar e efetuar matrículas"
 					class="dropdown-toggle" href="javascript:void(0);">Alunos</a>
 					<ul class="dropdown-menu">
-						<li><a href="<c:url value="/alunos/cadastrar" />">Cadastrar aluno</a>
-						</li>
-						<li><a href="<c:url value="/alunos/listar" />">Buscar aluno</a>
-						</li>
-					</ul></li>
+						<li><a href="<c:url value="/alunos/cadastrar" />">Cadastrar aluno</a></li>
+						<li><a href="<c:url value="/alunos/listar" />">Buscar aluno</a></li>
+					</ul>
+				</li>
 				<li class="dropdown"><a rel="tooltip" data-placement="bottom" title="Gerenciar e efetuar matrículas"
 					class="dropdown-toggle" href="javascript:void(0);">Matrículas</a>
 					<ul class="dropdown-menu">
-						<li><a href="<c:url value="/alunos/cadastrar" />">Nova matrícula</a>
-						</li>
-						<li><a href="<c:url value="/alunos/listar" />">Buscar matrícula</a>
-						</li>
-					</ul></li>
+						<li><a href="<c:url value="/alunos/cadastrar" />">Nova matrícula</a></li>
+						<li><a href="<c:url value="/alunos/listar" />">Buscar matrícula</a></li>
+					</ul>
+				</li>
 				<li><a rel="tooltip" data-placement="bottom" title="Marcação de aulas" href="<c:url value="/aulas" />">Aulas</a>
 				</li>
 				<li><a rel="tooltip" data-placement="bottom" title="Cadastro de professores"
-					href="<c:url value="/professores" />">Professores</a></li>
+					href="<c:url value="/professores" />">Professores</a>
+				</li>
+			</ul>
+			<ul class="nav pull-right">
+				<li><p class="navbar-text" rel="tooltip" data-placement="bottom" 
+					data-title="Este é seu nome de usuario "><i class="icon-user"></i> <%= usuario %></p></li>
+				<li class="divider-vertical"></li>
+				<li><a href="<c:url value="/logout" />"><i class="icon-off"></i> Logout</a></li>
 			</ul>
 		</div>
 	</div>

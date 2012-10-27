@@ -10,21 +10,32 @@ import br.com.caelum.vraptor.ioc.SessionScoped;
 public class UsuarioLogado implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	private Usuario logado;
+	private Usuario usuario;
 	
-	public void login(Usuario usuario) {
-		this.logado = usuario;
-	}
-	
-	public boolean isLogado() {
-		return logado != null;
+	public String getLogin() {
+		return usuario.getLogin();
 	}
 	
 	public String getNome() {
-		return logado.getNome();
+		return usuario.getNome();
+	}
+	
+	public void login(Usuario usuario) {
+		if (!isLogado()) {
+			this.usuario = usuario;
+		} else {
+			logout();
+			login(usuario);
+		}
+	}
+	
+	public boolean isLogado() {
+		return usuario != null;
 	}
 	
 	public void logout() {
-		this.logado = null;
+		this.usuario = null;
 	}
+	
+	
 }

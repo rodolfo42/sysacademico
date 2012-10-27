@@ -54,7 +54,6 @@ $(function() {
 			// não é um input
 			return;
 		}
-		console.log(regexp);
 
 		var prevValue = "";
 		// referencia

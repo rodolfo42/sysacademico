@@ -9,7 +9,7 @@
 <body>
 	<form id="frmMatricula" action="<c:url value="/matriculas/adicionar"/>" method="POST">
 		<fieldset>
-			<legend>Matr�cula</legend>
+			<legend>Matrícula</legend>
 
 			<label for="data">Data:</label> <input id="data" class="input-small" type="text" name="matricula.data" /> <label
 				for="aluno">Aluno:</label> <select name="matricula.aluno.id" id="aluno">

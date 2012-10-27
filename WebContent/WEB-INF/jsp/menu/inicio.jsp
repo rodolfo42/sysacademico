@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
+<meta name="usuario.nome" content="${ usuario.nome }" />
+<meta name="usuario.login" content="${ usuario.login }" />
 <body>
 	<%-- <div id="aniversarios" class="well">
 	<table id="tabelaAniversariantes" class="table table-condensed" width="100%">

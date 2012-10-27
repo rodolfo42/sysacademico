@@ -9,16 +9,19 @@ import br.com.caelum.vraptor.Result;
 
 import com.prisila.dao.AlunoDao;
 import com.prisila.modelo.entidade.Aluno;
+import com.prisila.modelo.entidade.UsuarioLogado;
 
 @Resource
 public class MenuController extends Controller {
 	
 	private final AlunoDao alunoDao;
 	private final Result result;
+	private final UsuarioLogado usuario;
 	
-	public MenuController(AlunoDao alunoDao, Result result) {
+	public MenuController(AlunoDao alunoDao, Result result, UsuarioLogado usuario) {
 		this.alunoDao = alunoDao;
 		this.result = result;
+		this.usuario = usuario;
 	}
 	
 	@Get
@@ -26,6 +29,8 @@ public class MenuController extends Controller {
 	public void inicio() {
 		List<Aluno> alunosList = alunoDao.listaAniversariantes();
 		result.include("alunosList", alunosList);
+		
+		result.include("usuario", usuario);
 	}
 	
 }
