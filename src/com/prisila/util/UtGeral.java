@@ -63,4 +63,8 @@ public class UtGeral {
 		retorno[1] = ultimoDia.getTime();
 		return retorno;
 	}
+	
+	public static long converteMinutosParaMilisegundos(int valorMinutos){
+		return (valorMinutos * 60) * 1000;
+	}
 }
