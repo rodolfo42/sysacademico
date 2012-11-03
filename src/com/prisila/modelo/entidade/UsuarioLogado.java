@@ -37,5 +37,4 @@ public class UsuarioLogado implements Serializable {
 		this.usuario = null;
 	}
 	
-	
 }

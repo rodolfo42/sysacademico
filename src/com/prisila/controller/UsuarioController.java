@@ -68,8 +68,10 @@ public class UsuarioController extends Controller {
 	@Path("/login")
 	@Publico
 	public void login(Usuario usuario) {
-		if (dao.existeLoginSenha(usuario)) {
-			usuarioLogado.login(usuario);
+		String login = usuario.getLogin();
+		String senha = usuario.getSenha();
+		if (dao.existeLoginSenha(login, senha)) {
+			usuarioLogado.login(dao.buscarPorLoginSenha(login, senha));
 			result.redirectTo(MenuController.class).inicio();
 		} else {
 			setMensagem(result, new Mensagem(TipoMensagem.ERROR, "Usuário ou senha inválidos"));

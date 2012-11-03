@@ -1,4 +1,4 @@
-package com.prisila.tests;
+package com.prisila.test;
 
 import junit.framework.TestCase;
 

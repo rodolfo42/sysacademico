@@ -1,12 +1,12 @@
 package com.prisila.modelo.entidade;
 
 import java.io.Serializable;
-import java.math.BigInteger;
-import java.security.MessageDigest;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import com.prisila.util.UtGeral;
 
 @Entity
 public class Usuario implements Serializable {
@@ -52,19 +52,7 @@ public class Usuario implements Serializable {
 	}
 	
 	public String getSenhaEncriptada() {
-		if (getSenha() == null) {
-			return null;
-		}
-		byte[] bytes;
-		try {
-			bytes = getSenha().getBytes();
-			MessageDigest md = MessageDigest.getInstance("MD5");
-			BigInteger md5 = new BigInteger(1, md.digest(bytes));
-			return md5.toString(16);
-		} catch (Exception e) {
-			System.err.println("Erro no MD5 da senha");
-		}
-		return null;
+		return UtGeral.hashMD5(getSenha());
 	}
 	
 }

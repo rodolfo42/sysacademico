@@ -6,6 +6,7 @@ import org.hibernate.criterion.Restrictions;
 import br.com.caelum.vraptor.ioc.Component;
 
 import com.prisila.modelo.entidade.Usuario;
+import com.prisila.util.UtGeral;
 
 @Component
 public class UsuarioDao extends Dao<Usuario> {
@@ -14,8 +15,11 @@ public class UsuarioDao extends Dao<Usuario> {
 		super(session);
 	}
 	
-	public boolean existeLoginSenha(Usuario usr) {
-		return buscar(Restrictions.eq("login", usr.getLogin()), Restrictions.eq("senha", usr.getSenhaEncriptada()))
-				.size() > 0;
+	public Usuario buscarPorLoginSenha(String login, String senha) {
+		return buscarUm(Restrictions.eq("login", login), Restrictions.eq("senha", UtGeral.hashMD5(senha)));
+	}
+	
+	public boolean existeLoginSenha(String login, String senha) {
+		return buscarPorLoginSenha(login, senha) != null;
 	}
 }

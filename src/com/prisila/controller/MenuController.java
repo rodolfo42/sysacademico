@@ -31,6 +31,8 @@ public class MenuController extends Controller {
 		result.include("alunosList", alunosList);
 		
 		result.include("usuario", usuario);
+		System.err.println(usuario.getNome());
+		System.err.println(usuario.getLogin());
 	}
 	
 }

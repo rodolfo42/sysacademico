@@ -15,15 +15,15 @@ import org.hibernate.criterion.Restrictions;
 public class Dao<T> {
 	
 	private final Session session;
-	private Class<T> classePersistencia;
+	private Class<T> clazz;
 	private final List<Criterion> criteriosBusca;
 	private Criteria criteria;
 	
 	public Dao(Session session) {
 		this.session = session;
-		this.classePersistencia = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
+		this.clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
 				.getActualTypeArguments()[0];
-		this.criteria = session.createCriteria(classePersistencia);
+		this.criteria = session.createCriteria(clazz);
 		this.criteriosBusca = new ArrayList<Criterion>();
 	}
 	
@@ -37,57 +37,72 @@ public class Dao<T> {
 		tx.commit();
 	}
 	
-	public void deleta(Long id) {
-		Transaction tx = session.beginTransaction();
-		T objetoDelete = (T) session.load(classePersistencia, id);
-		session.delete(objetoDelete);
-		tx.commit();
-	}
-	
 	public void atualiza(T objeto) {
 		Transaction tx = session.beginTransaction();
 		session.update(objeto);
 		tx.commit();
 	}
 	
+	public void deleta(Long id) {
+		Transaction tx = session.beginTransaction();
+		T objetoDelete = (T) session.load(clazz, id);
+		session.delete(objetoDelete);
+		tx.commit();
+	}
+	
 	public T carrega(Long id) {
-		return (T) session.load(classePersistencia, id);
+		return (T) session.load(clazz, id);
 	}
 	
 	public final List<T> listaTudo() {
-		return session.createCriteria(classePersistencia).list();
+		return session.createCriteria(clazz).list();
 	}
 	
-	protected Criterion getParametroBusca(String nomeDoCampo, String textoDaBusca) {
+	protected Criterion getCriterionLike(String nomeDoCampo, String textoDaBusca) {
+		// MatchMode.ANYWHERE já embrulha a string em porcentagem
 		return Restrictions.ilike(nomeDoCampo, textoDaBusca, MatchMode.ANYWHERE);
 	}
 	
-	protected void addCriterion(Criterion c) {
+	protected Dao<T> adicionarCriterion(Criterion c) {
 		criteriosBusca.add(c);
+		return this;
 	}
 	
-	public List<T> buscar() {
+	public List<T> buscarTodos() {
 		Criterion[] crits = {};
 		crits = criteriosBusca.toArray(crits);
 		criteriosBusca.clear();
-		return buscar(crits);
+		return buscarTodos(crits);
 	}
 	
-	public List<T> buscar(Criterion... criterion) {
+	public T buscarUm(Criterion... criterion) {
+		return (T) getCriteria(criterion).uniqueResult();
+	}
+	
+	public List<T> buscarTodos(Criterion... criterion) {
+		return getCriteria(criterion).list();
+	}
+	
+	public List<T> buscarTantos(int quantos, Criterion... criterion) {
+		return getCriteria(criterion).setMaxResults(quantos).list();
+	}
+	
+	private Criteria getCriteria(Criterion[] criterion) {
 		for (Criterion c : criterion) {
 			criteria.add(c);
 		}
-		Criteria criteriaBackup = criteria;
-		criteria = session.createCriteria(classePersistencia);
-		return criteriaBackup.list();
+		
+		Criteria criteriaAux = criteria;
+		resetCriteria();
+		return criteriaAux;
 	}
 	
-	protected Class<T> getClassePersistencia() {
-		return classePersistencia;
+	private void resetCriteria() {
+		criteria = session.createCriteria(clazz);
 	}
-	
-	protected void adicionaCriteria(Criteria criteria) {
-		this.criteria = criteria;
+
+	protected Class<T> getClassePersistente() {
+		return clazz;
 	}
 	
 	protected Criteria getCriteria() {

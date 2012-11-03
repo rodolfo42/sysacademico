@@ -2,23 +2,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
 <body>
 	<div class="span12">
 		<form class="well form-search">
 			<label for="aluno">Aluno:</label> <input type="text" id="aluno" />
 		</form>
-		<h2>Matr�culas</h2>
+		<h2>Matrículas</h2>
 		<table id="tabelaMatricula" width="100%" class="table table-striped">
 			<thead>
 				<tr>
 					<th>Id</th>
 					<th>Data</th>
 					<th>Aluno</th>
-					<th>Respons�vel</th>
+					<th>Responsável</th>
 					<th>Tipo de Matr�cula</th>
 					<th>Curso</th>
 					<th>Tipo de Aula</th>

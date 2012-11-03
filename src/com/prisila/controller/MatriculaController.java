@@ -90,11 +90,11 @@ public class MatriculaController extends Controller {
 	@Get
 	@Path("/matriculas/busca.json")
 	public void buscaJson(String nomeAluno) {
-		if (!UtString.isNullOrEmpty(nomeAluno)) {
-			dao.buscarPorAluno(nomeAluno);
+		if (UtString.notEmptyOrNull(nomeAluno)) {
+			dao.buscarPorNomeAluno(nomeAluno);
 		}
 		
-		result.use(json()).from(dao.buscar()).include("aluno").include("responsavel").include("curso")
+		result.use(json()).from(dao.buscarTodos()).include("aluno").include("responsavel").include("curso")
 				.include("listaTipoAula", "listaTipoAula.nome").serialize();
 	}
 	
