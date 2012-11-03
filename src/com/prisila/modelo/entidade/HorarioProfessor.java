@@ -15,7 +15,7 @@ import com.prisila.modelo.constante.DiaDaSemana;
 import com.prisila.util.UtString;
 
 @Entity
-public class HorarioProfessor {
+public class HorarioProfessor implements Comparable<HorarioProfessor>{
 	
 	@Id
 	@GeneratedValue
@@ -26,7 +26,14 @@ public class HorarioProfessor {
 	private DiaDaSemana diaDaSemana;
 	@Transient
 	private final int criterioHoraInicio = 1;
+	@Transient
 	private final int criterioHoraFim = 2;
+	@Transient
+	private String nomeDiaDaSemana;
+	@Transient
+	private String horaInicioTexto;
+	@Transient
+	private String horaFimTexto;
 	
 	public Long getId() {
 		return id;
@@ -58,6 +65,7 @@ public class HorarioProfessor {
 	
 	public void setDiaDaSemana(DiaDaSemana diaDaSemana) {
 		this.diaDaSemana = diaDaSemana;
+		this.nomeDiaDaSemana = diaDaSemana.getNome();
 	}
 	
 	private String getHoraTexto(Long hora) {
@@ -90,4 +98,32 @@ public class HorarioProfessor {
 			}
 		}
 	}
+
+	public Long getHoraInicio() {
+		return horaInicio;
+	}
+
+	public void setHoraInicio(Long horaInicio) {
+		this.horaInicio = horaInicio;
+		this.horaInicioTexto = getHoraInicioTexto();
+	}
+
+	public Long getHoraFim() {
+		return horaFim;
+	}
+
+	public void setHoraFim(Long horaFim) {
+		this.horaFim = horaFim;
+		this.horaFimTexto = getHoraFimTexto();
+	}
+
+	public String getNomeDiaDaSemana() {
+		return nomeDiaDaSemana;
+	}
+	
+	@Override
+	public int compareTo(HorarioProfessor horarioProfessor) {
+		return this.diaDaSemana.ordinal() - horarioProfessor.diaDaSemana.ordinal();
+	}
+	
 }
