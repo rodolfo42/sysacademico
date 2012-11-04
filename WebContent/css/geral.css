@@ -1,3 +1,15 @@
+/* classes gerais */
+.textCenter {
+	text-align: center;
+}
+
+.clear {
+	clear: both;
+}
+
+.cursor-help {
+	cursor: help;
+}
 
 /* multifield.js */
 .mfItem {
@@ -8,14 +20,4 @@
 
 .mfItem:last-child {
 	border-bottom: 0 !important;
-}
-
-
-/* classes gerais */
-.textCenter {
-	text-align: center;
-}
-
-.clear {
-	clear: both;
 }

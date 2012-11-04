@@ -21,16 +21,18 @@ String loginUsuario = thePage.getProperty("meta.usuario.login");
 			<ul class="nav">
 				<li><a rel="tooltip" data-placement="bottom" title="Ir para a página inicial" href="<c:url value="/" />">Início</a>
 				</li>
-				<li class="dropdown"><a rel="tooltip" data-placement="bottom" title="Gerenciar e efetuar matrículas"
-					class="dropdown-toggle" href="javascript:void(0);">Alunos</a>
-					<ul class="dropdown-menu">
+				<li class="dropdown">
+					<a id="dLabel" rel="tooltip" data-placement="bottom" title="Gerenciar e efetuar matrículas" data-toggle="dropdown"
+						class="dropdown-toggle" href="javascript:void(0);">Alunos</a>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 						<li><a href="<c:url value="/alunos/cadastrar" />">Cadastrar aluno</a></li>
 						<li><a href="<c:url value="/alunos/listar" />">Buscar aluno</a></li>
 					</ul>
 				</li>
-				<li class="dropdown"><a rel="tooltip" data-placement="bottom" title="Gerenciar e efetuar matrículas"
-					class="dropdown-toggle" href="javascript:void(0);">Matrículas</a>
-					<ul class="dropdown-menu">
+				<li class="dropdown">
+					<a id="dLabel2" rel="tooltip" data-placement="bottom" title="Gerenciar e efetuar matrículas" data-toggle="dropdown"
+						class="dropdown-toggle" href="javascript:void(0);">Matrículas</a>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel2">
 						<li><a href="<c:url value="/alunos/cadastrar" />">Nova matrícula</a></li>
 						<li><a href="<c:url value="/alunos/listar" />">Buscar matrícula</a></li>
 					</ul>
@@ -42,8 +44,12 @@ String loginUsuario = thePage.getProperty("meta.usuario.login");
 				</li>
 			</ul>
 			<ul class="nav pull-right">
-				<li><p class="navbar-text" rel="tooltip" data-placement="bottom" 
-					data-title="Você está logado como <%= nomeUsuario %>"><i class="icon-user"></i> <%= loginUsuario %></p></li>
+				<li id="loginInfo">
+					<p class="navbar-text cursor-help">
+						<i class="icon-user"></i>
+						<span></span>
+					</p>
+				</li>
 				<li class="divider-vertical"></li>
 				<li><a href="<c:url value="/logout" />"><i class="icon-off"></i> Logout</a></li>
 			</ul>
@@ -52,5 +58,25 @@ String loginUsuario = thePage.getProperty("meta.usuario.login");
 	<div id="mainContainer" class="container">
 		<decorator:body />
 	</div>
+	<script type="text/javascript">
+	$(function(){
+		$.ajax({
+			url: "<c:url value="/usuario/info" />",
+			type: "GET",
+			dataType: "json",
+			context: $("#loginInfo"),
+			success: function(response) {
+				var login = response.usuario.login;
+				var nome = response.usuario.nome;
+				
+				$('span', this).text(login);
+				$('p', this).tooltip({
+					title: "Você está logado como " + nome,
+					placement: "bottom"
+				});
+			}
+		});
+	});
+	</script>
 </body>
 </html>

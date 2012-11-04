@@ -16,6 +16,6 @@ public abstract class Controller {
 	 */
 	protected void setMensagem(Result result, Mensagem mensagem) {
 		result.include("mensagem", mensagem);
-		System.out.printf("Registrando mensagem do tipo [%s]: %s%n", mensagem.getTipo(), mensagem.getMensagem());
+		System.out.printf("MENSAGEM [%s]: %s%n", mensagem.getTipo(), mensagem.getMensagem());
 	}
 }

@@ -1,5 +1,7 @@
 package com.prisila.controller;
 
+import static br.com.caelum.vraptor.view.Results.json;
+
 import java.util.List;
 
 import br.com.caelum.vraptor.Get;
@@ -85,5 +87,11 @@ public class UsuarioController extends Controller {
 		usuarioLogado.logout();
 		setMensagem(result, new Mensagem(TipoMensagem.INFO, "Você foi deslogado do sistema"));
 		result.redirectTo(getClass()).login();
+	}
+	
+	@Get
+	@Path("/usuario/info")
+	public void loginInfo() {
+		result.use(json()).from(usuarioLogado.getUsuario()).serialize();
 	}
 }
