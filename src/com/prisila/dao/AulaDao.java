@@ -13,5 +13,4 @@ public class AulaDao extends Dao<Aula> {
 		super(session);
 	}
 	
-	
 }

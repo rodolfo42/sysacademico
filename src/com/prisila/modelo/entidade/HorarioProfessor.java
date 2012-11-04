@@ -15,7 +15,7 @@ import com.prisila.modelo.constante.DiaDaSemana;
 import com.prisila.util.UtString;
 
 @Entity
-public class HorarioProfessor implements Comparable<HorarioProfessor>{
+public class HorarioProfessor implements Comparable<HorarioProfessor> {
 	
 	@Id
 	@GeneratedValue
@@ -98,25 +98,25 @@ public class HorarioProfessor implements Comparable<HorarioProfessor>{
 			}
 		}
 	}
-
+	
 	public Long getHoraInicio() {
 		return horaInicio;
 	}
-
+	
 	public void setHoraInicio(Long horaInicio) {
 		this.horaInicio = horaInicio;
 		this.horaInicioTexto = getHoraInicioTexto();
 	}
-
+	
 	public Long getHoraFim() {
 		return horaFim;
 	}
-
+	
 	public void setHoraFim(Long horaFim) {
 		this.horaFim = horaFim;
 		this.horaFimTexto = getHoraFimTexto();
 	}
-
+	
 	public String getNomeDiaDaSemana() {
 		return nomeDiaDaSemana;
 	}

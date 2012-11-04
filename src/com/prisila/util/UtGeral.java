@@ -71,7 +71,6 @@ public class UtGeral {
 		return retorno;
 	}
 	
-
 	public static String hashMD5(String s) {
 		if (s == null) {
 			LOG.error("Erro ao calular o hash MD5 ");
@@ -88,8 +87,9 @@ public class UtGeral {
 			LOG.error("Erro ao calular o hash MD5 ");
 		}
 		return null;
-
-	public static long converteMinutosParaMilisegundos(int valorMinutos){
+	}
+	
+	public static long converteMinutosParaMilisegundos(int valorMinutos) {
 		return (valorMinutos * 60) * 1000;
 	}
 }

@@ -7,7 +7,7 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 
 public class PropertiesLoader {
-
+	
 	private Properties properties;
 	private final String nomeProperties = "aula.properties";
 	private final Logger logger = Logger.getLogger(getClass());
@@ -23,7 +23,7 @@ public class PropertiesLoader {
 		}
 	}
 	
-	public String getValor(String key){
+	public String getValor(String key) {
 		return this.properties.getProperty(key);
 	}
 	

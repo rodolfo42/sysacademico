@@ -21,8 +21,7 @@ public class Dao<T> {
 	
 	public Dao(Session session) {
 		this.session = session;
-		this.clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
-				.getActualTypeArguments()[0];
+		this.clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 		this.criteria = session.createCriteria(clazz);
 		this.criteriosBusca = new ArrayList<Criterion>();
 	}
@@ -100,7 +99,7 @@ public class Dao<T> {
 	private void resetCriteria() {
 		criteria = session.createCriteria(clazz);
 	}
-
+	
 	protected Class<T> getClassePersistente() {
 		return clazz;
 	}

@@ -1,11 +1,12 @@
 package com.prisila.controller;
 
+import static br.com.caelum.vraptor.view.Results.json;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.primefaces.json.JSONArray;
 
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
@@ -17,12 +18,10 @@ import com.prisila.dao.ProfessorDao;
 import com.prisila.modelo.entidade.Curso;
 import com.prisila.modelo.entidade.HorarioProfessor;
 import com.prisila.modelo.entidade.Professor;
-import com.prisila.util.PropertiesLoader;
-import static br.com.caelum.vraptor.view.Results.json;
 
 @Resource
 public class AulaController {
-
+	
 	private final AulaDao dao;
 	private final ProfessorDao professorDao;
 	private final Result result;
@@ -39,17 +38,17 @@ public class AulaController {
 		logger = Logger.getLogger(getClass());
 	}
 	
-	@Get @Path("/aula/buscarHorario.json/{curso.id}")
-	public void buscarHorariosDisponiveis(Curso curso){
+	@Get
+	@Path("/aula/buscarHorario.json/{curso.id}")
+	public void buscarHorariosDisponiveis(Curso curso) {
 		List<Professor> lista;
 		lista = professorDao.buscarHorariosDisponiveis(curso);
 		lista = filtraSugestaoHorariosParaAula(lista);
 		result.use(json()).from(lista).include("listaHorarioProfessor")
-			.exclude("listaHorarioProfessor.criterioHoraInicio")
-			.exclude("listaHorarioProfessor.criterioHoraFim")
-			.serialize();
+				.exclude("listaHorarioProfessor.criterioHoraInicio").exclude("listaHorarioProfessor.criterioHoraFim")
+				.serialize();
 	}
-
+	
 	private List<Professor> filtraSugestaoHorariosParaAula(List<Professor> listaProfessorHorarios) {
 		List<Professor> professores = new ArrayList<Professor>();
 		Professor novoProfessor = null;
@@ -58,8 +57,9 @@ public class AulaController {
 		long auxSomador;
 		boolean temHorarioParaProfessor;
 		
-//		PropertiesLoader propertiesLoader = new PropertiesLoader();
-//		duracaoAulaEmMilisegundos = converteMinutosParaMilisegundos( Integer.parseInt(propertiesLoader.getValor(KEY_DURACAO_AULA)) );
+		// PropertiesLoader propertiesLoader = new PropertiesLoader();
+		// duracaoAulaEmMilisegundos = converteMinutosParaMilisegundos(
+		// Integer.parseInt(propertiesLoader.getValor(KEY_DURACAO_AULA)) );
 		duracaoAulaEmMilisegundos = 3000000;
 		
 		for (Professor professor : listaProfessorHorarios) {
@@ -70,7 +70,7 @@ public class AulaController {
 			for (HorarioProfessor horarioProfessor : professor.getListaHorarioProfessor()) {
 				auxSomador = horarioProfessor.getHoraInicio();
 				
-				while ( (auxSomador + duracaoAulaEmMilisegundos) <= horarioProfessor.getHoraFim() ){
+				while ((auxSomador + duracaoAulaEmMilisegundos) <= horarioProfessor.getHoraFim()) {
 					temHorarioParaProfessor = true;
 					novoHorarioProfessor = new HorarioProfessor();
 					novoHorarioProfessor.setHoraInicio(auxSomador);
@@ -80,7 +80,7 @@ public class AulaController {
 					horarios.add(novoHorarioProfessor);
 				}
 			}
-			if (temHorarioParaProfessor){
+			if (temHorarioParaProfessor) {
 				novoProfessor = professor;
 				novoProfessor.setListaHorarioProfessor(horarios);
 				professores.add(novoProfessor);
@@ -89,7 +89,7 @@ public class AulaController {
 		return professores;
 	}
 	
-	private long converteMinutosParaMilisegundos(int valorMinutos){
+	private long converteMinutosParaMilisegundos(int valorMinutos) {
 		return (valorMinutos * valorConversorSegundos) * valorConversorMilisegundos;
 	}
 	

@@ -27,7 +27,7 @@ public class MatriculaDao extends Dao<Matricula> {
 	}
 	
 	public List<Matricula> buscarPorAlunos(List<Aluno> alunos) {
-		if(alunos == null) {
+		if (alunos == null) {
 			return null;
 		}
 		List<Long> ids = new ArrayList<Long>(0);

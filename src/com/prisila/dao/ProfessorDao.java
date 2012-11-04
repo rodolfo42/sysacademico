@@ -17,8 +17,7 @@ public class ProfessorDao extends Dao<Professor> {
 		super(session);
 	}
 	
-	
-	public List<Professor> buscarHorariosDisponiveis(Curso curso){
+	public List<Professor> buscarHorariosDisponiveis(Curso curso) {
 		StringBuilder qry = new StringBuilder();
 		qry.append("from Professor p join fetch p.listaCurso c ");
 		qry.append(" where c.id = ? ");

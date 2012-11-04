@@ -40,7 +40,7 @@ public class AlunoDao extends Dao<Aluno> {
 		
 		return getSession().createQuery(qry.toString()).setInteger(0, calendario.get(Calendar.MONTH) + 1).list();
 	}
-
+	
 	public List<Aluno> buscarPorNome(String nomeAluno) {
 		getCriteria().add(getCriterionLike("nome", nomeAluno));
 		return buscarTodos();
