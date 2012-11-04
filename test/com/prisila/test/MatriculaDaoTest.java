@@ -12,5 +12,4 @@ public class MatriculaDaoTest {
 	public void setupDao() {
 		
 	}
-	
 }
