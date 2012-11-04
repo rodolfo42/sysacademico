@@ -13,12 +13,12 @@ public class UsuarioTest {
 	Usuario usuario;
 	
 	@Before
-	protected void setUp() {
+	public void before() {
 		usuario = new Usuario();
 	}
 	
 	@After
-	protected void tearDown() {
+	public void after() {
 		usuario = null;
 	}
 	

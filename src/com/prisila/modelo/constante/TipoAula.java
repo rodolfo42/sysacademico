@@ -1,7 +1,7 @@
 package com.prisila.modelo.constante;
 
 public enum TipoAula {
-	PRATICA_INDIVIDUAL("Pr·tica Individual"), PRATICA_GRUPO("Pr·tica em Grupo"), TEORIA_GRUPO("Teoria em Grupo");
+	PRATICA_INDIVIDUAL("Pr√°tica Individual"), PRATICA_GRUPO("Pr√°tica em Grupo"), TEORIA_GRUPO("Teoria em Grupo");
 	
 	private final String nome;
 	
