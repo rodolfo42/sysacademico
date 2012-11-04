@@ -13,4 +13,9 @@ build/**/*
 .classpath
 .project
 .settings/*
+
+# arquivos do maven
 pom.xml
+target/
+target/**/*
+
