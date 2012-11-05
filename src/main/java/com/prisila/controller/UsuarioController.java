@@ -20,12 +20,12 @@ import com.prisila.util.Mensagem.TipoMensagem;
 @Resource
 public class UsuarioController extends Controller {
 	
-	private final UsuarioDao dao;
+	private final UsuarioDao usuarioDao;
 	private final Result result;
 	private final UsuarioLogado usuarioLogado;
 	
 	public UsuarioController(UsuarioDao dao, Result result, UsuarioLogado usuarioLogado) {
-		this.dao = dao;
+		this.usuarioDao = dao;
 		this.result = result;
 		this.usuarioLogado = usuarioLogado;
 	}
@@ -37,24 +37,31 @@ public class UsuarioController extends Controller {
 	
 	@Post
 	@Path("/usuarios/adicionar")
-	public void adicionar(Usuario usuario) {
-		usuario.setSenha(usuario.getSenhaEncriptada());
-		dao.salva(usuario);
+	public void adicionar(Usuario usuario, String confirmacaoSenha) {
+		usuario.criptografarSenha();
+		usuarioDao.salva(usuario);
 		setMensagem(result, new Mensagem(TipoMensagem.INFO, "Usuário adicionado com sucesso!"));
 		result.redirectTo(UsuarioController.class).listar();
 	}
 	
 	@Get
-	@Path("/usuarios/listar")
-	public List<Usuario> listar() {
-		return dao.listaTudo();
+	@Path("/usuarios/remover/{usuarioId}")
+	public void remover(Long usuarioId) {
+		LOG.debug("usuarioId: {}", usuarioId);
+		usuarioDao.deleta(usuarioId);
+		result.redirectTo(getClass()).listar();
 	}
 	
 	@Get
-	@Path("/usuarios/login/erro")
-	public void erroLogin() {
-		
+	@Path("/usuarios/listar")
+	public void listar() {
+		result.include("usuarioList", usuarioDao.listaTudo());
 	}
+	
+	
+	
+	
+	
 	
 	@Get
 	@Path("/login")
@@ -72,8 +79,8 @@ public class UsuarioController extends Controller {
 	public void login(Usuario usuario) {
 		String login = usuario.getLogin();
 		String senha = usuario.getSenha();
-		if (dao.existeLoginSenha(login, senha)) {
-			usuarioLogado.login(dao.buscarPorLoginSenha(login, senha));
+		if (usuarioDao.existeLoginSenha(login, senha)) {
+			usuarioLogado.login(usuarioDao.buscarPorLoginSenha(login, senha));
 			result.redirectTo(MenuController.class).inicio();
 		} else {
 			setMensagem(result, new Mensagem(TipoMensagem.ERROR, "Usuário ou senha inválidos"));
@@ -93,7 +100,7 @@ public class UsuarioController extends Controller {
 	 * Action para trazer as informações de login atual via JSON
 	 */
 	@Get
-	@Path("/usuario/info")
+	@Path("/logininfo")
 	public void loginInfo() {
 		result.use(json()).from(usuarioLogado.getUsuario()).serialize();
 	}

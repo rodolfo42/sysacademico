@@ -1,6 +1,18 @@
 /* classes gerais */
+.textRight {
+	text-align: right;
+}
+
+.textLeft {
+	text-align: left;
+}
+
 .textCenter {
 	text-align: center;
+}
+
+.textJustify {
+	text-align: justify;
 }
 
 .clear {
@@ -9,6 +21,15 @@
 
 .cursor-help {
 	cursor: help;
+}
+
+.aoLadoH2 {
+	margin-top: 15px;
+}
+
+.tooltip-inner {
+	max-width: none;
+	white-space: nowrap;
 }
 
 /* multifield.js */

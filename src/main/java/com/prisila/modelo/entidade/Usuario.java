@@ -51,8 +51,7 @@ public class Usuario implements Serializable {
 		this.nome = nome;
 	}
 	
-	public String getSenhaEncriptada() {
-		return UtGeral.hashMD5(getSenha());
+	public void criptografarSenha() {
+		setSenha(UtGeral.hashMD5(getSenha()));
 	}
-	
 }

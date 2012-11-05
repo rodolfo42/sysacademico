@@ -44,13 +44,14 @@ String loginUsuario = thePage.getProperty("meta.usuario.login");
 				</li>
 			</ul>
 			<ul class="nav pull-right">
+				<li><a rel="tooltip" data-placement="bottom" title="Gerencie os usuários deste sistema" href="<c:url value="/usuarios/listar" />">Usuários</a></li>
+				<li class="divider-vertical"></li>
 				<li id="loginInfo">
 					<p class="navbar-text cursor-help">
 						<i class="icon-user"></i>
 						<span></span>
 					</p>
 				</li>
-				<li class="divider-vertical"></li>
 				<li><a href="<c:url value="/logout" />"><i class="icon-off"></i> Logout</a></li>
 			</ul>
 		</div>
@@ -61,7 +62,7 @@ String loginUsuario = thePage.getProperty("meta.usuario.login");
 	<script type="text/javascript">
 	$(function(){
 		$.ajax({
-			url: "<c:url value="/usuario/info" />",
+			url: "<c:url value="/logininfo" />",
 			type: "GET",
 			dataType: "json",
 			context: $("#loginInfo"),

@@ -97,6 +97,42 @@ $(function() {
 		$(this).restrictToRegexp(new RegExp("^[" + charString + "]*$"));
 	};
 	
+	
+	/**
+	 * box de confirmação
+	 */
+	var createConfirmationModal = function(title, text) {
+		var modal = $(document.createElement('div')).addClass('modal hide fade');
+		modal.append($('<div class="modal-header"></div>').html("<h3>" + title + "</h3>"));
+		modal.append($('<div class="modal-body"></div>').append($('<p></p>').text(text)));
+		var footer = $('<div class="modal-footer"></div>');
+		
+		var noButton = $('<button></button>').addClass("btn").attr('data-dismiss', "modal").text("Não");
+		var yesButton = $('<button></button>').addClass("btn btn-primary yesBtn").text("Confirma");
+		footer.append(yesButton).append(noButton);
+		
+		modal.append(footer);
+		return modal.modal();
+	};
+	$(document).delegate("[data-confirmation-text]", "click submit", function(e){
+		var _this = $(this);
+		if( !_this.data("confirmation-confirmed") ) {
+			e.preventDefault();
+			var text = _this.data("confirmation-text"),
+				title = _this.data("confirmation-title") || "Confirmação";
+			
+			var modal = createConfirmationModal(title, text);
+			var yesBtn = $('.yesBtn', modal);
+			yesBtn.bind('click', function(e){
+				e.preventDefault();
+				_this.data("confirmation-confirmed", true);
+				_this.trigger(e.type);
+			});
+		} else {
+			$('body .modal:visible').modal('hide');
+		}
+	});
+	
 	/**
 	 * funções AJAX
 	 */

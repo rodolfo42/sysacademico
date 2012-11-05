@@ -1,3 +1,22 @@
 body {
 	padding-top: 50px;
 }
+
+.well h1,
+.well h2,
+.well h3,
+.well h4,
+.well h5,
+.well h6 {
+	margin-top: 0;
+}
+
+.voceSabiaQue {
+	position: relative;
+}
+
+.voceSabiaQue > .icon {
+	position: absolute;
+	top: 30px;
+	right: 15px;
+}
