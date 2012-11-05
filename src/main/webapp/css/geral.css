@@ -1,0 +1,55 @@
+/* classes gerais */
+.textCenter {
+	text-align: center;
+}
+
+.clear {
+	clear: both;
+}
+
+.cursor-help {
+	cursor: help;
+}
+
+/* multifield.js */
+.mfItem {
+	border-bottom: 1px solid #DDD;
+	margin-top: 10px;
+	min-height: 30px;
+}
+
+.mfItem:last-child {
+	border-bottom: 0 !important;
+}
+
+/* ajax */
+.ajaxFeedback {
+	position: fixed;
+	bottom: 50px;
+	width: 100%;
+	left: 0;
+	text-align: center;
+}
+.ajaxFeedback span {
+	color: #FFF;
+	background-color: #666;
+	padding: 10px 20px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.ajaxFeedback.loading span {
+	padding-left: 40px;
+	background-color: #666 !important;
+	background-image: url("../img/ajax-loader.gif");
+	background-repeat: no-repeat;
+	background-position: 10px center;
+}
+
+.ajaxFeedback.success span {
+	background-color: #468847;
+}
+
+.ajaxFeedback.error span {
+	background-color: #b94a48;
+}

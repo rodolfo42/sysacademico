@@ -14,8 +14,7 @@ build/**/*
 .project
 .settings/*
 
-# arquivos do maven
-pom.xml
+# arquivos binarios do maven
 target/
 target/**/*
 
