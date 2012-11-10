@@ -36,7 +36,7 @@ public class UsuarioLogado implements Serializable {
 	public void logout() {
 		this.usuario = null;
 	}
-
+	
 	public Usuario getUsuario() {
 		return usuario;
 	}
