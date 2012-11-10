@@ -30,7 +30,7 @@ public class Dao<T> {
 		return session;
 	}
 	
-	public void salva(T objeto) {
+	public void salvar(T objeto) {
 		Transaction tx = session.beginTransaction();
 		session.save(objeto);
 		tx.commit();
@@ -42,7 +42,7 @@ public class Dao<T> {
 		tx.commit();
 	}
 	
-	public void deleta(Long id) {
+	public void deletar(Long id) {
 		Transaction tx = session.beginTransaction();
 		T objetoDelete = (T) session.load(clazz, id);
 		session.delete(objetoDelete);

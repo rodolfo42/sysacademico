@@ -4,11 +4,16 @@
 		<pattern>/*</pattern>
 		<excludes>
 			<pattern>/login</pattern>
+			<pattern>/pagina/*</pattern>
 		</excludes>
 	</decorator>
 
 	<decorator name="login" page="login.jsp">
 		<pattern>/login</pattern>
 		<pattern>/sobre</pattern>
+	</decorator>
+	
+	<decorator name="paginas" page="pagina.jsp">
+		<pattern>/pagina/*</pattern>
 	</decorator>
 </decorators>

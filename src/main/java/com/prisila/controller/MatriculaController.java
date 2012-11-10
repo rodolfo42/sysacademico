@@ -56,7 +56,7 @@ public class MatriculaController extends Controller {
 	@Post
 	@Path("/matriculas/adicionar")
 	public void adicionar(Matricula matricula) {
-		dao.salva(matricula);
+		dao.salvar(matricula);
 		result.redirectTo(this).listar();
 	}
 	
@@ -77,7 +77,7 @@ public class MatriculaController extends Controller {
 	@Delete
 	@Path("/matriculas/{id}")
 	public void deletar(Long id) {
-		dao.deleta(id);
+		dao.deletar(id);
 		result.redirectTo(this).listar();
 	}
 	

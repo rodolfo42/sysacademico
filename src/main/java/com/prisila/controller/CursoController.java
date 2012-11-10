@@ -32,7 +32,7 @@ public class CursoController extends Controller {
 	@Post
 	@Path("/cursos/adicionar")
 	public void adicionar(Curso curso) {
-		dao.salva(curso);
+		dao.salvar(curso);
 		result.redirectTo(this).listar();
 	}
 	
@@ -58,7 +58,7 @@ public class CursoController extends Controller {
 	@Delete
 	@Path("/cursos/{id}")
 	public void deletar(Long id) {
-		dao.deleta(id);
+		dao.deletar(id);
 		result.redirectTo(this).listar();
 	}
 	

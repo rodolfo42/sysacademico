@@ -1,26 +1,26 @@
 /* classes gerais */
 .textRight {
-	text-align: right;
+	text-align: right !important;
 }
 
 .textLeft {
-	text-align: left;
+	text-align: left !important;
 }
 
 .textCenter {
-	text-align: center;
+	text-align: center !important;
 }
 
 .textJustify {
-	text-align: justify;
+	text-align: justify !important;
 }
 
 .clear {
-	clear: both;
+	clear: both !important;
 }
 
 .cursor-help {
-	cursor: help;
+	cursor: help !important;
 }
 
 .aoLadoH2 {

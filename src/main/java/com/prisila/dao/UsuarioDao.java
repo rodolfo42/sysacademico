@@ -15,11 +15,15 @@ public class UsuarioDao extends Dao<Usuario> {
 		super(session);
 	}
 	
-	public Usuario buscarPorLoginSenha(String login, String senha) {
-		return buscarUm(Restrictions.eq("login", login), Restrictions.eq("senha", UtGeral.hashMD5(senha)));
+	public Usuario buscarPorUsernameSenha(String username, String senha) {
+		return buscarUm(Restrictions.eq("login", username), Restrictions.eq("senha", UtGeral.hashMD5(senha)));
 	}
 	
-	public boolean existeLoginSenha(String login, String senha) {
-		return buscarPorLoginSenha(login, senha) != null;
+	public boolean existeUsernameSenha(String username, String senha) {
+		return buscarPorUsernameSenha(username, senha) != null;
+	}
+
+	public Usuario buscarPorUsername(String username) {
+		return buscarUm(Restrictions.eq("login", username));
 	}
 }

@@ -1,6 +1,9 @@
 package com.prisila.controller;
 
 import static br.com.caelum.vraptor.view.Results.json;
+
+import java.util.List;
+
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
@@ -36,24 +39,57 @@ public class UsuarioController extends Controller {
 	@Path("/usuarios/adicionar")
 	public void adicionar(Usuario usuario, String confirmacaoSenha) {
 		usuario.criptografarSenha();
-		usuarioDao.salva(usuario);
-		setMensagem(result, new Mensagem(TipoMensagem.INFO, "Usuário adicionado com sucesso!"));
+		try {
+			usuarioDao.salvar(usuario);
+			setMensagem(result, new Mensagem(TipoMensagem.SUCCESS, "Usuário adicionado com sucesso"));
+		} catch (Exception e) {
+			LOG.error("Erro ao editar cadastro de usuario!", e);
+			setMensagem(result, new Mensagem(TipoMensagem.ERROR, "Erro inesperado ao adicionar o usuário"));
+		}
 		result.redirectTo(UsuarioController.class).listar();
 	}
 	
 	@Get
-	@Path("/usuarios/remover/{usuarioId}")
-	public void remover(Long usuarioId) {
-		LOG.debug("usuarioId: {}", usuarioId);
-		usuarioDao.deleta(usuarioId);
+	@Path("/usuarios/editar/{username}")
+	public void editar(String username) {
+		result.include("usuario", usuarioDao.buscarPorUsername(username));
+	}
+	
+	@Post
+	@Path("/usuarios/editar/{username}")
+	public void editar(String username, Usuario usuario) {
+		Usuario usuarioASerEditado = usuarioDao.buscarPorUsername(username);
+		usuarioASerEditado.setLogin(usuario.getLogin());
+		usuarioASerEditado.setNome(usuario.getNome());
+		try {
+			usuarioDao.salvar(usuarioASerEditado);
+			setMensagem(result, new Mensagem(TipoMensagem.SUCCESS, "Dados editados com sucesso"));
+		} catch (Exception e) {
+			LOG.error("Erro ao editar cadastro de usuario!", e);
+			setMensagem(result, new Mensagem(TipoMensagem.ERROR, "Erro inesperado ao adicionar o usuário"));
+		}
+	}
+	
+	@Get
+	@Path("/usuarios/remover/{username}")
+	public void remover(String username) {
+		Usuario usuario = usuarioDao.buscarPorUsername(username);
+		usuarioDao.deletar(usuario.getId());
 		result.redirectTo(getClass()).listar();
 	}
 	
 	@Get
 	@Path("/usuarios/listar")
 	public void listar() {
-		result.include("usuarioList", usuarioDao.listaTudo());
+		List<Usuario> usuarioList = usuarioDao.listaTudo();
+		Usuario usuarioAtual = usuarioDao.buscarPorUsername(usuarioLogado.getLogin());
+		usuarioList.remove(usuarioAtual);
+		result.include("usuarioList", usuarioList);
 	}
+	
+	
+	
+	
 	
 	@Get
 	@Path("/login")
@@ -71,8 +107,8 @@ public class UsuarioController extends Controller {
 	public void login(Usuario usuario) {
 		String login = usuario.getLogin();
 		String senha = usuario.getSenha();
-		if (usuarioDao.existeLoginSenha(login, senha)) {
-			usuarioLogado.login(usuarioDao.buscarPorLoginSenha(login, senha));
+		if (usuarioDao.existeUsernameSenha(login, senha)) {
+			usuarioLogado.login(usuarioDao.buscarPorUsernameSenha(login, senha));
 			result.redirectTo(MenuController.class).inicio();
 		} else {
 			setMensagem(result, new Mensagem(TipoMensagem.ERROR, "Usuário ou senha inválidos"));

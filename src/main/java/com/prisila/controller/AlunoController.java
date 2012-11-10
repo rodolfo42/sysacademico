@@ -39,7 +39,7 @@ public class AlunoController extends Controller {
 	@Post
 	@Path("/alunos/cadastrar")
 	public void cadastrar(Aluno aluno) {
-		dao.salva(aluno);
+		dao.salvar(aluno);
 		result.redirectTo(MatriculaController.class).adicionar();
 	}
 	
@@ -67,7 +67,7 @@ public class AlunoController extends Controller {
 	@Delete
 	@Path("/alunos/{id}")
 	public void deletar(Long id) {
-		dao.deleta(id);
+		dao.deletar(id);
 		result.redirectTo(this).listar();
 	}
 	

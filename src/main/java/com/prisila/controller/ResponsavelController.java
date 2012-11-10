@@ -38,7 +38,7 @@ public class ResponsavelController extends Controller {
 	@Post
 	@Path("/responsaveis/adicionar")
 	public void adicionar(Responsavel responsavel) {
-		dao.salva(responsavel);
+		dao.salvar(responsavel);
 		for (Aluno aluno : responsavel.getListaAluno()) {
 			aluno = alunoDao.carrega(aluno.getId());
 			aluno.adicionaVinculo(responsavel);
@@ -75,7 +75,7 @@ public class ResponsavelController extends Controller {
 	@Delete
 	@Path("/responsaveis/{id}")
 	public void deletar(Long id) {
-		dao.deleta(id);
+		dao.deletar(id);
 		result.redirectTo(this).listar();
 	}
 	

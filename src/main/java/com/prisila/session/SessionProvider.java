@@ -5,23 +5,30 @@ import javax.annotation.PreDestroy;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.ComponentFactory;
 
 @Component
-public class CriadorDeSession implements ComponentFactory<Session> {
+public class SessionProvider implements ComponentFactory<Session> {
 	
 	private final SessionFactory factory;
 	private Session session;
+	private Logger LOG = LoggerFactory.getLogger(getClass());
 	
-	public CriadorDeSession(SessionFactory factory) {
+	public SessionProvider(SessionFactory factory) {
 		this.factory = factory;
 	}
 	
 	@PostConstruct
-	public void abre() {
-		this.session = factory.openSession();
+	public void abrirSession() {
+		try {
+			this.session = factory.openSession();
+		} catch(Exception e) {
+			LOG.error("Erro ao tentar abrir a sessão", e);
+		}
 	}
 	
 	public Session getInstance() {
@@ -29,7 +36,7 @@ public class CriadorDeSession implements ComponentFactory<Session> {
 	}
 	
 	@PreDestroy
-	public void fecha() {
+	public void fecharSession() {
 		this.session.close();
 	}
 	

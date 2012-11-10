@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
@@ -22,20 +23,19 @@ import com.prisila.modelo.entidade.Professor;
 @Resource
 public class AulaController {
 	
-	private final AulaDao dao;
+	private final AulaDao aulaDao;
 	private final ProfessorDao professorDao;
 	private final Result result;
-	private final Logger logger;
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	private long duracaoAulaEmMilisegundos;
 	private static final String KEY_DURACAO_AULA = "duracao_aula";
 	private static final int valorConversorSegundos = 60;
 	private static final int valorConversorMilisegundos = 1000;
 	
 	public AulaController(AulaDao dao, ProfessorDao professorDao, Result result) {
-		this.dao = dao;
+		this.aulaDao = dao;
 		this.professorDao = professorDao;
 		this.result = result;
-		logger = Logger.getLogger(getClass());
 	}
 	
 	@Get
@@ -92,5 +92,4 @@ public class AulaController {
 	private long converteMinutosParaMilisegundos(int valorMinutos) {
 		return (valorMinutos * valorConversorSegundos) * valorConversorMilisegundos;
 	}
-	
 }

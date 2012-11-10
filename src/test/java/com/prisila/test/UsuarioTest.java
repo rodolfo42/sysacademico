@@ -10,7 +10,7 @@ import com.prisila.modelo.entidade.Usuario;
 
 public class UsuarioTest {
 	
-	Usuario usuario;
+	private Usuario usuario;
 	
 	@Before
 	public void before() {

@@ -43,7 +43,6 @@
 
 		<div class="span4">
 			<div class="well voceSabiaQue textJustify">
-				<i class="icon icon-info-sign"></i>
 				<h3>Você sabia que...</h3>
 				<p>
 					As senhas utilizadas por todos os usuários deste sistema são encriptadas usando um método chamado de <strong>hashing</strong>.
