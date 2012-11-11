@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 
 import com.prisila.modelo.constante.DiaDaSemana;
-import com.prisila.util.UtString;
+import com.prisila.util.StringUtil;
 
 @Entity
 public class HorarioProfessor implements Comparable<HorarioProfessor> {
@@ -79,7 +79,7 @@ public class HorarioProfessor implements Comparable<HorarioProfessor> {
 	}
 	
 	private void setHoraTexto(String hora, int criterio) {
-		if (!UtString.isNullOrEmpty(hora)) {
+		if (!StringUtil.isNullOrEmpty(hora)) {
 			Date date;
 			long horaLong = 0;
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");

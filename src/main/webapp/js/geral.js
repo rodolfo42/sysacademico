@@ -114,8 +114,9 @@ $(function() {
 		modal.append(footer);
 		return modal.modal();
 	};
-	$(document).delegate("[data-confirmation-text]", "click submit", function(e){
+	$(document).delegate("[data-confirmation-text]", "click submit", function(e) {
 		var _this = $(this);
+		var eventType = e.type;
 		if( !_this.data("confirmation-confirmed") ) {
 			e.preventDefault();
 			var text = _this.data("confirmation-text"),
@@ -123,13 +124,18 @@ $(function() {
 			
 			var modal = createConfirmationModal(title, text);
 			var yesBtn = $('.yesBtn', modal);
-			yesBtn.bind('click', function(e){
-				e.preventDefault();
+			yesBtn.bind('click', function(ev){
+				ev.preventDefault();
 				_this.data("confirmation-confirmed", true);
-				_this.trigger(e.type);
+				modal.modal('hide');
+				if(eventType == 'click') {
+					// .trigger('click') não redireciona para a url do href
+					// browsers nao deixam pois assim evitam clickjacking
+					window.location = _this.attr('href');
+				} else { // submit funciona
+					_this.trigger(eventType);
+				}
 			});
-		} else {
-			$('body .modal:visible').modal('hide');
 		}
 	});
 	

@@ -37,17 +37,21 @@
 				<li><a rel="tooltip" data-placement="bottom" title="Cadastro de professores"
 					href="<c:url value="/professores" />">Professores</a>
 				</li>
+				<li class="divider-vertical"></li>
+				<li><a id="btnGerenciarUsuarios" style="display: none;" rel="tooltip" data-placement="bottom" title="Gerencie os usuários deste sistema" href="<c:url value="/usuarios/listar" />"><i class="icon-lock"></i> Usuários</a></li>
 			</ul>
 			<ul class="nav pull-right">
-				<li><a rel="tooltip" data-placement="bottom" title="Gerencie os usuários deste sistema" href="<c:url value="/usuarios/listar" />">Usuários</a></li>
-				<li class="divider-vertical"></li>
-				<li id="loginInfo">
-					<p class="navbar-text cursor-help">
+				<li id="loginInfo" class="dropdown">
+					<a id="dLabel3" href="javascript:void(0);" rel="tooltip" class="dropdown-toggle" data-toggle="dropdown">
 						<i class="icon-user"></i>
-						<span></span>
-					</p>
+						<span class="username"></span>
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel3">
+						<li><a href="<c:url value="/perfil/editar" />"><i class="icon-wrench"></i> Editar meu perfil</a></li>
+						<li><a href="<c:url value="/logout" />"><i class="icon-off"></i> Logout</a></li>
+					</ul>
 				</li>
-				<li><a href="<c:url value="/logout" />"><i class="icon-off"></i> Logout</a></li>
 			</ul>
 		</div>
 	</div>
@@ -64,14 +68,29 @@
 			success: function(response) {
 				var login = response.usuario.login;
 				var nome = response.usuario.nome;
+				var isAdmin = response.usuario.admin;
 				
-				$('span', this).text(login);
+				$('span.username', this).text(login);
 				$('p', this).tooltip({
 					title: "Você está logado como " + nome,
 					placement: "bottom"
 				});
+				if(isAdmin) {
+					$("#btnGerenciarUsuarios").show(0);
+				}
 			}
 		});
+		
+		<c:if test="${not empty mensagem}">
+		var alertHolder = null;
+		if($('#feedback').length > 0) {
+			alertHolder = $('#feedback');
+		} else {
+			alertHolder = $('<div class="alert"></div>').insertBefore('#mainContainer');
+			alertHolder.attr('id', 'feedback');
+		}
+		alertHolder.addClass("${mensagem.tipo}").text("${mensagem.mensagem}");
+		</c:if>
 	});
 	</script>
 </body>

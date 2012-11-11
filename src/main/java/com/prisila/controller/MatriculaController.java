@@ -22,7 +22,7 @@ import com.prisila.modelo.entidade.Aluno;
 import com.prisila.modelo.entidade.Curso;
 import com.prisila.modelo.entidade.Matricula;
 import com.prisila.modelo.entidade.Responsavel;
-import com.prisila.util.UtString;
+import com.prisila.util.StringUtil;
 
 @Resource
 public class MatriculaController extends Controller {
@@ -90,7 +90,7 @@ public class MatriculaController extends Controller {
 	@Get
 	@Path("/matriculas/busca.json")
 	public void buscaJson(String nomeAluno) {
-		if (UtString.notEmptyOrNull(nomeAluno)) {
+		if (StringUtil.notEmptyOrNull(nomeAluno)) {
 			dao.buscarPorNomeAluno(nomeAluno);
 		}
 		

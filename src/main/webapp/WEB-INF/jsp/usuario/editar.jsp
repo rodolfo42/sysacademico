@@ -5,7 +5,19 @@
 	<div class="row">
 		<div class="span8">
 			<h2>Editar dados de usuário</h2>
-			<form action="<c:url value="/usuarios/adicionar"/>" method="POST" class="form-horizontal">
+			
+			<c:if test="${not empty errors}">
+				<div class="alert alert-block alert-error">
+					<h4>Corrija os seguintes erros</h4>
+					<ul>
+						<c:forEach items="${errors}" var="error">
+							<li>${error.message}</li>
+						</c:forEach>
+					</ul>
+				</div>
+			</c:if>
+			
+			<form action="" method="POST" class="form-horizontal">
 				<div class="control-group">
 					<div class="control-label">Nome completo</div>
 					<div class="controls">

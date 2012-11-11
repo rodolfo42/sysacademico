@@ -8,9 +8,11 @@ import br.com.caelum.vraptor.ioc.SessionScoped;
 @Component
 @SessionScoped
 public class UsuarioLogado implements Serializable {
-	
-	private static final long serialVersionUID = 261932533970111881L;
+	private static final long serialVersionUID = -769652759770888432L;
+
 	private Usuario usuario;
+
+	private String urlAposLogin;
 	
 	public String getLogin() {
 		return usuario.getLogin();
@@ -22,7 +24,7 @@ public class UsuarioLogado implements Serializable {
 	
 	public void login(Usuario usuario) {
 		if (!isLogado()) {
-			this.usuario = usuario;
+			atualizarInfo(usuario);
 		} else {
 			logout();
 			login(usuario);
@@ -35,9 +37,28 @@ public class UsuarioLogado implements Serializable {
 	
 	public void logout() {
 		this.usuario = null;
+		this.urlAposLogin = null;
 	}
 	
 	public Usuario getUsuario() {
 		return usuario;
+	}
+
+	public boolean isAdmin() {
+		return usuario.isAdmin();
+	}
+
+	public void setUrlAposLogin(String url) {
+		this.urlAposLogin = url;
+	}
+	
+	public String getUrlAposLogin() {
+		String url = urlAposLogin;
+		urlAposLogin = null;
+		return url;
+	}
+
+	public void atualizarInfo(Usuario usuario) {
+		this.usuario = usuario;
 	}
 }

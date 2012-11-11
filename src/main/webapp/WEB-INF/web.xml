@@ -4,7 +4,12 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="WebApp_ID" version="2.5">
 	<display-name>sysacademico</display-name>
-	
+
+	<context-param>
+		<param-name>br.com.caelum.vraptor.encoding</param-name>
+		<param-value>UTF-8</param-value>
+	</context-param>
+
 	<error-page>
 		<error-code>404</error-code>
 		<location>/pagina/naoencontrada.jsp</location>
@@ -13,7 +18,7 @@
 		<error-code>500</error-code>
 		<location>/pagina/erro.jsp</location>
 	</error-page>
-	
+
 	<filter>
 		<filter-name>vraptor</filter-name>
 		<filter-class>br.com.caelum.vraptor.VRaptor</filter-class>

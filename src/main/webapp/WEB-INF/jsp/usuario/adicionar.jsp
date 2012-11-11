@@ -5,11 +5,23 @@
 	<div class="row">
 		<div class="span8">
 			<h2>Cadastrar novo usuário</h2>
-			<form action="<c:url value="/usuarios/adicionar"/>" method="POST" class="form-horizontal">
+			<!-- TODO copiar para tag -->
+			<c:if test="${not empty errors}">
+				<div class="alert alert-block alert-error">
+					<h4>Corrija os seguintes erros</h4>
+					<ul>
+						<c:forEach items="${errors}" var="error">
+							<li>${error.message}</li>
+						</c:forEach>
+					</ul>
+				</div>
+			</c:if>
+			
+			<form action="<c:url value="/usuarios/adicionar" />" method="POST" class="form-horizontal">
 				<div class="control-group">
 					<div class="control-label">Nome completo</div>
 					<div class="controls">
-						<input type="text" maxlength="50" name="usuario.nome" class="input-xlarge" value="${usuario.nome}" />
+						<input type="text" maxlength="50" name="usuario.nome" placeholder="nome completo" class="input-xlarge" value="${usuario.nome}" />
 					</div>
 				</div>
 				<div class="control-group">
@@ -17,6 +29,16 @@
 					<div class="controls">
 						<input type="text" maxlength="50" class="input-large" placeholder="somente letras e números" name="usuario.login"
 							value="${usuario.login}" />
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<div class="control-label">É administrador?</div>
+					<div class="controls">
+						<input type="checkbox" name="usuario.admin" <c:if test="${not empty usuario.admin && usuario.admin == true}">checked="checked"</c:if> />
+						<span class="help-text">
+							O usuário administrador tem permissão de gerenciar o acesso de outros usuários
+						</span>
 					</div>
 				</div>
 

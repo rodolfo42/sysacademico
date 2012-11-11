@@ -23,8 +23,7 @@ public class Mensagem {
 		
 		public String get() {
 			return tipo;
-		}
-		
+		}	
 	}
 	
 	private TipoMensagem tipoMensagem;

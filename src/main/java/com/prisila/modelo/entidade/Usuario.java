@@ -8,10 +8,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.prisila.util.UtGeral;
+import org.hibernate.validator.Length;
+import org.hibernate.validator.NotEmpty;
+import org.hibernate.validator.NotNull;
+import org.hibernate.validator.Pattern;
+
+import com.prisila.util.GeralUtil;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames={"login"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "login" }))
 public class Usuario implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -19,9 +24,19 @@ public class Usuario implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long id;
-	private String login;
-	private String senha;
+	
+	@NotEmpty(message = "{usuario.nome.obrigatorio}")
 	private String nome;
+	
+	@NotEmpty(message = "{usuario.login.obrigatorio}")
+	@Pattern(regex = "^[a-zA-Z0-9]+$", message = "{usuario.login.alfanumerico}")
+	private String login;
+	
+	@NotEmpty(message = "{usuario.senha.obrigatoria}")
+	private String senha;
+	
+	@NotNull
+	private boolean admin;
 	
 	public Long getId() {
 		return id;
@@ -56,6 +71,14 @@ public class Usuario implements Serializable {
 	}
 	
 	public void criptografarSenha() {
-		setSenha(UtGeral.hashMD5(getSenha()));
+		setSenha(GeralUtil.hashMD5(getSenha()));
+	}
+
+	public boolean isAdmin() {
+		return admin;
+	}
+	
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 }

@@ -17,7 +17,7 @@
 				</thead>
 				<tbody>
 					<c:choose>
-						<c:when test="not empty ${usuarioList}">
+						<c:when test="${ not empty usuarioList}">
 							<c:forEach items="${usuarioList}" var="usuario">
 								<tr>
 									<td>${usuario.nome}</td>
