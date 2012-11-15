@@ -14,10 +14,10 @@
 		<error-code>404</error-code>
 		<location>/pagina/naoencontrada.jsp</location>
 	</error-page>
-	<error-page>
+	<!-- <error-page>
 		<error-code>500</error-code>
 		<location>/pagina/erro.jsp</location>
-	</error-page>
+	</error-page> -->
 
 	<filter>
 		<filter-name>vraptor</filter-name>
