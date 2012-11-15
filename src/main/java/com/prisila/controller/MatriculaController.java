@@ -90,7 +90,7 @@ public class MatriculaController extends Controller {
 	@Get
 	@Path("/matriculas/busca.json")
 	public void buscaJson(String nomeAluno) {
-		if (StringUtil.notEmptyOrNull(nomeAluno)) {
+		if (StringUtil.notNullOrEmpty(nomeAluno)) {
 			dao.buscarPorNomeAluno(nomeAluno);
 		}
 		

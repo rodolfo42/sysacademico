@@ -11,16 +11,16 @@ import br.com.caelum.vraptor.resource.ResourceMethod;
 import com.prisila.annotation.Admin;
 import com.prisila.annotation.Publico;
 import com.prisila.controller.UsuarioController;
-import com.prisila.modelo.entidade.UsuarioLogado;
+import com.prisila.modelo.entidade.LoginInfo;
 
 @Intercepts
 public class LoginInterceptor implements Interceptor {
 	
-	private final UsuarioLogado usuarioLogado;
+	private final LoginInfo loginInfo;
 	private final Result result;
 	
-	public LoginInterceptor(UsuarioLogado usuario, Result result) {
-		this.usuarioLogado = usuario;
+	public LoginInterceptor(LoginInfo loginInfo, Result result) {
+		this.loginInfo = loginInfo;
 		this.result = result;
 	}
 	
@@ -28,9 +28,9 @@ public class LoginInterceptor implements Interceptor {
 	public boolean accepts(ResourceMethod method) {
 		boolean isAcessoPermitido = true;
 		if (method.containsAnnotation(Admin.class)) {
-			isAcessoPermitido = usuarioLogado.isLogado() && usuarioLogado.isAdmin();
+			isAcessoPermitido = loginInfo.isLogado() && loginInfo.isAdmin();
 		} else if (!method.containsAnnotation(Publico.class)) {
-			isAcessoPermitido = usuarioLogado.isLogado();
+			isAcessoPermitido = loginInfo.isLogado();
 		}
 		return !isAcessoPermitido;
 	}
@@ -46,7 +46,7 @@ public class LoginInterceptor implements Interceptor {
 				String[] s = pathAnnotation.value();
 				if (s != null && s.length > 0) {
 					// TODO pegar a verdadeira url que o usuario tentou acessar
-					// usuarioLogado.setUrlAposLogin(s[0]);
+					// loginInfo.setUrlAposLogin(s[0]);
 				}
 				result.redirectTo(UsuarioController.class).login();
 			}

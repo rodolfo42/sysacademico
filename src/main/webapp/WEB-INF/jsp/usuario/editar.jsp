@@ -30,6 +30,16 @@
 						<input type="text" maxlength="50" class="input-large" placeholder="somente letras e números" name="usuario.login" value="${usuario.login}" />
 					</div>
 				</div>
+				
+				<div class="control-group">
+					<div class="control-label">É administrador?</div>
+					<div class="controls">
+						<input type="checkbox" name="usuario.admin" <c:if test="${not empty usuario.admin && usuario.admin == true}">checked="checked"</c:if> />
+						<span class="help-text">
+							O usuário administrador tem permissão de gerenciar o acesso de outros usuários
+						</span>
+					</div>
+				</div>
 
 				<div class="control-group">
 					<div class="control-label">Senha</div>

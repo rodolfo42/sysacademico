@@ -33,6 +33,6 @@ public class UsuarioDao extends Dao<Usuario> {
 	}
 
 	public boolean isSenhaValida(String senha) {
-		return StringUtil.notEmptyOrNull(senha) && senha.length() >= 8;
+		return StringUtil.notNullOrEmpty(senha) && senha.length() >= 8;
 	}
 }
