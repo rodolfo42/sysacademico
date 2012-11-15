@@ -45,14 +45,14 @@
 				<div class="control-group">
 					<div class="control-label">Senha</div>
 					<div class="controls">
-						<input type="password" maxlength="50" class="input-medium" name="usuario.senha" /> <span class="help-block">
+						<input type="password" maxlength="50" class="input-medium" name="usuario.senha" placeholder="mínimo de 8 caracteres" /> <span class="help-block">
 							<span class="label label-info">Dica</span> não use datas de aniversário ou nomes de pessoas relacionadas </span>
 					</div>
 				</div>
 				<div class="control-group">
 					<div class="control-label">Confirmação da senha</div>
 					<div class="controls">
-						<input type="password" maxlength="50" class="input-medium" name="confirmacaoSenha" /> <span class="help-block">Repita
+						<input type="password" maxlength="50" class="input-medium" name="confirmacaoSenha" placeholder="igual à acima" /> <span class="help-block">Repita
 							a senha para evitar erros de digitação</span>
 					</div>
 				</div>

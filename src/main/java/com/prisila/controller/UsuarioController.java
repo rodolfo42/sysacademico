@@ -84,10 +84,8 @@ public class UsuarioController extends Controller {
 		usuarioASerEditado.setLogin(usuario.getLogin());
 		usuarioASerEditado.setNome(usuario.getNome());
 		
-		final boolean isAlteracaoDeSenha = 
-			StringUtil.notNullOrEmpty(usuario.getSenha()) &&
-			StringUtil.notNullOrEmpty(senhaAtual) &&
-			StringUtil.notNullOrEmpty(confirmacaoSenha);
+		final boolean isAlteracaoDeSenha = StringUtil.notNullOrEmpty(usuario.getSenha())
+				&& StringUtil.notNullOrEmpty(senhaAtual) && StringUtil.notNullOrEmpty(confirmacaoSenha);
 		
 		final Usuario dadosEdicao = usuario;
 		final String usernameAtual = loginInfo.getLogin();
@@ -96,7 +94,7 @@ public class UsuarioController extends Controller {
 				if (!usernameAtual.equals(dadosEdicao.getLogin())) {
 					that(!usuarioDao.existeUsername(dadosEdicao.getLogin()), "usuario.login", "usuario.login.existente");
 				}
-				if(isAlteracaoDeSenha) {
+				if (isAlteracaoDeSenha) {
 					that(usuarioDao.isSenhaValida(dadosEdicao.getSenha()), "usuario.senha", "usuario.senha.minimo");
 					that(StringUtil.notNullOrEmpty(confirmacaoSenha) && confirmacaoSenha.equals(dadosEdicao.getSenha()),
 							"confirmacaoSenha", "usuario.confirmacaoSenha.diferente");
@@ -113,7 +111,7 @@ public class UsuarioController extends Controller {
 		try {
 			// TODO verificar se o usuario em questão está logado e atualizar
 			// info de sessão
-			if(isAlteracaoDeSenha) {
+			if (isAlteracaoDeSenha) {
 				usuarioASerEditado.setSenha(dadosEdicao.getSenha());
 				usuarioASerEditado.criptografarSenha();
 			}
@@ -184,6 +182,7 @@ public class UsuarioController extends Controller {
 		Usuario usuario = usuarioDao.buscarPorUsername(username);
 		
 		// TODO verificar se o usuario em questão está logado e invalidar sessão
+		// dele
 		if (usuario == null) {
 			setMensagem(result, new Mensagem(TipoMensagem.ERROR, "Usuário não existe"));
 			result.redirectTo(getClass()).listar();
@@ -195,9 +194,8 @@ public class UsuarioController extends Controller {
 		} catch (Exception e) {
 			LOG.error("Erro ao remover usuario!", e);
 			setMensagem(result, new Mensagem(TipoMensagem.ERROR, "Erro inesperado remover o usuário. Tente novamente"));
+			result.redirectTo(getClass()).listar();
 		}
-		
-		result.redirectTo(getClass()).listar();
 	}
 	
 	@Get
