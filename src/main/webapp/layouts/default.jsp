@@ -38,7 +38,7 @@
 					href="<c:url value="/professores" />">Professores</a>
 				</li>
 				<li class="divider-vertical"></li>
-				<li><a id="btnGerenciarUsuarios" style="display: none;" rel="tooltip" data-placement="bottom" title="Gerencie os usuários deste sistema" href="<c:url value="/usuarios/listar" />"><i class="icon-lock"></i> Usuários</a></li>
+				
 			</ul>
 			<ul class="nav pull-right">
 				<li id="loginInfo" class="dropdown">
@@ -49,6 +49,10 @@
 					</a>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel3">
 						<li><a href="<c:url value="/perfil/editar" />"><i class="icon-wrench"></i> Editar meu perfil</a></li>
+						<li id="btnGerenciarUsuarios" style="display: none;">
+							<a href="<c:url value="/usuarios/listar"/>" 
+								rel="tooltip" data-placement="left" title="Gerencie os usuários deste sistema"><i class="icon-key"></i> Gerenciar usuários</a>
+						</li>
 						<li><a href="<c:url value="/logout" />"><i class="icon-off"></i> Logout</a></li>
 					</ul>
 				</li>
