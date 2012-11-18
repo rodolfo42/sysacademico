@@ -40,7 +40,7 @@ public class AlunoController extends Controller {
 	@Path("/alunos/cadastrar")
 	public void cadastrar(Aluno aluno) {
 		dao.salvar(aluno);
-		result.redirectTo(MatriculaController.class).adicionar();
+		result.redirectTo(MatriculaController.class).cadastrar();
 	}
 	
 	@Get
