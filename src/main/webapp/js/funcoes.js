@@ -98,7 +98,7 @@ function decimalValido(opcao_separador, campo, event) {
 	}
 }
 
-function carregaComboJson(url, dados, idCombo) {
+function carregaComboJson(url, dados, idCombo, funcaoSucesso) {
 	$.ajax({
 		url : url,
 		dataType : 'json',
@@ -108,14 +108,10 @@ function carregaComboJson(url, dados, idCombo) {
 			$('#' + idCombo).attr('disabled', 'disabled');
 		},
 		success : function(json) {
-			$('#' + idCombo).children().remove();
-			$('#' + idCombo).append('<option value="0">Selecionar</option>');
-			for ( var i = 0; i < json.list.length; i++) {
-				item = json.list[i];
-				$('#' + idCombo).append(
-						'<option value="' + item.id + '">' + item.nome
-								+ '</option>');
-			}
+			var $combo = $('#'+idCombo);
+			$combo.children().remove();
+			$combo.append('<option value="0">Selecionar</option>');
+			funcaoSucesso(json, $combo);
 		},
 		complete : function() {
 			$('#' + idCombo).removeAttr('disabled');
