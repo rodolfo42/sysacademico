@@ -1,6 +1,7 @@
 package com.prisila.dao;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -36,5 +37,15 @@ public class MatriculaDao extends Dao<Matricula> {
 		}
 		getCriteria().createAlias("aluno", "a", Criteria.INNER_JOIN, Restrictions.in("a.id", ids));
 		return buscarTodos();
+	}
+	
+	@Override
+	public void salvar(Matricula matricula){
+		Calendar data = Calendar.getInstance();
+		
+		matricula.setAtivo(true);
+		matricula.setData(data);
+		
+		super.salvar(matricula);
 	}
 }

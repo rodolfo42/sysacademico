@@ -7,12 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form id="frmMatricula" action="<c:url value="/matriculas/adicionar"/>" method="POST">
+	<form id="frmMatricula" action="<c:url value="/matriculas/guardaNaSessao"/>" method="POST">
 		<fieldset>
 			<legend>Matrícula</legend>
-
-			<label for="data">Data:</label>
-			<input id="data" class="input-small" type="text" name="matricula.data" />
 			
 			<label for="aluno">Aluno:</label>
 			<select name="matricula.aluno.id" id="aluno">
@@ -38,69 +35,25 @@
 					<option value="${curso.id }">${curso.nome }</option>
 				</c:forEach>
 			</select>
-			
-			<label for="horaDisp">Horários Disponíveis:</label>
-			<select name="matricula.timestamp" id="horaDisp">
-				
-			</select>
-			
-			<div class="control-group">
-				<label class="control-label">Tipo de Aula:</label>
-				<div class="btn-group" data-toggle="buttons-checkbox">
-					<c:forEach items="${tipoAulaList }" var="tipoAula">
-						<button class="btn btn-warning" name="btnTipoAula">${tipoAula.nome }</button>
-					</c:forEach>
-				</div>
-			</div>
-
 
 		</fieldset>
 		<button type="submit" class="btn">Enviar</button>
 	</form>
 	<script type="text/javascript">	
-		$('div.btn-group .btn').click(function(){
-			$(this).button('toggle');
-			return false;
-		});
+		
 		$('#aluno').change(function(){
-			carregaComboJson('<c:url value="/matriculas/responsavel.json"/>','idAluno='+$(this).val(),'responsavel');
+			carregaComboJson('<c:url value="/matriculas/responsavel.json"/>',
+							 'idAluno='+$(this).val(),
+							 'responsavel',
+							 montaComboResponsavel);
 		});
 		
-		$('#curso').change(function(){
-			carregaHorariosDisponiveis($(this).val());
-		});
-		
-		function carregaHorariosDisponiveis(idCurso){
-			var horaDisp = $('#horaDisp');
-			var auxDiaDaSemana;
-			
-			$.ajax({
-				url : '<c:url value="/aula/buscarHorario.json/'+idCurso+'"/>',
-				dataType : 'json',
-				cache : false,
-				success : function(json) {
-					$(horaDisp).children().remove();
-					$(horaDisp).append('<option value="0">Selecionar</option>');
-					
-					for ( var i = 0; i < json.list.length; i++) {
-						professor = json.list[i];
-						nomeProfessor = professor.nome;
-						auxDiaDaSemana = undefined;
-						
-						for ( var c = 0; c < professor.listaHorarioProfessor.length; c++) {
-							horario = professor.listaHorarioProfessor[c];
-							
-							if (auxDiaDaSemana != horario.diaDaSemana){
-								$(horaDisp).append('<optgroup label="'+nomeProfessor+' - '+horario.nomeDiaDaSemana+'"></optgroup>');
-								auxDiaDaSemana = horario.diaDaSemana;
-							}
-							
-							$(horaDisp).find('optgroup:last').append('<option value="' + horario.horaInicio + '">' + horario.horaInicioTexto + '</option>');
-						}
-					}
-				}
-			});
-		}
+		var montaComboResponsavel = function(json, $combo){
+			for ( var i = 0; i < json.list.length; i++) {
+				item = json.list[i];
+				$combo.append('<option value="' + item.id + '">' + item.nome + '</option>');
+			}
+		};
 	</script>
 </body>
 </html>

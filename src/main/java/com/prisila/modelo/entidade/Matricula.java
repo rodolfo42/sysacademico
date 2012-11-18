@@ -1,7 +1,7 @@
 package com.prisila.modelo.entidade;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.ElementCollection;
@@ -21,7 +21,7 @@ public class Matricula {
 	@GeneratedValue
 	private Long id;
 	@Temporal(TemporalType.DATE)
-	private Date data;
+	private Calendar data;
 	@ManyToOne
 	private Aluno aluno;
 	@ManyToOne
@@ -44,11 +44,11 @@ public class Matricula {
 		this.id = id;
 	}
 	
-	public Date getData() {
+	public Calendar getData() {
 		return data;
 	}
 	
-	public void setData(Date data) {
+	public void setData(Calendar data) {
 		this.data = data;
 	}
 	

@@ -74,3 +74,7 @@
 .ajaxFeedback.error span {
 	background-color: #b94a48;
 }
+
+.row-fluid{
+	min-height: 50px;
+}

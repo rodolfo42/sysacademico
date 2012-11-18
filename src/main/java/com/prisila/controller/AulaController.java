@@ -1,52 +1,63 @@
 package com.prisila.controller;
 
-import static br.com.caelum.vraptor.view.Results.json;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import br.com.caelum.vraptor.Get;
-import br.com.caelum.vraptor.Path;
+import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 
 import com.prisila.dao.AulaDao;
+import com.prisila.dao.AulaMatriculaDao;
+import com.prisila.dao.MatriculaDao;
 import com.prisila.dao.ProfessorDao;
+import com.prisila.dao.SalaDao;
+import com.prisila.exception.TechnicalException;
+import com.prisila.modelo.constante.TipoAula;
+import com.prisila.modelo.entidade.Aula;
+import com.prisila.modelo.entidade.AulaMatricula;
 import com.prisila.modelo.entidade.Curso;
 import com.prisila.modelo.entidade.HorarioProfessor;
+import com.prisila.modelo.entidade.Matricula;
+import com.prisila.modelo.entidade.MatriculaSessao;
 import com.prisila.modelo.entidade.Professor;
+import com.prisila.modelo.entidade.Sala;
 
 @Resource
-public class AulaController {
+public class AulaController extends Controller {
 	
-	private final AulaDao aulaDao;
+	private final AulaDao dao;
 	private final ProfessorDao professorDao;
+	private final SalaDao salaDao;
+	private final AulaMatriculaDao aulaMatriculaDao;
+	private final MatriculaDao matriculaDao;
 	private final Result result;
-	private final Logger log = LoggerFactory.getLogger(getClass());
+	private MatriculaSessao matriculaSessao;
 	private long duracaoAulaEmMilisegundos;
 	private static final String KEY_DURACAO_AULA = "duracao_aula";
 	private static final int valorConversorSegundos = 60;
 	private static final int valorConversorMilisegundos = 1000;
 	
-	public AulaController(AulaDao dao, ProfessorDao professorDao, Result result) {
-		this.aulaDao = dao;
+	public AulaController(AulaDao dao, ProfessorDao professorDao, SalaDao salaDao, Result result, MatriculaSessao matriculaSessao, MatriculaDao matriculaDao, AulaMatriculaDao aulaMatriculaDao) {
+		this.dao = dao;
 		this.professorDao = professorDao;
 		this.result = result;
+		this.matriculaSessao = matriculaSessao;
+		this.salaDao = salaDao;
+		this.matriculaDao = matriculaDao;
+		this.aulaMatriculaDao = aulaMatriculaDao;
 	}
 	
 	@Get
-	@Path("/aula/buscarHorario.json/{curso.id}")
-	public void buscarHorariosDisponiveis(Curso curso) {
+	public List<Professor> buscaHorariosDisponiveis(Curso curso) {
 		List<Professor> lista;
-		lista = professorDao.buscarHorariosDisponiveis(curso);
-		lista = filtraSugestaoHorariosParaAula(lista);
-		result.use(json()).from(lista).include("listaHorarioProfessor")
+		lista = professorDao.buscaHorariosDisponiveis(curso);
+		return filtraSugestaoHorariosParaAula(lista);
+		/*result.use(json()).from(lista).include("listaHorarioProfessor")
 				.exclude("listaHorarioProfessor.criterioHoraInicio").exclude("listaHorarioProfessor.criterioHoraFim")
-				.serialize();
+				.serialize();*/
 	}
 	
 	private List<Professor> filtraSugestaoHorariosParaAula(List<Professor> listaProfessorHorarios) {
@@ -92,4 +103,53 @@ public class AulaController {
 	private long converteMinutosParaMilisegundos(int valorMinutos) {
 		return (valorMinutos * valorConversorSegundos) * valorConversorMilisegundos;
 	}
+	
+	@Get
+	public void marcar(){
+		Matricula matricula = matriculaSessao.getMatricula();
+		List<Professor> listaProfessor = null;
+		if (matricula != null){
+			listaProfessor = buscaHorariosDisponiveis(matricula.getCurso());
+		}
+		incluirRecursosNaResult(listaProfessor);
+	}
+	
+	@Post
+	public void marcar(List<Aula> aulas){
+		result.on(TechnicalException.class).forwardTo(this).marcar();
+		
+		Matricula matricula = matriculaSessao.getMatricula();
+		matriculaDao.salvar(matricula);
+		
+		AulaMatricula aulaMatricula = null;
+		
+		try {
+			for (Aula aula : aulas) {
+				aula.formatarAulaDaSemana();
+				dao.salvar(aula);
+				
+				aulaMatricula = new AulaMatricula();
+				aulaMatricula.setMatricula(matricula);
+				aulaMatricula.setAula(aula);
+				aulaMatriculaDao.salvar(aulaMatricula);
+			}
+		} catch (TechnicalException e) {
+			LOG.error(e.getMessage());
+		}
+		
+		result.redirectTo(this).listar();
+	}
+	
+	public List<AulaMatricula> listar() {
+		return null;
+	}
+
+	private void incluirRecursosNaResult(List<Professor> listaProfessor){
+		TipoAula[] tipoAulas = TipoAula.values();
+		List<Sala> listaSala = salaDao.buscarTodos();
+		result.include("salaList", listaSala);
+		result.include("tipoAulas", tipoAulas);
+		result.include("professorList", listaProfessor);
+	}
+	
 }

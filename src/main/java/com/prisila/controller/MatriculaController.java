@@ -21,6 +21,7 @@ import com.prisila.modelo.constante.TipoMatricula;
 import com.prisila.modelo.entidade.Aluno;
 import com.prisila.modelo.entidade.Curso;
 import com.prisila.modelo.entidade.Matricula;
+import com.prisila.modelo.entidade.MatriculaSessao;
 import com.prisila.modelo.entidade.Responsavel;
 import com.prisila.util.StringUtil;
 
@@ -37,27 +38,35 @@ public class MatriculaController extends Controller {
 	private TipoMatricula[] tipoMatriculaList;
 	private TipoAula[] tipoAulaList;
 	private List<Curso> cursoList;
+	private MatriculaSessao matriculaSessao;
 	
 	public MatriculaController(MatriculaDao matriculaDao, AlunoDao alunoDao, ResponsavelDao responsavelDao,
-			CursoDao cursoDao, Result result) {
+			CursoDao cursoDao, Result result, MatriculaSessao matriculaSessao) {
 		this.dao = matriculaDao;
 		this.alunoDao = alunoDao;
 		this.responsavelDao = responsavelDao;
 		this.cursoDao = cursoDao;
 		this.result = result;
+		this.matriculaSessao = matriculaSessao;
 	}
 	
 	@Get
-	@Path("/matriculas/adicionar")
-	public void adicionar() {
+	@Path("/matriculas/cadastrar")
+	public void cadastrar() {
 		incluirListasNaResult();
 	}
 	
 	@Post
-	@Path("/matriculas/adicionar")
-	public void adicionar(Matricula matricula) {
+	@Path("/matriculas/cadastrar")
+	public void cadastrar(Matricula matricula) {
 		dao.salvar(matricula);
-		result.redirectTo(this).listar();
+	}
+	
+	@Post
+	@Path("/matriculas/guardaNaSessao")
+	public void guardaNaSessao(Matricula matricula) {
+		matriculaSessao.setMatricula(matricula);
+		result.redirectTo(AulaController.class).marcar();
 	}
 	
 	@Get
@@ -133,6 +142,10 @@ public class MatriculaController extends Controller {
 		result.include("tipoMatriculaList", tipoMatriculaList);
 		result.include("cursoList", cursoList);
 		result.include("tipoAulaList", tipoAulaList);
+	}
+
+	public MatriculaSessao getMatriculaSessao() {
+		return matriculaSessao;
 	}
 	
 }
