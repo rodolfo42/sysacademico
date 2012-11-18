@@ -74,15 +74,15 @@ public class Dao<T> {
 		return buscarTodos(crits);
 	}
 	
-	public T buscarUm(Criterion... criterion) {
+	protected T buscarUm(Criterion... criterion) {
 		return (T) getCriteria(criterion).uniqueResult();
 	}
 	
-	public List<T> buscarTodos(Criterion... criterion) {
+	protected List<T> buscarTodos(Criterion... criterion) {
 		return getCriteria(criterion).list();
 	}
 	
-	public List<T> buscarTantos(int quantos, Criterion... criterion) {
+	protected List<T> buscarTantos(int quantos, Criterion... criterion) {
 		return getCriteria(criterion).setMaxResults(quantos).list();
 	}
 	
