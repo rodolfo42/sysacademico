@@ -65,7 +65,17 @@ public class MatriculaController extends Controller {
 	@Post
 	@Path("/matriculas/guardaNaSessao")
 	public void guardaNaSessao(Matricula matricula) {
-		matriculaSessao.setMatricula(matricula);
+		Matricula matriculaAux = dao.buscarPorAluno(matricula.getAluno())
+									.buscarPorResponsavel(matricula.getResponsavel())
+									.buscarPorCurso(matricula.getCurso())
+									.buscarUm();
+		if (matriculaAux != null){
+			matriculaSessao.setMatricula(matriculaAux);
+			matriculaSessao.setPrecisaSalvar(false);
+		}else{
+			matriculaSessao.setMatricula(matricula);
+			matriculaSessao.setPrecisaSalvar(true);
+		}
 		result.redirectTo(AulaController.class).marcar();
 	}
 	

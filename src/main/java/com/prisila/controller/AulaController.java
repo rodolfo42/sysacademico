@@ -14,6 +14,7 @@ import com.prisila.dao.AulaMatriculaDao;
 import com.prisila.dao.MatriculaDao;
 import com.prisila.dao.ProfessorDao;
 import com.prisila.dao.SalaDao;
+import com.prisila.exception.MatriculaInexistenteNaSessao;
 import com.prisila.exception.TechnicalException;
 import com.prisila.modelo.constante.TipoAula;
 import com.prisila.modelo.entidade.Aula;
@@ -106,11 +107,10 @@ public class AulaController extends Controller {
 	
 	@Get
 	public void marcar(){
-		Matricula matricula = matriculaSessao.getMatricula();
+		Matricula matricula = getMatriculaNaSessao();
+		
 		List<Professor> listaProfessor = null;
-		if (matricula != null){
-			listaProfessor = buscaHorariosDisponiveis(matricula.getCurso());
-		}
+		listaProfessor = buscaHorariosDisponiveis(matricula.getCurso());
 		incluirRecursosNaResult(listaProfessor);
 	}
 	
@@ -118,8 +118,11 @@ public class AulaController extends Controller {
 	public void marcar(List<Aula> aulas){
 		result.on(TechnicalException.class).forwardTo(this).marcar();
 		
-		Matricula matricula = matriculaSessao.getMatricula();
-		matriculaDao.salvar(matricula);
+		Matricula matricula = getMatriculaNaSessao();
+		
+		if (matriculaSessao.isPrecisaSalvar()){
+			matriculaDao.salvar(matricula);
+		}
 		
 		AulaMatricula aulaMatricula = null;
 		
@@ -140,9 +143,23 @@ public class AulaController extends Controller {
 		result.redirectTo(this).listar();
 	}
 	
+	@Get
 	public List<AulaMatricula> listar() {
-		return null;
+		
+		return aulaMatriculaDao.buscarAulas(getMatriculaNaSessao());
 	}
+
+	private Matricula getMatriculaNaSessao() {
+		Matricula matricula = null;
+		try {
+			matricula = matriculaSessao.getMatricula();
+		} catch (MatriculaInexistenteNaSessao e) {
+			LOG.error(e.getMessage());
+		}
+		return matricula;
+	}
+	
+	
 
 	private void incluirRecursosNaResult(List<Professor> listaProfessor){
 		TipoAula[] tipoAulas = TipoAula.values();

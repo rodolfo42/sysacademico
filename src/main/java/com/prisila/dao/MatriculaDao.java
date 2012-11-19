@@ -11,7 +11,9 @@ import org.hibernate.criterion.Restrictions;
 import br.com.caelum.vraptor.ioc.Component;
 
 import com.prisila.modelo.entidade.Aluno;
+import com.prisila.modelo.entidade.Curso;
 import com.prisila.modelo.entidade.Matricula;
+import com.prisila.modelo.entidade.Responsavel;
 
 @Component
 public class MatriculaDao extends Dao<Matricula> {
@@ -37,6 +39,21 @@ public class MatriculaDao extends Dao<Matricula> {
 		}
 		getCriteria().createAlias("aluno", "a", Criteria.INNER_JOIN, Restrictions.in("a.id", ids));
 		return buscarTodos();
+	}
+	
+	public MatriculaDao buscarPorAluno(Aluno aluno){
+		adicionarCriterion(Restrictions.eq("aluno.id", aluno.getId()));
+		return this;
+	}
+	
+	public MatriculaDao buscarPorResponsavel(Responsavel responsavel){
+		adicionarCriterion(Restrictions.eq("responsavel.id", responsavel.getId()));
+		return this;
+	}
+	
+	public MatriculaDao buscarPorCurso(Curso curso){
+		adicionarCriterion(Restrictions.eq("curso.id", curso.getId()));
+		return this;
 	}
 	
 	@Override

@@ -78,7 +78,7 @@
 				$(this).toggleClass('warning');
 				$(this).siblings().removeClass('warning');
 				var div = $(this).parent().parent().parent();
-				setValueNasHiddens(div);
+				setValueNasHiddens(div, this);
 			});
 			
 			var mostraOcultaInfo = function(div){
@@ -96,10 +96,10 @@
 				div.find('select.sala').prop('disabled', !isDisabled);
 			};
 			
-			var setValueNasHiddens = function(div){
-				div.find('input.hidden-professor').val($(this).attr('data-id-professor'));
-				div.find('input.hidden-timestamp').val($(this).attr('data-timestamp'));
-				div.find('input.hidden-dia-semana').val($(this).attr('data-dia-semana'));
+			var setValueNasHiddens = function(div, tr){
+				div.find('input.hidden-professor').val($(tr).attr('data-id-professor'));
+				div.find('input.hidden-timestamp').val($(tr).attr('data-timestamp'));
+				div.find('input.hidden-dia-semana').val($(tr).attr('data-dia-semana'));
 			};
 		});
 	</script>

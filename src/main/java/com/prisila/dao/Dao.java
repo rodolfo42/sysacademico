@@ -74,6 +74,13 @@ public class Dao<T> {
 		return buscarTodos(crits);
 	}
 	
+	public T buscarUm() {
+		Criterion[] crits = {};
+		crits = criteriosBusca.toArray(crits);
+		criteriosBusca.clear();
+		return buscarUm(crits);
+	}
+	
 	protected T buscarUm(Criterion... criterion) {
 		return (T) getCriteria(criterion).uniqueResult();
 	}
