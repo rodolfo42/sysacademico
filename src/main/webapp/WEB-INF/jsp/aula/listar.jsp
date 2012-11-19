@@ -13,6 +13,7 @@
 		<thead>
 			<tr>
 				<th>Curso</th>
+				<th>Tipo da Aula</th>
 				<th>Data</th>
 				<th>Status</th>
 			</tr>
@@ -25,6 +26,7 @@
 				</c:if>
 				<tr class="${classeTr}">
 					<td>${aulaMatricula.matricula.curso.nome }</td>
+					<td>${aulaMatricula.aula.tipoAula.nome }</td>
 					<td><fmt:formatDate value="${aulaMatricula.aula.timestamp.time }" pattern="dd/MM/yyyy 'às' HH:mm (EEEE)" /></td>
 					<td>${aulaMatricula.statusAula.descricao }</td>
 				</tr>
