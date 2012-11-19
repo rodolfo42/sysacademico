@@ -3,8 +3,12 @@ package com.prisila.modelo.entidade;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import com.prisila.modelo.constante.StatusAula;
 
 @Entity
 public class AulaMatricula implements Serializable {
@@ -16,7 +20,8 @@ public class AulaMatricula implements Serializable {
 	@Id
 	@ManyToOne
 	private Matricula matricula;
-	private boolean presenca;
+	@Enumerated(EnumType.ORDINAL)
+	private StatusAula statusAula;
 	
 	public Aula getAula() {
 		return aula;
@@ -33,12 +38,13 @@ public class AulaMatricula implements Serializable {
 	public void setMatricula(Matricula matricula) {
 		this.matricula = matricula;
 	}
-	
-	public boolean isPresenca() {
-		return presenca;
+
+	public StatusAula getStatusAula() {
+		return statusAula;
+	}
+
+	public void setStatusAula(StatusAula statusAula) {
+		this.statusAula = statusAula;
 	}
 	
-	public void setPresenca(boolean presenca) {
-		this.presenca = presenca;
-	}
 }
