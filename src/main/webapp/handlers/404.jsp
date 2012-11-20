@@ -2,6 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title></title>
-<meta http-equiv="Refresh" content="0;url=<c:url value="/erro/404" />"></head>
-<body>404</body></html>
+<meta http-equiv="Refresh" content="0;url=<c:url value="/erro/404" />">
+</head>
+<body>
+</body>
+</html>

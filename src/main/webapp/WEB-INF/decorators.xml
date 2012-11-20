@@ -4,7 +4,7 @@
 		<pattern>/*</pattern>
 		<excludes>
 			<pattern>/login</pattern>
-			<pattern>/pagina/*</pattern>
+			<pattern>/erro/*</pattern>
 		</excludes>
 	</decorator>
 
@@ -13,7 +13,7 @@
 		<pattern>/sobre</pattern>
 	</decorator>
 	
-	<decorator name="paginas" page="pagina.jsp">
-		<pattern>/pagina/*</pattern>
+	<decorator name="paginas" page="branco.jsp">
+		<pattern>/erro/*</pattern>
 	</decorator>
 </decorators>
