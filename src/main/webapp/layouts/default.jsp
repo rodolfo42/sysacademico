@@ -19,7 +19,7 @@
 				</li>
 				<li class="dropdown">
 					<a id="dLabel" rel="tooltip" data-placement="bottom" title="Gerenciar e efetuar matrículas" data-toggle="dropdown"
-						class="dropdown-toggle" href="javascript:void(0);">Alunos</a>
+						class="dropdown-toggle" href="javascript:void(0);">Alunos <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 						<li><a href="<c:url value="/alunos/cadastrar" />">Cadastrar aluno</a></li>
 						<li><a href="<c:url value="/alunos/listar" />">Buscar aluno</a></li>
@@ -27,7 +27,7 @@
 				</li>
 				<li class="dropdown">
 					<a id="dLabel2" rel="tooltip" data-placement="bottom" title="Gerenciar e efetuar matrículas" data-toggle="dropdown"
-						class="dropdown-toggle" href="javascript:void(0);">Matrículas</a>
+						class="dropdown-toggle" href="javascript:void(0);">Matrículas <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel2">
 						<li><a href="<c:url value="/alunos/cadastrar" />">Nova matrícula</a></li>
 						<li><a href="<c:url value="/alunos/listar" />">Buscar matrícula</a></li>
@@ -71,6 +71,7 @@
 			type: "GET",
 			dataType: "json",
 			context: $("#loginInfo"),
+			errorMessage: "Não foi possível identificar o usuário atual",
 			success: function(response) {
 				var login = response.usuario.login;
 				var nome = response.usuario.nome;

@@ -14,7 +14,8 @@
 		<error-code>404</error-code>
 		<location>/handlers/404.jsp</location>
 	</error-page>
-	<!-- <error-page>
+	<!-- comentado temporariamente para mostrar o stackTrace das Exceptions 
+	<error-page>
 		<error-code>500</error-code>
 		<location>/handlers/500.jsp</location>
 	</error-page> -->

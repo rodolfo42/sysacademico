@@ -5,8 +5,6 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<h2>Login</h2>
-		</div>
-		<div class="row-fluid">
 			<tag:alert />
 		</div>
 		<div class="row-fluid">
