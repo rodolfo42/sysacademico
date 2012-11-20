@@ -21,7 +21,11 @@
 							<c:forEach items="${usuarioList}" var="usuario">
 								<tr>
 									<td>${usuario.nome}</td>
-									<td>${usuario.login}</td>
+									<td>${usuario.login}
+										<c:if test="${usuario.admin}">
+											<span class="muted">(Administrador)</span>
+										</c:if> 
+									</td>
 									<td>
 										<div class="btn-group pull-right">
 											<a class="btn btn-mini" href="<c:url value="/usuarios/editar/${usuario.login}" />">editar</a> <a

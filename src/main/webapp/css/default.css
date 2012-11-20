@@ -20,3 +20,9 @@ body {
 	top: 30px;
 	right: 15px;
 }
+
+#feedback {
+	margin: 10px 20px 10px;
+	text-align: center;
+	font-size: 120%;
+}

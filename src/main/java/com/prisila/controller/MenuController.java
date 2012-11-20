@@ -6,16 +6,12 @@ import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 
-import com.prisila.dao.AlunoDao;
-
 @Resource
 public class MenuController extends Controller {
 	
-	private final AlunoDao alunoDao;
 	private final Result result;
 	
-	public MenuController(AlunoDao alunoDao, Result result) {
-		this.alunoDao = alunoDao;
+	public MenuController(Result result) {
 		this.result = result;
 	}
 	

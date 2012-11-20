@@ -149,14 +149,7 @@ public class UsuarioController extends Controller {
 				if (!usernameAtual.equals(novoUsuario.getLogin())) {
 					that(!usuarioDao.existeUsername(novoUsuario.getLogin()), "usuario.login", "usuario.login.existente");
 				}
-				// that(usuarioDao.isSenhaValida(novoUsuario.getSenha()),
-				// "usuario.senha", "usuario.senha.minimo");
-				// that(StringUtil.notEmptyOrNull(confirmacaoSenha) &&
-				// confirmacaoSenha.equals(novoUsuario.getSenha()),
-				// "confirmacaoSenha", "usuario.confirmacaoSenha.diferente");
-				// that(StringUtil.notEmptyOrNull(senhaAtual) &&
-				// GeralUtil.hashMD5(senhaAtual).equals(novoUsuario.getSenha()),
-				// "senhaAtual", "usuario.editar.senhaatual");
+				// TODO permitir edicao de senha
 			}
 		});
 		
