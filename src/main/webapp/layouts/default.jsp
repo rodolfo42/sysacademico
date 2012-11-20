@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/taglibs.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,6 +60,7 @@
 			</ul>
 		</div>
 	</div>
+	<tag:alert />
 	<div id="mainContainer" class="container">
 		<decorator:body />
 	</div>
@@ -85,7 +87,7 @@
 			}
 		});
 		
-		<c:if test="${not empty mensagem}">
+		/* <c:if test="${not empty mensagem}">
 		var alertHolder = null;
 		if($('#feedback').length > 0) {
 			alertHolder = $('#feedback');
@@ -93,8 +95,8 @@
 			alertHolder = $('<div class="alert"></div>').insertBefore('#mainContainer');
 			alertHolder.attr('id', 'feedback');
 		}
-		alertHolder.addClass("${mensagem.tipo}").text("${mensagem.mensagem}");
-		</c:if>
+		alertHolder.addClass("alert-${mensagem.tipo}").text("${mensagem.mensagem}");
+		</c:if> */
 	});
 	</script>
 </body>
