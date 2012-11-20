@@ -12,11 +12,11 @@
 
 	<error-page>
 		<error-code>404</error-code>
-		<location>/pagina/naoencontrada.jsp</location>
+		<location>/handlers/404.jsp</location>
 	</error-page>
 	<!-- <error-page>
 		<error-code>500</error-code>
-		<location>/pagina/erro.jsp</location>
+		<location>/handlers/500.jsp</location>
 	</error-page> -->
 
 	<filter>
