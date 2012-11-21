@@ -9,6 +9,7 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.Validator;
 
 import com.prisila.dao.AlunoDao;
 import com.prisila.dao.ResponsavelDao;
@@ -22,24 +23,28 @@ public class AlunoController extends Controller {
 	private final ResponsavelDao responsavelDao;
 	private final Result result;
 	private List<Responsavel> respList;
+	private Validator validator;
 	
-	public AlunoController(AlunoDao dao, ResponsavelDao responsavelDao, Result result) {
+	public AlunoController(AlunoDao dao, ResponsavelDao responsavelDao, Result result, Validator validator) {
 		this.dao = dao;
 		this.responsavelDao = responsavelDao;
 		this.result = result;
+		this.validator = validator;
 	}
 	
 	@Get
 	@Path("/alunos/cadastrar")
 	public void cadastrar() {
-		respList = responsavelDao.listaTudo();
-		result.include("responsavelList", respList);
 	}
 	
 	@Post
 	@Path("/alunos/cadastrar")
-	public void cadastrar(Aluno aluno) {
-		dao.salvar(aluno);
+	public void cadastrar(Aluno novoAluno) {
+		
+		validator.validate(novoAluno);
+		validator.onErrorUsePageOf(this).cadastrar();
+		
+		dao.salvar(novoAluno);
 		result.redirectTo(MatriculaController.class).cadastrar();
 	}
 	
