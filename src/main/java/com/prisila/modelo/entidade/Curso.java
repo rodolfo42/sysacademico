@@ -10,12 +10,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import org.hibernate.validator.NotEmpty;
+
 @Entity
 public class Curso {
 	
 	@Id
 	@GeneratedValue
 	private Long id;
+	@NotEmpty
 	private String nome;
 	@ManyToMany(mappedBy = "listaCurso", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<Professor> listaProfessor;

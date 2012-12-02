@@ -5,7 +5,8 @@
 	<div class="row">
 		<div class="span8">
 			<h2>Cadastrar novo usuário</h2>
-			<!-- TODO copiar para tag -->
+			<tag:validationalert />
+			
 			<c:if test="${not empty errors}">
 				<div class="alert alert-block alert-error">
 					<h4>Corrija os seguintes erros</h4>

@@ -6,11 +6,13 @@
 	<form action="<c:url value="/cursos/adicionar"/>" method="POST">
 		<fieldset>
 			<legend>Adicionar Curso</legend>
-
-			<label for="nome">Nome:</label> <input id="nome" type="text" name="curso.nome" />
-
+			<label for="nome">Nome do curso</label>
+			<input id="nome" type="text" name="curso.nome" />
 		</fieldset>
-		<button type="submit" class="btn">Enviar</button>
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary">Enviar</button>
+			<a href="<c:url value="/cursos/listar" />" class="btn btn-small">voltar</a>
+		</div>
 	</form>
 </body>
 </html>

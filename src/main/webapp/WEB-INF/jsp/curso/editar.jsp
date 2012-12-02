@@ -5,13 +5,12 @@
 <body>
 	<form action="<c:url value="/cursos/${curso.id }"/>" method="POST">
 		<fieldset>
-
 			<legend>Adicionar Curso</legend>
-
 			<label for="nome">Nome:</label> <input id="nome" type="text" name="curso.nome" value="${curso.nome }" />
-
-			<button type="submit" name="_method" value="PUT">Alterar</button>
-			<button type="submit" name="_method" value="DELETE">Excluir</button>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary" name="_method" value="PUT">Alterar</button>
+				<button type="submit" class="btn btn-danger" name="_method" value="DELETE">Excluir</button>
+			</div>
 		</fieldset>
 	</form>
 </body>
