@@ -2,28 +2,18 @@ package com.prisila.test;
 
 import static org.junit.Assert.*;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.AnnotationConfiguration;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import com.prisila.dao.CursoDao;
 import com.prisila.modelo.entidade.Curso;
 
-public class CursoDAOTest {
+public class CursoDAOTest extends DAOTest {
 	
 	CursoDao dao;
-	SessionFactory sessionFactory;
-	Session session;
 	
-	@Before
-	public void construirSessionFactory() {
-		sessionFactory = new AnnotationConfiguration()
-			.configure("hibernate.test.cfg.xml")
-			.buildSessionFactory();
-		session = sessionFactory.openSession();
+	@Override
+	public void setup() {
+		super.setup();
 		dao = new CursoDao(session);
 	}
 	
@@ -58,14 +48,9 @@ public class CursoDAOTest {
 		assertEquals("Curso2", dao.carrega(1L).getNome());
 	}
 	
-	
-	@After
-	public void finalizarSessionFactory() {
-		session.close();
-		sessionFactory.close();
-		
+	@Override
+	public void finalize() {
+		super.finalize();
 		dao = null;
-		session = null;
-		sessionFactory = null;
 	}
 }
