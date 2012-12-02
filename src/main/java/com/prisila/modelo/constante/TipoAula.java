@@ -5,7 +5,7 @@ public enum TipoAula {
 	
 	private final String nome;
 	
-	TipoAula(String nome) {
+	private TipoAula(String nome) {
 		this.nome = nome;
 	}
 	
