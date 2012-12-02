@@ -28,7 +28,6 @@ public class TesteDB {
 		return prof;
 	}
 	
-	
 	/**
 	 * Retorna todas as instâncias cadastradas
 	 * 
@@ -40,15 +39,30 @@ public class TesteDB {
 		return (List<T>) dbMap.get(clazz);
 	}
 	
+	public static <T> T getOne(Class<T> clazz) {
+		ArrayList<T> list = (ArrayList<T>) dbMap.get(clazz);
+		if (list != null && list.size() > 0) {
+			/*
+			 * nao precisa ser list.size() -1, pois Math.random() só retorna <
+			 * 1.0, então o arredondamento sempre vai ser para baixo
+			 */
+			int randIndex = (int) (Math.random() * (list.size()));
+			return list.get(randIndex);
+		} else {
+			return null;
+		}
+	}
+	
 	/**
 	 * adiciona um instância ao banco
+	 * 
 	 * @param <T>
 	 * @param thing
 	 * @return
 	 */
 	public static <T> boolean addInstance(T thing) {
 		Class<T> clazz = (Class<T>) thing.getClass();
-		if(!dbMap.containsKey(clazz)) {
+		if (!dbMap.containsKey(clazz)) {
 			dbMap.put(clazz, new ArrayList<T>(0));
 		}
 		return ((ArrayList<T>) dbMap.get(clazz)).add(thing);

@@ -7,8 +7,8 @@ import org.junit.After;
 import org.junit.Before;
 
 /**
- * extender essa classe para todos os testCases de DAO's
- * contém lógica para instanciar o SessionFactory com configs de teste
+ * extender essa classe para todos os testCases de DAO's contém lógica para
+ * instanciar o SessionFactory com configs de teste
  */
 public abstract class DAOTest {
 	
@@ -18,9 +18,7 @@ public abstract class DAOTest {
 	@Before
 	public void setup() {
 		System.out.println("DAOTest.setup()");
-		sessionFactory = new AnnotationConfiguration()
-			.configure("hibernate.test.cfg.xml")
-			.buildSessionFactory();
+		sessionFactory = new AnnotationConfiguration().configure("hibernate.test.cfg.xml").buildSessionFactory();
 		session = sessionFactory.openSession();
 	}
 	

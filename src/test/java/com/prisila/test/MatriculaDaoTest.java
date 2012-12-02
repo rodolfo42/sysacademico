@@ -35,7 +35,7 @@ public class MatriculaDaoTest extends DAOTest {
 		curso.setNome("Curso teste");
 		return curso;
 	}
-
+	
 	private Responsavel getResponsavelTeste() {
 		Responsavel resp = new Responsavel();
 		resp.setNome("Responsavel teste");
@@ -47,7 +47,7 @@ public class MatriculaDaoTest extends DAOTest {
 		resp.setDataConfirmacao(Calendar.getInstance().getTime());
 		return resp;
 	}
-
+	
 	private Aluno getAlunoTeste() {
 		Aluno a = new Aluno();
 		a.setNome("Aluno Teste");
@@ -58,7 +58,7 @@ public class MatriculaDaoTest extends DAOTest {
 		a.setListaResponsavel(Arrays.asList(getResponsavelTeste()));
 		return a;
 	}
-
+	
 	@Override
 	public void finalize() {
 		super.finalize();
