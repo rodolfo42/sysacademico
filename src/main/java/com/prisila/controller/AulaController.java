@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 import br.com.caelum.vraptor.Get;
+import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
+import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 
@@ -16,6 +18,7 @@ import com.prisila.dao.ProfessorDao;
 import com.prisila.dao.SalaDao;
 import com.prisila.exception.MatriculaInexistenteNaSessao;
 import com.prisila.exception.TechnicalException;
+import com.prisila.modelo.constante.StatusAula;
 import com.prisila.modelo.constante.TipoAula;
 import com.prisila.modelo.entidade.Aula;
 import com.prisila.modelo.entidade.AulaMatricula;
@@ -106,12 +109,11 @@ public class AulaController extends Controller {
 	}
 	
 	@Get
-	public void marcar(){
+	public List<Professor> marcar(){
 		Matricula matricula = getMatriculaNaSessao();
 		
-		List<Professor> listaProfessor = null;
-		listaProfessor = buscaHorariosDisponiveis(matricula.getCurso());
-		incluirRecursosNaResult(listaProfessor);
+		incluirRecursosNaResult();
+		return buscaHorariosDisponiveis(matricula.getCurso());
 	}
 	
 	@Post
@@ -145,7 +147,7 @@ public class AulaController extends Controller {
 	
 	@Get
 	public List<AulaMatricula> listar() {
-		
+		incluirRecursosNaResult();
 		return aulaMatriculaDao.buscarAulas(getMatriculaNaSessao());
 	}
 
@@ -159,14 +161,25 @@ public class AulaController extends Controller {
 		return matricula;
 	}
 	
-	
+	@Put
+	@Path("/aula/editarStatusAula")
+	public void editarStatusAula(AulaMatricula aulaMatricula){
+		aulaMatricula.setMatricula(getMatriculaNaSessao());
+		
+		AulaMatricula aulaMatriculaNoBanco = aulaMatriculaDao.carrega(aulaMatricula);
+		aulaMatriculaNoBanco.setStatusAula(aulaMatricula.getStatusAula());
+		
+		aulaMatriculaDao.atualiza(aulaMatriculaNoBanco);
+		result.redirectTo(this).listar();
+	}
 
-	private void incluirRecursosNaResult(List<Professor> listaProfessor){
+	private void incluirRecursosNaResult(){
 		TipoAula[] tipoAulas = TipoAula.values();
 		List<Sala> listaSala = salaDao.buscarTodos();
+		StatusAula[] statusAulas = StatusAula.values();
 		result.include("salaList", listaSala);
 		result.include("tipoAulas", tipoAulas);
-		result.include("professorList", listaProfessor);
+		result.include("statusAulas", statusAulas);
 	}
 	
 }

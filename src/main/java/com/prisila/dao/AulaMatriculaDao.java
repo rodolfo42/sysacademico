@@ -29,4 +29,11 @@ public class AulaMatriculaDao extends Dao<AulaMatricula> {
 		super.salvar(aulaMatricula);
 	}
 	
+	public AulaMatricula carrega(AulaMatricula aulaMatricula){
+		adicionarCriterion(Restrictions.eq("matricula.id", aulaMatricula.getMatricula().getId()));
+		adicionarCriterion(Restrictions.eq("aula.id", aulaMatricula.getAula().getId()));
+		
+		return super.buscarUm();
+	}
+	
 }
