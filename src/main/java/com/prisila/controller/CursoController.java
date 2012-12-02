@@ -21,6 +21,7 @@ public class CursoController extends Controller {
 	
 	private final CursoDao cursoDao;
 	private final Result result;
+	private Validator validator;
 	
 	public CursoController(CursoDao dao, Result result, Validator validator) {
 		this.cursoDao = dao;
