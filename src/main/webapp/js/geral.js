@@ -198,4 +198,18 @@ $(function() {
 			feedbackDiv.removeClass("in");
 		}, 5000);
 	});
+	
+	/**
+	 * Marcar via javascript uma combo usada em jsps de edição
+	 * a option que devera ficar selecionada
+	 * @author Gabriel
+	 */
+	$.fn.marcarSelecionado = function(valueQueDeveSerSelecionado){
+		if (!$(this).is('select')){
+			//nao é um select
+			return;
+		}
+		
+		$(this).find('option[value="'+valueQueDeveSerSelecionado+'"]').prop('selected', true);
+	};
 });

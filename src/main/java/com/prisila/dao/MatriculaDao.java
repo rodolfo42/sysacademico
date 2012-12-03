@@ -30,8 +30,8 @@ public class MatriculaDao extends Dao<Matricula> {
 	}
 	
 	public List<Matricula> buscarPorAlunos(List<Aluno> alunos) {
-		if (alunos == null) {
-			return null;
+		if (alunos == null || alunos.isEmpty()) {
+			return new ArrayList<Matricula>(0);
 		}
 		List<Long> ids = new ArrayList<Long>(0);
 		for (Aluno aluno : alunos) {
@@ -64,5 +64,17 @@ public class MatriculaDao extends Dao<Matricula> {
 		matricula.setData(data);
 		
 		super.salvar(matricula);
+	}
+	
+	public void inativar(Long id){
+		Matricula matricula = super.carrega(id);
+		matricula.setAtivo(false);
+		super.atualiza(matricula);
+	}
+	
+	public void ativar(Long id){
+		Matricula matricula = super.carrega(id);
+		matricula.setAtivo(true);
+		super.atualiza(matricula);
 	}
 }

@@ -17,7 +17,7 @@ public class ResponsavelDao extends Dao<Responsavel> {
 		super(session);
 	}
 	
-	public List<Aluno> listaPeloAluno(Aluno aluno) {
+	public List<Responsavel> listaPeloAluno(Aluno aluno) {
 		StringBuilder qry = new StringBuilder();
 		qry.append("from Responsavel r join fetch r.listaAluno a ");
 		qry.append("where a.id = ?");

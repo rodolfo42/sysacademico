@@ -30,7 +30,7 @@
 						class="dropdown-toggle" href="javascript:void(0);">Matrículas <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel2">
 						<li><a href="<c:url value="/alunos/cadastrar" />">Nova matrícula</a></li>
-						<li><a href="<c:url value="/alunos/listar" />">Buscar matrícula</a></li>
+						<li><a href="<c:url value="/matriculas/listar" />">Buscar matrícula</a></li>
 					</ul>
 				</li>
 				<li><a rel="tooltip" data-placement="bottom" title="Marcação de aulas" href="<c:url value="/aulas" />">Aulas</a>

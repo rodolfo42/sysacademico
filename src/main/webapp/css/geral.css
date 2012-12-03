@@ -23,6 +23,10 @@
 	cursor: help !important;
 }
 
+.cursor-pointer {
+	cursor: pointer !important;
+}
+
 .aoLadoH2 {
 	margin-top: 15px;
 }

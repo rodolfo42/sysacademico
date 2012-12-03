@@ -82,21 +82,36 @@ public class MatriculaController extends Controller {
 	@Get
 	@Path("/matriculas/{id}")
 	public Matricula editar(Long id) {
-		incluirListasNaResult();
-		return dao.carrega(id);
+		Matricula matriculaParaEditar = dao.carrega(id);
+		matriculaSessao.setMatricula(matriculaParaEditar);
+		
+		List<Responsavel> listaResponsavelPorAluno = responsavelDao.listaPeloAluno(matriculaParaEditar.getAluno());
+		result.include("responsavelListPorAluno", listaResponsavelPorAluno);
+		
+		return matriculaParaEditar;
 	}
 	
 	@Put
 	@Path("/matriculas/{matricula.id}")
 	public void alterar(Matricula matricula) {
-		dao.atualiza(matricula);
+		Matricula matriculaNoBanco = dao.carrega(matricula.getId());
+		
+		matriculaNoBanco.setResponsavel(matricula.getResponsavel());
+		dao.atualiza(matriculaNoBanco);
 		result.redirectTo(this).listar();
 	}
 	
-	@Delete
-	@Path("/matriculas/{id}")
-	public void deletar(Long id) {
-		dao.deletar(id);
+	@Put
+	@Path("/matriculas/inativar/{id}")
+	public void inativar(Long id) {
+		dao.inativar(id);
+		result.redirectTo(this).listar();
+	}
+	
+	@Put
+	@Path("/matriculas/ativar/{id}")
+	public void ativar(Long id) {
+		dao.ativar(id);
 		result.redirectTo(this).listar();
 	}
 	
@@ -109,11 +124,14 @@ public class MatriculaController extends Controller {
 	@Get
 	@Path("/matriculas/busca.json")
 	public void buscaJson(String nomeAluno) {
+		List<Matricula> listaMatriculaPorNomeDoAluno;
 		if (StringUtil.notNullOrEmpty(nomeAluno)) {
-			dao.buscarPorNomeAluno(nomeAluno);
+			listaMatriculaPorNomeDoAluno = dao.buscarPorNomeAluno(nomeAluno);
+		}else{
+			listaMatriculaPorNomeDoAluno = listar();
 		}
 		
-		result.use(json()).from(dao.buscarTodos()).include("aluno").include("responsavel").include("curso")
+		result.use(json()).from(listaMatriculaPorNomeDoAluno).include("aluno").include("responsavel").include("curso")
 				.include("listaTipoAula", "listaTipoAula.nome").serialize();
 	}
 	
@@ -144,18 +162,12 @@ public class MatriculaController extends Controller {
 	private void incluirListasNaResult() {
 		alunoList = alunoDao.listaTudo();
 		responsavelList = responsavelDao.listaTudo();
-		tipoMatriculaList = TipoMatricula.values();
 		cursoList = cursoDao.listaTudo();
 		tipoAulaList = TipoAula.values();
 		result.include("alunoList", alunoList);
 		result.include("responsavelList", responsavelList);
-		result.include("tipoMatriculaList", tipoMatriculaList);
 		result.include("cursoList", cursoList);
 		result.include("tipoAulaList", tipoAulaList);
-	}
-
-	public MatriculaSessao getMatriculaSessao() {
-		return matriculaSessao;
 	}
 	
 }
