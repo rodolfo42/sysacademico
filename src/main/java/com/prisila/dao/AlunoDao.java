@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import br.com.caelum.vraptor.ioc.Component;
 
@@ -14,8 +15,11 @@ import com.prisila.modelo.entidade.Responsavel;
 @Component
 public class AlunoDao extends Dao<Aluno> {
 	
-	public AlunoDao(Session session) {
+	private ResponsavelDao responsavelDao;
+	
+	public AlunoDao(Session session, ResponsavelDao responsavelDao) {
 		super(session);
+		this.responsavelDao = responsavelDao;
 	}
 	
 	/*
@@ -44,5 +48,16 @@ public class AlunoDao extends Dao<Aluno> {
 	public List<Aluno> buscarPorNome(String nomeAluno) {
 		getCriteria().add(getCriterionLike("nome", nomeAluno));
 		return buscarTodos();
+	}
+
+	public void salvarAlunoComResponsavel(Aluno novoAluno, Responsavel responsavelASalvar) {
+		Transaction tx = getSession().beginTransaction();
+		
+		responsavelASalvar.adicionaVinculo(novoAluno);
+		novoAluno.adicionaVinculo(responsavelASalvar);
+		
+		responsavelDao.getSession().save(responsavelASalvar);
+		getSession().save(novoAluno);
+		tx.commit();
 	}
 }

@@ -3,6 +3,7 @@ package com.prisila.dao;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import br.com.caelum.vraptor.ioc.Component;
 
@@ -23,5 +24,10 @@ public class ResponsavelDao extends Dao<Responsavel> {
 		qry.append("where a.id = ?");
 		
 		return getSession().createQuery(qry.toString()).setLong(0, aluno.getId()).list();
+	}
+
+	public Responsavel getByCPF(String cpf) {
+		adicionarCriterion(Restrictions.eq("cpf", cpf));
+		return buscarUm();
 	}
 }

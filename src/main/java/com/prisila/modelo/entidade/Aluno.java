@@ -14,14 +14,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import org.hibernate.validator.NotEmpty;
+import org.hibernate.validator.NotNull;
+import org.hibernate.validator.Past;
+
 @Entity
 public class Aluno {
 	
 	@Id
 	@GeneratedValue
 	private Long id;
+	@NotEmpty( message = "{aluno.nome.vazio}" )
 	private String nome;
+	
+	@NotNull( message = "{aluno.data.vazio}")
+	@Past( message = "{aluno.data.passado}" )
 	private Date dataNascimento;
+	
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "aluno_responsavel", joinColumns = { @JoinColumn(name = "aluno_id") }, inverseJoinColumns = @JoinColumn(name = "responsavel_id"))
 	private List<Responsavel> listaResponsavel;
