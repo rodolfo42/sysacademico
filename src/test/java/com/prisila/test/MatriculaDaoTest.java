@@ -15,16 +15,16 @@ public class MatriculaDAOTest extends DAOTest {
 	MatriculaDao matriculaDao;
 	AlunoDao alunoDao;
 	ResponsavelDao responsavelDao;
-	private CursoDao cursoDao;
+	CursoDao cursoDao;
 	
 	@Override
 	public void setup() {
 		super.setup();
 		// TODO usar injecao de dependencia do VRaptor
 		// a questão é: COMO?
-		alunoDao = new AlunoDao(session);
 		matriculaDao = new MatriculaDao(session, alunoDao);
 		responsavelDao = new ResponsavelDao(session);
+		alunoDao = new AlunoDao(session, responsavelDao);
 		cursoDao = new CursoDao(session);
 	}
 	

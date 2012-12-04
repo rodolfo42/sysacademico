@@ -11,20 +11,45 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import org.hibernate.validator.Email;
+import org.hibernate.validator.NotEmpty;
+import org.hibernate.validator.Pattern;
+
 @Entity
 public class Responsavel {
 	
 	@Id
 	@GeneratedValue
 	private Long id;
+	
+	@NotEmpty(message = "{resp.cpf.vazio")
+	@Pattern(regex = "^[0-9]{11}$", message = "{resp.cpf.invalido}")
 	private String cpf;
+	
+	@NotEmpty(message = "{resp.nome.vazio}")
 	private String nome;
+	
+	@NotEmpty(message = "{resp.endereco.vazio}")
 	private String endereco;
+	
+	@NotEmpty(message = "{resp.cep.vazio}")
+	@Pattern(regex = "[0-9]{8}", message = "{resp.cep.invalido}")
 	private String cep;
+	
+	@NotEmpty(message = "{resp.telefone.vazio}")
+	@Pattern(regex = "[0-9]{10,11}", message = "{resp.telefone.invalido}")
 	private String telefone;
+	
+	@NotEmpty(message = "{resp.celular.vazio}")
+	@Pattern(regex = "[0-9]{10,11}", message = "{resp.celular.invalido}")
 	private String celular;
+	
+	@NotEmpty(message = "{resp.email.vazio}")
+	@Email(message = "{resp.email.invalido}")
 	private String email;
+	
 	private Date dataConfirmacao;
+	
 	@ManyToMany(mappedBy = "listaResponsavel", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<Aluno> listaAluno;
 	

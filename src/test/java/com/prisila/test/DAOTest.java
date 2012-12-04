@@ -17,17 +17,16 @@ public abstract class DAOTest {
 	
 	@Before
 	public void setup() {
-		System.out.println("DAOTest.setup()");
 		sessionFactory = new AnnotationConfiguration().configure("hibernate.test.cfg.xml").buildSessionFactory();
 		session = sessionFactory.openSession();
 	}
 	
 	@After
 	public void finalize() {
-		System.out.println("DAOTest.finalize()");
 		session.close();
 		sessionFactory.close();
 		
+		// gc
 		session = null;
 		sessionFactory = null;
 	}
