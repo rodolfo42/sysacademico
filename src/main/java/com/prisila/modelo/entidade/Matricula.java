@@ -12,6 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.validator.NotEmpty;
+import org.hibernate.validator.NotNull;
+
 import com.prisila.modelo.constante.TipoAula;
 
 @Entity
@@ -22,10 +25,13 @@ public class Matricula {
 	private Long id;
 	@Temporal(TemporalType.DATE)
 	private Calendar data;
+	@NotNull
 	@ManyToOne
 	private Aluno aluno;
+	@NotNull
 	@ManyToOne
 	private Responsavel responsavel;
+	@NotNull
 	@ManyToOne
 	private Curso curso;
 	@ElementCollection

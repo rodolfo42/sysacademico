@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@include file="../taglibs.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -6,6 +6,7 @@
 	<form id="frmMatricula" action="<c:url value="/matriculas/guardaNaSessao"/>" method="POST">
 		<fieldset>
 			<legend>Matrícula</legend>
+			<tag:validationalert />
 			
 			<label for="aluno">Aluno:</label>
 			<select name="matricula.aluno.id" id="aluno">
