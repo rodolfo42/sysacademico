@@ -3,6 +3,7 @@ package com.prisila.dao;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 
 import br.com.caelum.vraptor.ioc.Component;
@@ -29,5 +30,15 @@ public class ResponsavelDao extends Dao<Responsavel> {
 	public Responsavel getByCPF(String cpf) {
 		adicionarCriterion(Restrictions.eq("cpf", cpf));
 		return buscarUm();
+	}
+
+	public List<Responsavel> buscarPorCPFAproximado(String cpf) {
+		adicionarCriterion(Restrictions.ilike("cpf", cpf, MatchMode.ANYWHERE));
+		return buscarTodos();
+	}
+
+	public List<Responsavel> buscarPorNomeAproximado(String nome) {
+		adicionarCriterion(Restrictions.ilike("nome", nome, MatchMode.ANYWHERE));
+		return buscarTodos();
 	}
 }

@@ -62,12 +62,9 @@ public class AlunoController extends Controller {
 			}
 		} else {
 			responsavelASalvar = novoResponsavel;
-		}
-		
-		if(responsavelASalvar != null) {
-			responsavelASalvar.adicionaVinculo(novoAluno);
 			validator.validate(responsavelASalvar);
 		}
+		
 		validator.validate(novoAluno);
 		validator.onErrorUsePageOf(this).cadastrar();
 		

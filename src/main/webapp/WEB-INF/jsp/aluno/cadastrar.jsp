@@ -1,5 +1,3 @@
-<%@page import="com.prisila.modelo.entidade.Aluno"%>
-<%@page import="com.prisila.util.StringUtil"%>
 <%@ include file="../taglibs.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
@@ -145,7 +143,20 @@
 				</div>
 				<div id="responsavelExistente" class="accordion-body collapse">
 					<div class="accordion-inner">
-						<span class="muted">chosen.js - pegando o resposável existente</span>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="span6">
+							<div class="control-group">
+								<div class="control-label">Digite CPF ou Nome</div>
+								<div class="controls">
+									<input type="text" class="input-xlarge" id="searchResponsavel" />
+									<input type="hidden" name="responsavelExistente.id" id="responsavelExistenteId" />
+									<div class="muted" style="margin-top: 10px" id="responsavelExistenteNome"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 					</div>
 				</div>
 			</div>
@@ -175,6 +186,33 @@
 			$("#copiarNomeAluno").bind('click', function(e) {
 				_bindNome = !_bindNome;
 				if(_bindNome) syncNome($("#nomeNovoAluno").val());
+			});
+			
+			var _lastResultSet = [];
+			$('#searchResponsavel').typeahead({
+				source: function(query, processFn){
+					return $.get('<c:url value="/responsaveis/busca" />', {'q': query}, function (data) {
+						var options = [];
+						var rs = _lastResultSet = data.list;
+						for(var i=0; i < rs.length; i++) {
+							options[i] = rs[i].cpf + " | " + rs[i].nome;
+						}
+						return processFn(options);
+					});
+				},
+				updater: function(selected) {
+					var cpf = selected.split("|")[0].trim();
+					
+					// isso é só para mostrar o nome do responsavel
+					for(var i=0; i < _lastResultSet.length; i++) {
+						if(_lastResultSet[i].cpf == cpf) {
+							$("#responsavelExistenteNome").text(_lastResultSet[i].nome);
+							$("#responsavelExistenteId").val(_lastResultSet[i].id);
+						}
+					}
+					
+					return cpf;
+				}
 			});
 		});
 		</script>

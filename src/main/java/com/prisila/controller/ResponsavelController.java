@@ -1,6 +1,13 @@
 package com.prisila.controller;
 
+import static br.com.caelum.vraptor.view.Results.json;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
@@ -22,6 +29,7 @@ public class ResponsavelController extends Controller {
 	private final AlunoDao alunoDao;
 	private final Result result;
 	private List<Aluno> alunoList;
+	private static Logger LOG = LoggerFactory.getLogger(ResponsavelController.class);
 	
 	public ResponsavelController(ResponsavelDao dao, AlunoDao alunoDao, Result result) {
 		this.dao = dao;
@@ -82,5 +90,17 @@ public class ResponsavelController extends Controller {
 	private void incluirListaNaResult() {
 		alunoList = alunoDao.listaTudo();
 		result.include("alunoList", alunoList);
+	}
+	
+	@Get
+	@Path("/responsaveis/busca")
+	public void buscar(String q) {
+		List<Responsavel> resultados = new ArrayList<Responsavel>();
+		if(Pattern.matches("^[0-9]+$", q)) { // somente numeros
+			resultados.addAll(dao.buscarPorCPFAproximado(q));
+		} else {
+			resultados.addAll(dao.buscarPorNomeAproximado(q));
+		}
+		result.use(json()).from(resultados).serialize();
 	}
 }

@@ -26,3 +26,7 @@ body {
 	text-align: center;
 	font-size: 120%;
 }
+
+.typeahead.dropdown-menu li.active a {
+	color: white;
+}

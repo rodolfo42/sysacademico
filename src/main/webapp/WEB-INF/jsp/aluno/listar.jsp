@@ -1,5 +1,5 @@
-<%@page import="com.prisila.util.StringUtil"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@ include file="../taglibs.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <body>
 	<h3>Alunos</h3>
@@ -18,15 +18,23 @@
 				<tr>
 					<td>${aluno.id }</td>
 					<td>${aluno.nome }</td>
-					<td>${aluno.dataNascimento }</td>
+					<td><fmt:formatDate pattern="dd/MM/yyyy" value="${aluno.dataNascimento}" /></td>
 					<td>
 						<c:forEach items="${aluno.listaResponsavel}" var="responsavel">
-							${responsavel.nome }<br />
+							<div><i class="icon icon-user"></i> ${responsavel.nome}</div>
 						</c:forEach>
 					</td>
 					<td>
-						<a href="<c:url value="/alunos/addresponsavel/${aluno.id}" />" class="btn btn-small">adicionar responsável</a>
-						<a href="<c:url value="/matriculas/matricular/${aluno.id}" />" class="btn btn-success">efetuar matrícula</a>
+						<div class="btn-group">
+							<a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
+								<i class="icon icon-cog"></i>
+								<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu pull-right">
+								<li><a href="javascript:void(0);"><i class="icon icon-user"></i> adicionar responsável (em breve)</a></li>
+								<li><a href="<c:url value="/matriculas/matricular/${aluno.id}" />"><i class="icon icon-legal"></i> efetuar matrícula</a></li>
+							</ul>
+						</div>
 					</td>
 				</tr>
 			</c:forEach>
