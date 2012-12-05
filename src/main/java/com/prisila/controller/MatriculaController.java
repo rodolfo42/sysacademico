@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.hibernate.exception.ConstraintViolationException;
+
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
@@ -35,6 +37,8 @@ import com.prisila.modelo.entidade.MatriculaSessao;
 import com.prisila.modelo.entidade.Professor;
 import com.prisila.modelo.entidade.Responsavel;
 import com.prisila.modelo.entidade.Sala;
+import com.prisila.util.Mensagem;
+import com.prisila.util.Mensagem.TipoMensagem;
 import com.prisila.util.StringUtil;
 
 @Resource
@@ -86,8 +90,10 @@ public class MatriculaController extends Controller {
 		
 		Matricula matricula = getMatriculaNaSessao();
 		
+		boolean teveErroDeConstraint = false;
 		AulaMatricula aulaMatricula = null;
 		Aula aulaParaMarcar = null;
+		Aula aulaNoBanco = null;
 		EsquemaAula esquemaAula = null;
 		List<Aula> listaAulasParaMarcar = new ArrayList<Aula>();
 		
@@ -104,8 +110,14 @@ public class MatriculaController extends Controller {
 				for (Calendar dataParaMarcar : esquemaAula.getAulasDoMes()) {
 					aulaParaMarcar = (Aula) aula.clone();
 					aulaParaMarcar.setTimestamp(dataParaMarcar);
-					listaAulasParaMarcar.add(aulaParaMarcar);
-					aulaDao.salvar(aulaParaMarcar);
+					
+					aulaNoBanco = aulaDao.buscarUma(aulaParaMarcar);
+					if (aulaNoBanco == null){
+						listaAulasParaMarcar.add(aulaParaMarcar);
+						aulaDao.salvar(aulaParaMarcar);
+					}else{
+						listaAulasParaMarcar.add(aulaNoBanco);
+					}
 					
 				}
 			}
@@ -123,7 +135,23 @@ public class MatriculaController extends Controller {
 			aulaMatricula = new AulaMatricula();
 			aulaMatricula.setMatricula(matricula);
 			aulaMatricula.setAula(aula);
-			aulaMatriculaDao.salvar(aulaMatricula);
+			try{
+				aulaMatriculaDao.salvar(aulaMatricula);
+			}catch (ConstraintViolationException e) {
+				LOG.warn("AulaMatricula já existe",e);
+				teveErroDeConstraint = true;
+			}
+		}
+		
+		if (teveErroDeConstraint){
+			String mensagem = "O aluno desta matrícula já estava alocado a aula";
+			setMensagem(result, new Mensagem(TipoMensagem.WARNING, mensagem));
+		}else{
+			String mensagem = "Aula(s) marcada(s) para esta matrícula com sucesso";
+			if (matriculaSessao.isPrecisaSalvar()){
+				mensagem = "Matrícula salva com sucesso<br />Aula(s) marcada(s) para esta matrícula com sucesso";
+			}
+			setMensagem(result, new Mensagem(TipoMensagem.SUCCESS, mensagem));
 		}
 		
 		result.redirectTo(AulaController.class).listar();
