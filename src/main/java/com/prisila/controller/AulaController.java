@@ -24,6 +24,8 @@ import com.prisila.modelo.entidade.Matricula;
 import com.prisila.modelo.entidade.MatriculaSessao;
 import com.prisila.modelo.entidade.Professor;
 import com.prisila.modelo.entidade.Sala;
+import com.prisila.util.Mensagem;
+import com.prisila.util.Mensagem.TipoMensagem;
 import com.prisila.util.PropertiesUtil;
 
 @Resource
@@ -131,6 +133,7 @@ public class AulaController extends Controller {
 		aulaMatriculaNoBanco.setStatusAula(aulaMatricula.getStatusAula());
 		
 		aulaMatriculaDao.atualiza(aulaMatriculaNoBanco);
+		setMensagem(result, new Mensagem(TipoMensagem.SUCCESS, "Status da aula modificado com sucesso"));
 		result.redirectTo(this).listar();
 	}
 
