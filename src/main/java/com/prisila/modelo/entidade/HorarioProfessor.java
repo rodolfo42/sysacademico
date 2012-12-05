@@ -30,10 +30,6 @@ public class HorarioProfessor implements Comparable<HorarioProfessor> {
 	private final int criterioHoraFim = 2;
 	@Transient
 	private String nomeDiaDaSemana;
-	@Transient
-	private String horaInicioTexto;
-	@Transient
-	private String horaFimTexto;
 	
 	public Long getId() {
 		return id;
@@ -105,7 +101,6 @@ public class HorarioProfessor implements Comparable<HorarioProfessor> {
 	
 	public void setHoraInicio(Long horaInicio) {
 		this.horaInicio = horaInicio;
-		this.horaInicioTexto = getHoraInicioTexto();
 	}
 	
 	public Long getHoraFim() {
@@ -114,7 +109,6 @@ public class HorarioProfessor implements Comparable<HorarioProfessor> {
 	
 	public void setHoraFim(Long horaFim) {
 		this.horaFim = horaFim;
-		this.horaFimTexto = getHoraFimTexto();
 	}
 	
 	public String getNomeDiaDaSemana() {

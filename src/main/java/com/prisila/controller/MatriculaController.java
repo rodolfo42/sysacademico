@@ -2,6 +2,8 @@ package com.prisila.controller;
 
 import static br.com.caelum.vraptor.view.Results.json;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import br.com.caelum.vraptor.Get;
@@ -14,15 +16,25 @@ import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.Validations;
 
 import com.prisila.dao.AlunoDao;
+import com.prisila.dao.AulaDao;
+import com.prisila.dao.AulaMatriculaDao;
 import com.prisila.dao.CursoDao;
 import com.prisila.dao.MatriculaDao;
 import com.prisila.dao.ResponsavelDao;
+import com.prisila.dao.SalaDao;
+import com.prisila.exception.MatriculaInexistenteNaSessao;
+import com.prisila.exception.TechnicalException;
 import com.prisila.modelo.constante.TipoAula;
 import com.prisila.modelo.entidade.Aluno;
+import com.prisila.modelo.entidade.Aula;
+import com.prisila.modelo.entidade.AulaMatricula;
 import com.prisila.modelo.entidade.Curso;
+import com.prisila.modelo.entidade.EsquemaAula;
 import com.prisila.modelo.entidade.Matricula;
 import com.prisila.modelo.entidade.MatriculaSessao;
+import com.prisila.modelo.entidade.Professor;
 import com.prisila.modelo.entidade.Responsavel;
+import com.prisila.modelo.entidade.Sala;
 import com.prisila.util.StringUtil;
 
 @Resource
@@ -30,6 +42,9 @@ public class MatriculaController extends Controller {
 	
 	private final MatriculaDao dao;
 	private final AlunoDao alunoDao;
+	private final SalaDao salaDao;
+	private final AulaDao aulaDao;
+	private final AulaMatriculaDao aulaMatriculaDao;
 	private final ResponsavelDao responsavelDao;
 	private final CursoDao cursoDao;
 	private final Result result;
@@ -38,31 +53,80 @@ public class MatriculaController extends Controller {
 	private TipoAula[] tipoAulaList;
 	private List<Curso> cursoList;
 	private MatriculaSessao matriculaSessao;
+	private final AulaController aulaController;
 	private final Validator validator;
 	private static final long ZERO = 0;
 	
-	public MatriculaController(MatriculaDao matriculaDao, AlunoDao alunoDao, ResponsavelDao responsavelDao,
-			CursoDao cursoDao, Result result, MatriculaSessao matriculaSessao, Validator validator) {
+	public MatriculaController(MatriculaDao matriculaDao, AlunoDao alunoDao, ResponsavelDao responsavelDao, 
+			SalaDao salaDao, CursoDao cursoDao, AulaDao aulaDao, AulaMatriculaDao aulaMatriculaDao, 
+			Result result, MatriculaSessao matriculaSessao,	AulaController aulaController, Validator validator) {
 		this.dao = matriculaDao;
 		this.alunoDao = alunoDao;
 		this.responsavelDao = responsavelDao;
 		this.cursoDao = cursoDao;
+		this.salaDao = salaDao;
+		this.aulaDao = aulaDao;
+		this.aulaMatriculaDao = aulaMatriculaDao;
 		this.result = result;
 		this.matriculaSessao = matriculaSessao;
+		this.aulaController = aulaController;
 		this.validator = validator;
 	}
 	
 	@Get
 	@Path("/matriculas/cadastrar")
 	public void cadastrar() {
-		incluirListasNaResult();
+		incluirRecursosNaResult();
 	}
 	
 	@Post
-	@Path("/matriculas/cadastrar")
-	public void cadastrar(final Matricula matricula) {
-
-		dao.salvar(matricula);
+	@Path("/matriculas/finalizar")
+	public void finalizar(List<Aula> aulas) {
+		result.on(TechnicalException.class).forwardTo(this).esquemaAula();
+		
+		Matricula matricula = getMatriculaNaSessao();
+		
+		AulaMatricula aulaMatricula = null;
+		Aula aulaParaMarcar = null;
+		EsquemaAula esquemaAula = null;
+		List<Aula> listaAulasParaMarcar = new ArrayList<Aula>();
+		
+		try {
+			for (Aula aula : aulas) {
+				esquemaAula = new EsquemaAula(aula.getTipoAula(),
+											  aula.getProfessor(), 
+											  aula.getSala(), 
+											  aula.getTimestampLong(), 
+											  aula.getDiaDaSemana());
+				
+				matricula.adicionaVinculo(esquemaAula);
+				
+				for (Calendar dataParaMarcar : esquemaAula.getAulasDoMes()) {
+					aulaParaMarcar = (Aula) aula.clone();
+					aulaParaMarcar.setTimestamp(dataParaMarcar);
+					listaAulasParaMarcar.add(aulaParaMarcar);
+					aulaDao.salvar(aulaParaMarcar);
+					
+				}
+			}
+		} catch (TechnicalException e) {
+			LOG.error(e.getMessage());
+		} catch (CloneNotSupportedException e) {
+			LOG.error(e.getMessage());
+		}
+		
+		if (matriculaSessao.isPrecisaSalvar()){
+			dao.salvar(matricula);
+		}
+		
+		for (Aula aula : listaAulasParaMarcar) {
+			aulaMatricula = new AulaMatricula();
+			aulaMatricula.setMatricula(matricula);
+			aulaMatricula.setAula(aula);
+			aulaMatriculaDao.salvar(aulaMatricula);
+		}
+		
+		result.redirectTo(AulaController.class).listar();
 	}
 	
 	@Post
@@ -89,7 +153,7 @@ public class MatriculaController extends Controller {
 			matriculaSessao.setMatricula(matricula);
 			matriculaSessao.setPrecisaSalvar(true);
 		}
-		result.redirectTo(AulaController.class).marcar();
+		result.redirectTo(this).esquemaAula();
 	}
 	
 	@Get
@@ -145,7 +209,7 @@ public class MatriculaController extends Controller {
 		}
 		
 		result.use(json()).from(listaMatriculaPorNomeDoAluno).include("aluno").include("responsavel").include("curso")
-				.include("listaTipoAula", "listaTipoAula.nome").serialize();
+				.include("listaEsquemaAula", "listaEsquemaAula.tipoAula.nome").serialize();
 	}
 	
 	@Get
@@ -172,8 +236,16 @@ public class MatriculaController extends Controller {
 		}
 	}
 	
-	private void incluirListasNaResult() {
+	public List<Professor> esquemaAula(){
+		Matricula matricula = getMatriculaNaSessao();
+		
+		incluirRecursosNaResult();
+		return aulaController.buscaHorariosDisponiveis(matricula.getCurso());
+	}
+	
+	private void incluirRecursosNaResult() {
 		alunoList = alunoDao.listaTudo();
+		List<Sala> listaSala = salaDao.buscarTodos();
 		responsavelList = responsavelDao.listaTudo();
 		cursoList = cursoDao.listaTudo();
 		tipoAulaList = TipoAula.values();
@@ -181,6 +253,17 @@ public class MatriculaController extends Controller {
 		result.include("responsavelList", responsavelList);
 		result.include("cursoList", cursoList);
 		result.include("tipoAulaList", tipoAulaList);
+		result.include("salaList", listaSala);
+	}
+	
+	private Matricula getMatriculaNaSessao() {
+		Matricula matricula = null;
+		try {
+			matricula = matriculaSessao.getMatricula();
+		} catch (MatriculaInexistenteNaSessao e) {
+			LOG.error(e.getMessage());
+		}
+		return matricula;
 	}
 	
 }

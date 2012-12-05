@@ -3,12 +3,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <body>
-	<form action="<c:url value="/aula/marcar"/>" method="POST">
+	<form action="<c:url value="/matriculas/finalizar"/>" method="POST">
 		<fieldset>
 			<legend>Marcar Aulas</legend>
 			
 			<div class="container" data-toggle="buttons-checkbox">
-				<c:forEach items="${tipoAulas }" var="tipoAula" varStatus="status">
+				<c:forEach items="${tipoAulaList }" var="tipoAula" varStatus="status">
 					<div class="row-fluid">
 						<span class="span2">
 							<button type="button" data-placement="right" rel="tooltip" title="Clique para marcar esse tipo de aula" class="btn">

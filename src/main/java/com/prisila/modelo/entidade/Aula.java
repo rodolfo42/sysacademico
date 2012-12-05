@@ -12,12 +12,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import com.prisila.exception.TechnicalException;
 import com.prisila.modelo.constante.DiaDaSemana;
 import com.prisila.modelo.constante.TipoAula;
 
 @Entity
-public class Aula {
+public class Aula implements Cloneable{
 	
 	@Id
 	@GeneratedValue
@@ -60,6 +59,10 @@ public class Aula {
 		this.sala = sala;
 	}
 	
+	public void setTimestamp(Calendar timestamp) {
+		this.timestamp = timestamp;
+	}
+	
 	public Calendar getTimestamp() {
 		return timestamp;
 	}
@@ -68,28 +71,8 @@ public class Aula {
 		this.timestampLong = timestampLong;
 	}
 	
-	public void formatarAulaDaSemana() throws TechnicalException{
-		int segundos = 0;
-		int semanaSeguinte = 1;
-		Calendar calendarTimestamp = Calendar.getInstance();
-		Calendar calendar = Calendar.getInstance();
-		
-		if (timestampLong == 0){
-			throw new TechnicalException("Timestamp é zero!");
-		}
-		calendarTimestamp.setTimeInMillis(timestampLong);
-		
-		if (diaDaSemana == null){
-			throw new TechnicalException("diaDaSemana está null!");
-		}
-		
-		calendar.set(Calendar.DAY_OF_WEEK, diaDaSemana.getCodigo());
-		calendar.add(Calendar.WEEK_OF_MONTH, semanaSeguinte);
-		calendar.set(Calendar.HOUR_OF_DAY, calendarTimestamp.get(Calendar.HOUR_OF_DAY));
-		calendar.set(Calendar.MINUTE, calendarTimestamp.get(Calendar.MINUTE));
-		calendar.set(Calendar.SECOND, segundos);
-		
-		this.timestamp = calendar;
+	public long getTimestampLong() {
+		return timestampLong;
 	}
 	
 	public TipoAula getTipoAula() {
@@ -102,6 +85,15 @@ public class Aula {
 
 	public void setDiaDaSemana(DiaDaSemana diaDaSemana) {
 		this.diaDaSemana = diaDaSemana;
+	}
+
+	public DiaDaSemana getDiaDaSemana() {
+		return diaDaSemana;
+	}
+
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
 	}
 	
 }

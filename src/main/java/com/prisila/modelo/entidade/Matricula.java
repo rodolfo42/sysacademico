@@ -4,18 +4,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.persistence.ElementCollection;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
-
-import com.prisila.modelo.constante.TipoAula;
 
 @Entity
 public class Matricula {
@@ -34,12 +33,13 @@ public class Matricula {
 	@NotNull
 	@ManyToOne
 	private Curso curso;
-	@ElementCollection
-	private List<TipoAula> listaTipoAula;
+	@NotNull
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	private List<EsquemaAula> listaEsquemaAula;
 	private boolean ativo;
-	
-	public Matricula() {
-		this.listaTipoAula = new ArrayList<TipoAula>();
+
+	public Matricula(){
+		listaEsquemaAula = new ArrayList<EsquemaAula>();
 	}
 	
 	public Long getId() {
@@ -82,18 +82,6 @@ public class Matricula {
 		this.curso = curso;
 	}
 	
-	public List<TipoAula> getListaTipoAula() {
-		return listaTipoAula;
-	}
-	
-	public void setListaTipoAula(List<TipoAula> listaTipoAula) {
-		this.listaTipoAula = listaTipoAula;
-	}
-	
-	public void adicionaVinculo(TipoAula tipoAula) {
-		this.listaTipoAula.add(tipoAula);
-	}
-	
 	public boolean isAtivo() {
 		return ativo;
 	}
@@ -101,5 +89,18 @@ public class Matricula {
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
+	
+	public void adicionaVinculo(EsquemaAula esquemaAula) {
+		this.listaEsquemaAula.add(esquemaAula);
+	}
+
+	public List<EsquemaAula> getListaEsquemaAula() {
+		return listaEsquemaAula;
+	}
+
+	public void setListaEsquemaAula(List<EsquemaAula> listaEsquemaAula) {
+		this.listaEsquemaAula = listaEsquemaAula;
+	}
+
 	
 }

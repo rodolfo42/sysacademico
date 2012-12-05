@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 public class PropertiesUtil {
 	
 	private Properties properties;
-	private final String nomeProperties = "aula.properties";
+	private final String nomeProperties = "/aula.properties";
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 	
 	public PropertiesUtil() {

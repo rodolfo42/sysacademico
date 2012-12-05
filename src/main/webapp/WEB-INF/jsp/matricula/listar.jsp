@@ -33,8 +33,8 @@
 							<td>${matricula.responsavel.nome }</td>
 							<td>${matricula.curso.nome }</td>
 							<td>
-								<c:forEach items="${matricula.listaTipoAula}" var="tipoAula">
-									${tipoAula.nome}<br />
+								<c:forEach items="${matricula.listaEsquemaAula}" var="esquemaAula">
+									${esquemaAula.tipoAula.nome}<br />
 								</c:forEach>
 							</td>
 							<td>

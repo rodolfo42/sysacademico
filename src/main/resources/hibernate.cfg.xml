@@ -23,5 +23,6 @@
 		<mapping class="com.prisila.modelo.entidade.Aula" />
 		<mapping class="com.prisila.modelo.entidade.HorarioProfessor" />
 		<mapping class="com.prisila.modelo.entidade.Sala" />
+		<mapping class="com.prisila.modelo.entidade.EsquemaAula" />
 	</session-factory>
 </hibernate-configuration>
