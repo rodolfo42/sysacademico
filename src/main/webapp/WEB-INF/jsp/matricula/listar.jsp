@@ -15,19 +15,18 @@
 			<table id="tabelaMatricula" width="100%" class="table">
 				<thead>
 					<tr>
-						<th>Id</th>
 						<th>Data</th>
 						<th>Aluno</th>
 						<th>Responsável</th>
 						<th>Curso</th>
 						<th>Tipo de Aula</th>
 						<th>Status</th>
+						<th>Ações</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${matriculaList}" var="matricula">
-						<tr onclick="consultaMatricula(${matricula.id});" class="cursor-pointer">
-							<td>${matricula.id }</td>
+						<tr>
 							<td><fmt:formatDate value="${matricula.data.time}" pattern="dd/MM/yyyy" /></td>
 							<td>${matricula.aluno.nome }</td>
 							<td>${matricula.responsavel.nome }</td>
@@ -44,6 +43,10 @@
 								<c:if test="${!matricula.ativo }">
 									<span class="label label-important">Inativa</span>
 								</c:if>
+							</td>
+							<td>
+								<a class="btn" rel="tooltip" title="Editar matrícula" href="javascript:editaMatricula(${matricula.id});"><i class="icon-edit"></i></a>
+								<a class="btn" rel="tooltip" title="Listar aulas da matrícula" href="javascript:listaAulas(${matricula.id});"><i class="icon-list"></i></a>
 							</td>
 						</tr>
 					</c:forEach>
@@ -65,16 +68,25 @@
 					for (var i=0;i<json.list.length;i++){
 						item = json.list[i];
 						tr += '<tr>';
-						tr += '<td>'+item.id+'</td>';
 						tr += '<td>'+converteData(item.data.time)+'</td>';
 						tr += '<td>'+item.aluno.nome+'</td>';
 						tr += '<td>'+item.responsavel.nome+'</td>';
 						tr += '<td>'+item.curso.nome+'</td>';
 						tr += '<td>';
-						for (var ii=0;ii<item.listaTipoAula.length;ii++){
-							tr += item.listaTipoAula[ii].nome+'<br />';
+						for (var ii=0;ii<item.listaEsquemaAula.length;ii++){
+							tr += item.listaEsquemaAula[ii].tipoAula.nome+'<br />';
 						}
 						tr +='</td>';
+						if (item.ativo){
+							label = 'success';
+						}else{
+							label = 'important';
+						}
+						tr += '<td><span class="label label-'+label+'">Ativa</span></td>';
+						tr += '<td><a class="btn" rel="tooltip" title="Editar matrícula" href="javascript:editaMatricula(${matricula.id});">';
+						tr += '<i class="icon-edit"></i></a> ';
+						tr += '<a class="btn" rel="tooltip" title="Listar aulas da matrícula" href="javascript:listaAulas(${matricula.id});">';
+						tr += '<i class="icon-list"></i></a></td>';
 						tr += "</tr>";
 					}
 					$('#tabelaMatricula').append(tr);
@@ -88,10 +100,16 @@
 			return sdf.format(date);
 		};
 		
-		var consultaMatricula = function(idMatricula){
+		var editaMatricula = function(idMatricula){
 			$('#formMatricula').attr('action','<c:url value="/matriculas/'+idMatricula+'"/>');
 			$('#formMatricula').submit();
-		}
+		};
+		
+		var listaAulas = function(idMatricula){
+			$('#formMatricula').attr('action','<c:url value="/matriculas/listar/'+idMatricula+'"/>');
+			$('#formMatricula').attr('method','GET');
+			$('#formMatricula').submit();
+		};
 	</script>
 </body>
 </html>

@@ -113,6 +113,13 @@ public class AulaController extends Controller {
 		incluirRecursosNaResult();
 		return aulaMatriculaDao.buscarAulas(getMatriculaNaSessao());
 	}
+	
+	@Get
+	@Path("/matriculas/listar/{matricula.id}")
+	public List<AulaMatricula> listar(Matricula matricula) {
+		incluirRecursosNaResult();
+		return aulaMatriculaDao.buscarAulas(matricula);
+	}
 
 	private Matricula getMatriculaNaSessao() {
 		Matricula matricula = null;
