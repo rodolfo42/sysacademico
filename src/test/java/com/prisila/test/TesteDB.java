@@ -73,8 +73,8 @@ public class TesteDB {
 		Matricula matr = new Matricula();
 		matr.setAluno(newAluno());
 		matr.setAtivo(true);
-		matr.adicionaVinculo(TipoAula.PRATICA_INDIVIDUAL);
-		matr.adicionaVinculo(TipoAula.PRATICA_GRUPO);
+//		matr.adicionaVinculo(TipoAula.PRATICA_INDIVIDUAL);
+//		matr.adicionaVinculo(TipoAula.PRATICA_GRUPO);
 		matr.setCurso(newCurso());
 		matr.setData(Calendar.getInstance());
 		matr.setResponsavel(matr.getAluno().getListaResponsavel().get(0));

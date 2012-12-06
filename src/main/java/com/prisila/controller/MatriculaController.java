@@ -138,18 +138,18 @@ public class MatriculaController extends Controller {
 			try{
 				aulaMatriculaDao.salvar(aulaMatricula);
 			}catch (ConstraintViolationException e) {
-				LOG.warn("AulaMatricula j· existe",e);
+				LOG.warn("AulaMatricula j√° existe",e);
 				teveErroDeConstraint = true;
 			}
 		}
 		
 		if (teveErroDeConstraint){
-			String mensagem = "O aluno desta matrÌcula j· estava alocado a aula";
+			String mensagem = "O aluno desta matr√≠cula j√° estava alocado a aula";
 			setMensagem(result, new Mensagem(TipoMensagem.WARNING, mensagem));
 		}else{
-			String mensagem = "Aula(s) marcada(s) para esta matrÌcula com sucesso";
+			String mensagem = "Aula(s) marcada(s) para esta matr√≠cula com sucesso";
 			if (matriculaSessao.isPrecisaSalvar()){
-				mensagem = "MatrÌcula salva com sucesso<br />Aula(s) marcada(s) para esta matrÌcula com sucesso";
+				mensagem = "Matr√≠cula salva com sucesso<br />Aula(s) marcada(s) para esta matr√≠cula com sucesso";
 			}
 			setMensagem(result, new Mensagem(TipoMensagem.SUCCESS, mensagem));
 		}
