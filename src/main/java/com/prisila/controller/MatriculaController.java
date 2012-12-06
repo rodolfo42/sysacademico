@@ -228,16 +228,16 @@ public class MatriculaController extends Controller {
 	
 	@Get
 	@Path("/matriculas/busca.json")
-	public void buscaJson(String nomeAluno) {
+	public void buscaJson(Aluno aluno) {
 		List<Matricula> listaMatriculaPorNomeDoAluno;
-		if (StringUtil.notNullOrEmpty(nomeAluno)) {
-			listaMatriculaPorNomeDoAluno = dao.buscarPorNomeAluno(nomeAluno);
+		if (StringUtil.notNullOrEmpty(aluno.getNome())) {
+			listaMatriculaPorNomeDoAluno = dao.buscarPorNomeAluno(aluno.getNome());
 		}else{
 			listaMatriculaPorNomeDoAluno = listar();
 		}
 		
-		result.use(json()).from(listaMatriculaPorNomeDoAluno).include("aluno").include("responsavel").include("curso")
-				.include("listaEsquemaAula", "listaEsquemaAula.tipoAula.nome").serialize();
+		result.include("matriculaList", listaMatriculaPorNomeDoAluno);
+		result.of(this).listar();
 	}
 	
 	@Get

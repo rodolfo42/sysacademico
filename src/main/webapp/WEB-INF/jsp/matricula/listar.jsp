@@ -4,10 +4,10 @@
 <html>
 <body>
 	<div class="span12">
-		<form class="form-search">
+		<form class="form-search" id="search" method="GET" action="<c:url value="/matriculas/busca.json" />">
 			<div class="input-append">
-    			<input type="text" id="aluno" placeholder="Nome do Aluno" class="input-medium search-query">
-   				<a class="btn" href="javascript:buscarMatriculas();"><i class="icon-search"></i></a>
+    			<input type="text" id="aluno" name="aluno.nome" placeholder="Nome do Aluno" class="input-medium search-query">
+   				<button type="submit" class="btn"><i class="icon-search"></i></button>
   			</div>
 		</form>
 		<form id="formMatricula" method="GET">
@@ -33,7 +33,25 @@
 							<td>${matricula.curso.nome }</td>
 							<td>
 								<c:forEach items="${matricula.listaEsquemaAula}" var="esquemaAula">
-									${esquemaAula.tipoAula.nome}<br />
+									<div class="conteudo_popover">
+										<label>
+											<b>Professor:</b>
+											${esquemaAula.professor.nome }
+										</label>
+										<label>
+											<b>Sala:</b>
+											${esquemaAula.sala.descricao }
+										</label>
+										<label>
+											<b>Dia:</b>
+											${esquemaAula.diaDaSemana.nome }
+										</label>
+										<label>
+											<b>Horário:</b>
+											${esquemaAula.horaTexto }
+										</label>
+									</div>
+									<a href="#" rel="popover">${esquemaAula.tipoAula.nome}</a><br />
 								</c:forEach>
 							</td>
 							<td>
@@ -56,43 +74,17 @@
 	</div>
 	<script type="text/javascript" src="<c:url value="/js/simpleDateFormat.js"/>"></script>
 	<script type="text/javascript">
-		var buscarMatriculas = function(){
-			$.ajax({
-				url:'<c:url value="/matriculas/busca.json"/>',
-				dataType: 'json',
-				data: 'nomeAluno='+$('#aluno').val(),
-				cache:false,
-				success: function(json){
-					$('#tabelaMatricula tbody').remove();
-					var tr = '';
-					for (var i=0;i<json.list.length;i++){
-						item = json.list[i];
-						tr += '<tr>';
-						tr += '<td>'+converteData(item.data.time)+'</td>';
-						tr += '<td>'+item.aluno.nome+'</td>';
-						tr += '<td>'+item.responsavel.nome+'</td>';
-						tr += '<td>'+item.curso.nome+'</td>';
-						tr += '<td>';
-						for (var ii=0;ii<item.listaEsquemaAula.length;ii++){
-							tr += item.listaEsquemaAula[ii].tipoAula.nome+'<br />';
-						}
-						tr +='</td>';
-						if (item.ativo){
-							label = 'success';
-						}else{
-							label = 'important';
-						}
-						tr += '<td><span class="label label-'+label+'">Ativa</span></td>';
-						tr += '<td><a class="btn" rel="tooltip" title="Editar matrícula" href="javascript:editaMatricula(${matricula.id});">';
-						tr += '<i class="icon-edit"></i></a> ';
-						tr += '<a class="btn" rel="tooltip" title="Listar aulas da matrícula" href="javascript:listaAulas(${matricula.id});">';
-						tr += '<i class="icon-list"></i></a></td>';
-						tr += "</tr>";
-					}
-					$('#tabelaMatricula').append(tr);
+		$(function(){
+			$('.conteudo_popover').hide();
+			$('[rel="popover"]').popover({
+				title: '<i class="icon-music"></i>&nbsp;<b>Dados da Aula</b>',
+				html: true,
+				trigger: 'hover',
+				content: function(){
+					return $('[rel="popover"]').parent().find('.conteudo_popover').html();
 				}
 			});
-		};
+		});
 		
 		var converteData = function(time){
 			var date = new Date(time);
@@ -106,7 +98,7 @@
 		};
 		
 		var listaAulas = function(idMatricula){
-			$('#formMatricula').attr('action','<c:url value="/matriculas/listar/'+idMatricula+'"/>');
+			$('#formMatricula').attr('action','<c:url value="/aula/listar/'+idMatricula+'"/>');
 			$('#formMatricula').attr('method','GET');
 			$('#formMatricula').submit();
 		};

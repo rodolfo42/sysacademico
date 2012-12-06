@@ -12,6 +12,7 @@ import br.com.caelum.vraptor.Result;
 
 import com.prisila.dao.AulaDao;
 import com.prisila.dao.AulaMatriculaDao;
+import com.prisila.dao.MatriculaDao;
 import com.prisila.dao.ProfessorDao;
 import com.prisila.dao.SalaDao;
 import com.prisila.exception.MatriculaInexistenteNaSessao;
@@ -35,6 +36,7 @@ public class AulaController extends Controller {
 	private final ProfessorDao professorDao;
 	private final SalaDao salaDao;
 	private final AulaMatriculaDao aulaMatriculaDao;
+	private final MatriculaDao matriculaDao;
 	private final Result result;
 	private MatriculaSessao matriculaSessao;
 	private long duracaoAulaEmMilisegundos;
@@ -42,13 +44,15 @@ public class AulaController extends Controller {
 	private static final int valorConversorSegundos = 60;
 	private static final int valorConversorMilisegundos = 1000;
 	
-	public AulaController(AulaDao dao, ProfessorDao professorDao, SalaDao salaDao, Result result, MatriculaSessao matriculaSessao, AulaMatriculaDao aulaMatriculaDao) {
+	public AulaController(AulaDao dao, ProfessorDao professorDao, SalaDao salaDao, Result result, 
+			MatriculaSessao matriculaSessao, AulaMatriculaDao aulaMatriculaDao, MatriculaDao matriculaDao) {
 		this.dao = dao;
 		this.professorDao = professorDao;
 		this.result = result;
 		this.matriculaSessao = matriculaSessao;
 		this.salaDao = salaDao;
 		this.aulaMatriculaDao = aulaMatriculaDao;
+		this.matriculaDao = matriculaDao;
 	}
 	
 	@Get
@@ -111,13 +115,16 @@ public class AulaController extends Controller {
 	@Get
 	public List<AulaMatricula> listar() {
 		incluirRecursosNaResult();
+		result.include("matricula",getMatriculaNaSessao());
 		return aulaMatriculaDao.buscarAulas(getMatriculaNaSessao());
 	}
 	
 	@Get
-	@Path("/matriculas/listar/{matricula.id}")
+	@Path("/aula/listar/{matricula.id}")
 	public List<AulaMatricula> listar(Matricula matricula) {
 		incluirRecursosNaResult();
+		matricula = matriculaDao.carrega(matricula.getId());
+		result.include("matricula",matricula);
 		return aulaMatriculaDao.buscarAulas(matricula);
 	}
 

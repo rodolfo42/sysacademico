@@ -17,7 +17,7 @@ public class MatriculaSessao implements Serializable {
 	
 	public Matricula getMatricula() throws MatriculaInexistenteNaSessao{
 		if (matricula == null){
-			throw new MatriculaInexistenteNaSessao("A matricula da sess√£o");
+			throw new MatriculaInexistenteNaSessao("A matricula da sess„o esta null");
 		}
 		
 		return matricula;
