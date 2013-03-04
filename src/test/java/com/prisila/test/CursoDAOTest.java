@@ -28,7 +28,7 @@ public class CursoDAOTest extends DAOTest {
 		
 		dao.salvar(curso);
 		dao.salvar(curso);
-		assertEquals("deveria ter salvo", 1, dao.buscarTodos().size());
+		assertEquals("deveria ter salvo", 1, dao.listaTudo().size());
 	}
 	
 	@Test
@@ -49,11 +49,11 @@ public class CursoDAOTest extends DAOTest {
 		curso.setNome("Curso");
 		
 		dao.salvar(curso);
-		assertEquals("deveria ter salvo", 1, dao.buscarTodos().size());
+		assertEquals("deveria ter salvo", 1, dao.listaTudo().size());
 		assertNotNull("ID nao deveria estar null apos save()", curso.getId());
 		
 		dao.deletar(curso.getId());
-		assertEquals("deveria ter deletado", 0, dao.buscarTodos().size());
+		assertEquals("deveria ter deletado", 0, dao.listaTudo().size());
 	}
 	
 	@Test
@@ -67,7 +67,7 @@ public class CursoDAOTest extends DAOTest {
 		curso.setListaProfessor(listaProf);
 		
 		dao.salvar(curso);
-		assertEquals("deveria ter salvo", 1, dao.buscarTodos().size());
+		assertEquals("deveria ter salvo", 1, dao.listaTudo().size());
 		assertEquals("deveria ter salvo", listaProf, dao.carrega(1L).getListaProfessor());
 	}
 	

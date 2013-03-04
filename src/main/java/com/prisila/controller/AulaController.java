@@ -153,7 +153,7 @@ public class AulaController extends Controller {
 
 	private void incluirRecursosNaResult(){
 		TipoAula[] tipoAulas = TipoAula.values();
-		List<Sala> listaSala = salaDao.buscarTodos();
+		List<Sala> listaSala = salaDao.listaTudo();
 		StatusAula[] statusAulas = StatusAula.values();
 		result.include("salaList", listaSala);
 		result.include("tipoAulas", tipoAulas);

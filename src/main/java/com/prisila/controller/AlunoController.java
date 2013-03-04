@@ -2,9 +2,6 @@ package com.prisila.controller;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
@@ -16,6 +13,7 @@ import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.ValidationMessage;
 
 import com.prisila.dao.AlunoDao;
+import com.prisila.dao.MatriculaDao;
 import com.prisila.dao.ResponsavelDao;
 import com.prisila.modelo.entidade.Aluno;
 import com.prisila.modelo.entidade.Responsavel;
@@ -25,16 +23,17 @@ import com.prisila.util.Mensagem.TipoMensagem;
 @Resource
 public class AlunoController extends Controller {
 	
-	private final AlunoDao alunoDao;
+	private final AlunoDao dao;
 	private final ResponsavelDao responsavelDao;
+	private final MatriculaDao matriculaDao;
 	private final Result result;
 	private List<Responsavel> respList;
 	private Validator validator;
-	private static Logger LOG = LoggerFactory.getLogger(AlunoController.class);
 	
-	public AlunoController(AlunoDao dao, ResponsavelDao responsavelDao, Result result, Validator validator) {
-		this.alunoDao = dao;
+	public AlunoController(AlunoDao dao, ResponsavelDao responsavelDao, MatriculaDao matriculaDao, Result result, Validator validator) {
+		this.dao = dao;
 		this.responsavelDao = responsavelDao;
+		this.matriculaDao = matriculaDao;
 		this.result = result;
 		this.validator = validator;
 	}
@@ -70,7 +69,7 @@ public class AlunoController extends Controller {
 		
 		// a partir desta linha, deu tudo certo nas validações
 		try {
-			alunoDao.salvarAlunoComResponsavel(novoAluno, responsavelASalvar);
+			dao.salvarAlunoComResponsavel(novoAluno, responsavelASalvar);
 			setMensagem(result, new Mensagem(TipoMensagem.SUCCESS, "Aluno cadastrado com sucesso"));
 			result.redirectTo(this).listar();
 		} catch (Exception e) {
@@ -84,26 +83,27 @@ public class AlunoController extends Controller {
 	public Aluno editar(Long id) {
 		respList = responsavelDao.listaTudo();
 		result.include("responsavelList", respList);
-		return alunoDao.carrega(id);
+		
+		return dao.carrega(id);
 	}
 	
 	@Put
 	@Path("/alunos/{aluno.id}")
 	public void alterar(Aluno aluno) {
-		alunoDao.atualiza(aluno);
+		dao.atualiza(aluno);
 		result.redirectTo(this).listar();
 	}
 	
 	@Get
 	@Path("/alunos/listar")
 	public List<Aluno> listar() {
-		return alunoDao.listaTudo();
+		return dao.listaTudo();
 	}
 	
 	@Delete
 	@Path("/alunos/{id}")
 	public void deletar(Long id) {
-		alunoDao.deletar(id);
+		dao.deletar(id);
 		result.redirectTo(this).listar();
 	}
 	

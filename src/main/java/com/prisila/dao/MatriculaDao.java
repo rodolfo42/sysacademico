@@ -41,19 +41,26 @@ public class MatriculaDao extends Dao<Matricula> {
 		return buscarTodos();
 	}
 	
-	public MatriculaDao buscarPorAluno(Aluno aluno){
+	private MatriculaDao buscarPorAluno(Aluno aluno){
 		adicionarCriterion(Restrictions.eq("aluno.id", aluno.getId()));
 		return this;
 	}
 	
-	public MatriculaDao buscarPorResponsavel(Responsavel responsavel){
+	private MatriculaDao buscarPorResponsavel(Responsavel responsavel){
 		adicionarCriterion(Restrictions.eq("responsavel.id", responsavel.getId()));
 		return this;
 	}
 	
-	public MatriculaDao buscarPorCurso(Curso curso){
+	private MatriculaDao buscarPorCurso(Curso curso){
 		adicionarCriterion(Restrictions.eq("curso.id", curso.getId()));
 		return this;
+	}
+	
+	public Matricula buscarPorAlunoResponsavelCurso(Matricula matricula){
+		return buscarPorAluno(matricula.getAluno())
+				.buscarPorResponsavel(matricula.getResponsavel())
+				.buscarPorCurso(matricula.getCurso())
+				.buscarUm();
 	}
 	
 	@Override

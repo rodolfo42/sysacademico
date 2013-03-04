@@ -67,14 +67,14 @@ public class Dao<T> {
 		return this;
 	}
 	
-	public List<T> buscarTodos() {
+	protected List<T> buscarTodos() {
 		Criterion[] crits = {};
 		crits = criteriosBusca.toArray(crits);
 		criteriosBusca.clear();
 		return buscarTodos(crits);
 	}
 	
-	public T buscarUm() {
+	protected T buscarUm() {
 		Criterion[] crits = {};
 		crits = criteriosBusca.toArray(crits);
 		criteriosBusca.clear();

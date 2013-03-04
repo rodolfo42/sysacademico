@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
@@ -34,6 +35,8 @@ public class Aluno {
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "aluno_responsavel", joinColumns = { @JoinColumn(name = "aluno_id") }, inverseJoinColumns = @JoinColumn(name = "responsavel_id"))
 	private List<Responsavel> listaResponsavel;
+	@OneToMany(mappedBy="aluno")
+	private List<Matricula> listaMatricula;
 	
 	public Aluno() {
 		this.listaResponsavel = new ArrayList<Responsavel>();
@@ -79,6 +82,14 @@ public class Aluno {
 		Calendar data = Calendar.getInstance();
 		data.setTime(dataNascimento);
 		return String.valueOf(data.get(Calendar.DAY_OF_MONTH));
+	}
+
+	public List<Matricula> getListaMatricula() {
+		return Collections.unmodifiableList(listaMatricula);
+	}
+
+	public void setListaMatricula(List<Matricula> listaMatricula) {
+		this.listaMatricula = listaMatricula;
 	}
 	
 }
