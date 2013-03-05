@@ -7,10 +7,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.prisila.modelo.entidade.Curso;
 
 public class GeralUtil {
 	
@@ -91,5 +95,21 @@ public class GeralUtil {
 	
 	public static long converteMinutosParaMilisegundos(int valorMinutos) {
 		return (valorMinutos * 60) * 1000;
+	}
+	
+	/**
+	 * Recebe uma lista original e outra lista que fará uma intersecção,
+	 * <br>retirando os itens duplicados nas duas listas
+	 * @param listaOriginal - lista original
+	 * @param listaItensARemover - lista que possui os itens que serão retirados da outra lista 
+	 * @return
+	 */
+	public static List<Curso> removeItensDuplicados(List<Curso> listaOriginal, List<Curso> listaItensARemover){
+		Set<Curso> setListaOriginal = new HashSet<Curso>(listaOriginal);
+		Set<Curso> setListaItensARemover = new HashSet<Curso>(listaItensARemover);
+		
+		setListaOriginal.removeAll(setListaItensARemover);
+		
+		return new ArrayList<Curso>(setListaOriginal);
 	}
 }

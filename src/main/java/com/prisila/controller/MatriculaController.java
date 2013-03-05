@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.exception.ConstraintViolationException;
 
 import br.com.caelum.vraptor.Get;
@@ -37,6 +38,7 @@ import com.prisila.modelo.entidade.MatriculaSessao;
 import com.prisila.modelo.entidade.Professor;
 import com.prisila.modelo.entidade.Responsavel;
 import com.prisila.modelo.entidade.Sala;
+import com.prisila.util.GeralUtil;
 import com.prisila.util.Mensagem;
 import com.prisila.util.Mensagem.TipoMensagem;
 import com.prisila.util.StringUtil;
@@ -78,9 +80,49 @@ public class MatriculaController extends Controller {
 	}
 	
 	@Get
-	@Path("/matriculas/cadastrar")
+	@Path("/matricula/cadastrar")
 	public void cadastrar() {
+		/**
+		 * TODO filtrar lista de cursos no cadastro normal de matriculas
+		 * usar json para mudar a combo assim que escolher o aluno
+		 * para trazer os cursos que aquele aluno ainda está matriculado
+		 */
 		incluirRecursosNaResult();
+	}
+	
+	@Get
+	@Path("/matricula/cadastrar/{id}")
+	public Matricula cadastrarAluno(Long id){
+		Matricula matricula = new Matricula();
+		Aluno alunoMatriculado;
+		try {
+			alunoMatriculado = alunoDao.carrega(id);
+			
+			matricula.setAluno(alunoMatriculado);
+			
+			List<Responsavel> listaResponsavelPorAluno = responsavelDao.listaPeloAluno(alunoMatriculado);
+			
+			cursoList = getCursosQueAlunoNaoEstaMatriculado(alunoMatriculado);
+			
+			result.include("responsavelListPorAluno", listaResponsavelPorAluno);
+			result.include("cursoList", cursoList);
+		} catch (HibernateException e) {
+			setMensagem(result, new Mensagem(TipoMensagem.ERROR, "Aluno inexistente"));
+			result.forwardTo(AlunoController.class).listar();
+		}
+
+		return matricula;
+	}
+	
+	
+	
+	private List<Curso> getCursosQueAlunoNaoEstaMatriculado(Aluno aluno){
+		List<Curso> listaCursoMatricula = new ArrayList<Curso>();
+		for (Matricula matricula : aluno.getListaMatricula()) {
+			listaCursoMatricula.add(matricula.getCurso());
+		}
+		
+		return GeralUtil.removeItensDuplicados(cursoDao.listaTudo(), listaCursoMatricula);
 	}
 	
 	@Post
@@ -170,10 +212,7 @@ public class MatriculaController extends Controller {
 		validator.validate(matricula);
 		validator.onErrorRedirectTo(this).cadastrar();
 		
-		Matricula matriculaAux = dao.buscarPorAluno(matricula.getAluno())
-									.buscarPorResponsavel(matricula.getResponsavel())
-									.buscarPorCurso(matricula.getCurso())
-									.buscarUm();
+		Matricula matriculaAux = dao.buscarPorAlunoResponsavelCurso(matricula);
 		if (matriculaAux != null){
 			matriculaSessao.setMatricula(matriculaAux);
 			matriculaSessao.setPrecisaSalvar(false);
@@ -264,6 +303,17 @@ public class MatriculaController extends Controller {
 		}
 	}
 	
+	@Get
+	@Path("/matriculas/curso.json")
+	public void cursoJson(String idAluno) {
+		if (!idAluno.equals("0")) {
+			Aluno aluno = alunoDao.carrega(Long.parseLong(idAluno));
+			result.use(json()).from(getCursosQueAlunoNaoEstaMatriculado(aluno)).serialize();
+		} else {
+			result.use(json()).from(cursoDao.listaTudo()).serialize();
+		}
+	}
+	
 	public List<Professor> esquemaAula(){
 		Matricula matricula = getMatriculaNaSessao();
 		
@@ -273,7 +323,7 @@ public class MatriculaController extends Controller {
 	
 	private void incluirRecursosNaResult() {
 		alunoList = alunoDao.listaTudo();
-		List<Sala> listaSala = salaDao.buscarTodos();
+		List<Sala> listaSala = salaDao.listaTudo();
 		responsavelList = responsavelDao.listaTudo();
 		cursoList = cursoDao.listaTudo();
 		tipoAulaList = TipoAula.values();

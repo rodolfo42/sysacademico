@@ -9,18 +9,14 @@
 			<tag:validationalert />
 			
 			<label for="aluno">Aluno:</label>
-			<select name="matricula.aluno.id" id="aluno">
-				<option value="0">Selecionar</option>
-				<c:forEach items="${alunoList }" var="aluno">
-					<option value="${aluno.id }">${aluno.nome }</option>
-				</c:forEach>
-			</select>
+			<p class="lead">${matricula.aluno.nome}</p>
+			<input type="hidden" name="matricula.aluno.id" value="${matricula.aluno.id}" />
 	
 			
 			<label for="responsavel">Responsável:</label>
 			<select name="matricula.responsavel.id" id="responsavel">
 				<option value="0">Selecionar</option>
-				<c:forEach items="${responsavelList }" var="responsavel">
+				<c:forEach items="${responsavelListPorAluno }" var="responsavel">
 					<option value="${responsavel.id }">${responsavel.nome }</option>
 				</c:forEach>
 			</select>
@@ -36,26 +32,5 @@
 		</fieldset>
 		<button type="submit" class="btn">Enviar</button>
 	</form>
-	<script type="text/javascript">	
-		
-		$('#aluno').change(function(){
-			carregaComboJson('<c:url value="/matriculas/responsavel.json"/>',
-							 'idAluno='+$(this).val(),
-							 'responsavel',
-							 montaCombo);
-			
-			carregaComboJson('<c:url value="/matriculas/curso.json"/>',
-					 'idAluno='+$(this).val(),
-					 'curso',
-					 montaCombo);
-		});
-		
-		var montaCombo = function(json, $combo){
-			for ( var i = 0; i < json.list.length; i++) {
-				item = json.list[i];
-				$combo.append(montaOption(item.id, item.nome));
-			}
-		};
-	</script>
 </body>
 </html>

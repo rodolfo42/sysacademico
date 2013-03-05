@@ -7,7 +7,7 @@
 		<input type="hidden" id="hiddenIdAula" name="aulaMatricula.aula.id">
 		<input type="hidden" id="hiddenStatusAula" name="aulaMatricula.statusAula">
 		<input type="hidden" id="hiddenMetodo" name="_method">
-		<h3>Aluno: ${matricula.aluno.nome }</h3>
+		<h3>Aluno: ${aulaMatriculaList[0].matricula.aluno.nome }</h3>
 		
 		<table class="table table-bordered table-hover">
 			<thead>

@@ -146,3 +146,11 @@ function arrumaCssDeElementos() {
 			});
 	$('embed#chrome-plugin-npapi-helper').css('position', 'absolute');
 }
+
+function montaOption(value, text){
+	var $option = $('<option>',{
+		value: value,
+		text: text
+	});
+	return $option;
+}
