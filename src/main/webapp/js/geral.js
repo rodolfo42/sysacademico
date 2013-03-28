@@ -200,16 +200,33 @@ $(function() {
 	});
 	
 	/**
-	 * Marcar via javascript uma combo usada em jsps de edição
+	 * Marcar via javascript uma combo usada em jsps de ediï¿½ï¿½o
 	 * a option que devera ficar selecionada
 	 * @author Gabriel
 	 */
 	$.fn.marcarSelecionado = function(valueQueDeveSerSelecionado){
 		if (!$(this).is('select')){
-			//nao é um select
+			//nao ï¿½ um select
 			return;
 		}
 		
 		$(this).find('option[value="'+valueQueDeveSerSelecionado+'"]').prop('selected', true);
-	};
+	};	
+	$('table.collapseTable tr[data-row="containerRow"]')
+		.addClass('cursor-pointer')
+		.on('click',function(e){
+			e.preventDefault();
+			var $rowsCollapse = $(this).siblings().filter('tr[data-row="row"]');
+			var $outrasRowsCollapse = $rowsCollapse.filter('tr[data-parent!="'+$(this).attr('id')+'"]');
+			$rowsCollapse = $rowsCollapse.filter('tr[data-parent="'+$(this).attr('id')+'"]');
+			
+			if ($rowsCollapse.hasClass('in')){
+				$rowsCollapse.hide('fast')
+							 .removeClass('in');
+			}else{
+				$outrasRowsCollapse.hide('fast');
+				$rowsCollapse.show('fast')
+						   	 .addClass('in');
+			}
+		});
 });
