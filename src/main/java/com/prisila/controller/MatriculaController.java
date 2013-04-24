@@ -7,7 +7,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.hibernate.HibernateException;
-import org.hibernate.exception.ConstraintViolationException;
 
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
@@ -27,6 +26,7 @@ import com.prisila.dao.ResponsavelDao;
 import com.prisila.dao.SalaDao;
 import com.prisila.exception.MatriculaInexistenteNaSessao;
 import com.prisila.exception.TechnicalException;
+import com.prisila.modelo.constante.StatusAulaAluno;
 import com.prisila.modelo.constante.TipoAula;
 import com.prisila.modelo.entidade.Aluno;
 import com.prisila.modelo.entidade.Aula;
@@ -132,8 +132,7 @@ public class MatriculaController extends Controller {
 		
 		Matricula matricula = getMatriculaNaSessao();
 		
-		boolean teveErroDeConstraint = false;
-		AulaMatricula aulaMatricula = null;
+		boolean teveErroNaAulaMatricula = false;
 		Aula aulaParaMarcar = null;
 		Aula aulaNoBanco = null;
 		EsquemaAula esquemaAula = null;
@@ -148,6 +147,7 @@ public class MatriculaController extends Controller {
 											  aula.getDiaDaSemana());
 				
 				matricula.adicionaVinculo(esquemaAula);
+				aula.setCurso(matricula.getCurso());
 				
 				for (Calendar dataParaMarcar : esquemaAula.getAulasDoMes()) {
 					aulaParaMarcar = (Aula) aula.clone();
@@ -173,19 +173,9 @@ public class MatriculaController extends Controller {
 			dao.salvar(matricula);
 		}
 		
-		for (Aula aula : listaAulasParaMarcar) {
-			aulaMatricula = new AulaMatricula();
-			aulaMatricula.setMatricula(matricula);
-			aulaMatricula.setAula(aula);
-			try{
-				aulaMatriculaDao.salvar(aulaMatricula);
-			}catch (ConstraintViolationException e) {
-				LOG.warn("AulaMatricula já existe",e);
-				teveErroDeConstraint = true;
-			}
-		}
+		teveErroNaAulaMatricula = salvar(matricula, listaAulasParaMarcar);
 		
-		if (teveErroDeConstraint){
+		if (teveErroNaAulaMatricula){
 			String mensagem = "O aluno desta matrícula já estava alocado a aula";
 			setMensagem(result, new Mensagem(TipoMensagem.WARNING, mensagem));
 		}else{
@@ -197,6 +187,34 @@ public class MatriculaController extends Controller {
 		}
 		
 		result.redirectTo(AulaController.class).listar();
+	}
+
+	@Post
+	public boolean salvar(Matricula matricula, List<Aula> listaAulasParaMarcar) {
+		AulaMatricula aulaMatricula;
+		boolean teveErro = false;
+		for (Aula aula : listaAulasParaMarcar) {
+			aulaMatricula = new AulaMatricula();
+			aulaMatricula.setMatricula(matricula);
+			aulaMatricula.setAula(aula);
+			aulaMatricula.setStatusAulaAluno(StatusAulaAluno.AULA_NAO_REALIZADA);
+			
+			final boolean temAulaMatriculaNoBanco = aulaMatriculaDao.carrega(aulaMatricula) != null;
+			
+			validator.checking(new Validations(){
+				{
+					that(!temAulaMatriculaNoBanco, "aulaMatricula", "aulaMatricula.ja.existe");
+				}
+			});
+			
+			if (validator.hasErrors()){
+				teveErro = true;
+				LOG.warn("Erro na AulaMatricula: {}",validator.getErrors());
+			}
+			
+			aulaMatriculaDao.salvar(aulaMatricula);
+		}
+		return teveErro;
 	}
 	
 	@Post

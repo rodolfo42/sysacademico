@@ -1,14 +1,17 @@
 package com.prisila.controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
+import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.Validator;
 
 import com.prisila.dao.AulaDao;
 import com.prisila.dao.AulaMatriculaDao;
@@ -17,7 +20,9 @@ import com.prisila.dao.ProfessorDao;
 import com.prisila.dao.SalaDao;
 import com.prisila.exception.MatriculaInexistenteNaSessao;
 import com.prisila.modelo.constante.StatusAula;
+import com.prisila.modelo.constante.StatusAulaAluno;
 import com.prisila.modelo.constante.TipoAula;
+import com.prisila.modelo.entidade.Aula;
 import com.prisila.modelo.entidade.AulaMatricula;
 import com.prisila.modelo.entidade.Curso;
 import com.prisila.modelo.entidade.HorarioProfessor;
@@ -27,7 +32,6 @@ import com.prisila.modelo.entidade.Professor;
 import com.prisila.modelo.entidade.Sala;
 import com.prisila.util.Mensagem;
 import com.prisila.util.Mensagem.TipoMensagem;
-import com.prisila.util.PropertiesUtil;
 
 @Resource
 public class AulaController extends Controller {
@@ -40,12 +44,13 @@ public class AulaController extends Controller {
 	private final Result result;
 	private MatriculaSessao matriculaSessao;
 	private long duracaoAulaEmMilisegundos;
-	private static final String KEY_DURACAO_AULA = "duracao_aula";
 	private static final int valorConversorSegundos = 60;
 	private static final int valorConversorMilisegundos = 1000;
+	private final Validator validator; 
 	
 	public AulaController(AulaDao dao, ProfessorDao professorDao, SalaDao salaDao, Result result, 
-			MatriculaSessao matriculaSessao, AulaMatriculaDao aulaMatriculaDao, MatriculaDao matriculaDao) {
+			MatriculaSessao matriculaSessao, AulaMatriculaDao aulaMatriculaDao, MatriculaDao matriculaDao,
+			Validator validator) {
 		this.dao = dao;
 		this.professorDao = professorDao;
 		this.result = result;
@@ -53,6 +58,7 @@ public class AulaController extends Controller {
 		this.salaDao = salaDao;
 		this.aulaMatriculaDao = aulaMatriculaDao;
 		this.matriculaDao = matriculaDao;
+		this.validator = validator;
 	}
 	
 	@Get
@@ -70,8 +76,7 @@ public class AulaController extends Controller {
 		long auxSomador;
 		boolean temHorarioParaProfessor;
 		
-		PropertiesUtil propertiesUtil = new PropertiesUtil();
-		duracaoAulaEmMilisegundos = converteMinutosParaMilisegundos(Integer.parseInt(propertiesUtil.getProperty(KEY_DURACAO_AULA)));
+		duracaoAulaEmMilisegundos = converteMinutosParaMilisegundos(Aula.getDuracaoAula());
 		
 		for (Professor professor : listaProfessorHorarios) {
 			Collections.sort(professor.getListaHorarioProfessor());
@@ -139,25 +144,104 @@ public class AulaController extends Controller {
 	}
 	
 	@Put
-	@Path("/aula/editarStatusAula")
-	public void editarStatusAula(AulaMatricula aulaMatricula){
-		aulaMatricula.setMatricula(getMatriculaNaSessao());
+	@Path("/aula/editarStatusAulaAluno")
+	public void editarStatusAulaAluno(AulaMatricula aulaMatricula){
 		
-		AulaMatricula aulaMatriculaNoBanco = aulaMatriculaDao.carrega(aulaMatricula);
-		aulaMatriculaNoBanco.setStatusAula(aulaMatricula.getStatusAula());
+		AulaMatricula aulaMatriculaNoBanco = aulaMatriculaDao.carrega(aulaMatricula.getId());
+		aulaMatriculaNoBanco.setStatusAulaAluno(aulaMatricula.getStatusAulaAluno());
 		
 		aulaMatriculaDao.atualiza(aulaMatriculaNoBanco);
-		setMensagem(result, new Mensagem(TipoMensagem.SUCCESS, "Status da aula modificado com sucesso"));
-		result.redirectTo(this).listar();
+		setMensagem(result, new Mensagem(TipoMensagem.SUCCESS, "Status da aula desse aluno foi modificado com sucesso"));
+		result.redirectTo(this).listarAulasOcorrendoAgora();
 	}
+	
+	@Put
+	@Path("/aula/editarStatusAula")
+	public void editarStatusAula(Aula aula){
+		
+		Aula aulaNoBanco = dao.carrega(aula.getId());
+		aulaNoBanco.setStatusAula(aula.getStatusAula());
+		
+		dao.atualiza(aulaNoBanco);
+		setMensagem(result, new Mensagem(TipoMensagem.SUCCESS, "Status da aula modificado com sucesso"));
+		result.redirectTo(this).listarAulasOcorrendoAgora();
+	}
+	
+	@Get
+	@Path("/aula/lista/agora")
+	public List<Aula> listarAulasOcorrendoAgora(){
+		Calendar horaAtual = Calendar.getInstance();
+		
+		List<Aula> aulasDeHojeComecadasAntesDaHoraAtual = dao.getAulasOcorrendoAgora();
+		List<Aula> aulasOcorrendoAgora = new ArrayList<Aula>();
+		
+		int duracaoAula = Aula.getDuracaoAula();
+		Calendar horaAula;
+		for (Aula aula : aulasDeHojeComecadasAntesDaHoraAtual) {
+			horaAula = aula.getTimestamp();
+			horaAula.add(Calendar.MINUTE, duracaoAula);
+			
+			if (horaAula.after(horaAtual)){
+				horaAula.add(Calendar.MINUTE, -duracaoAula);
+				aulasOcorrendoAgora.add(aula);
+			}
+		}
+		
+		incluirRecursosNaResult();
+		
+		return aulasOcorrendoAgora;
+	}
+	
+	@Path("/aula/atualiza/agora")
+	public void marcarAulasOcorrendoAgora(){
+		List<Aula> aulasOcorrendoAgora = listarAulasOcorrendoAgora();
+		
+		for (Aula aula : aulasOcorrendoAgora) {
+			aula.setStatusAula(StatusAula.AULA_REALIZANDO);
+			dao.atualiza(aula);
+		}
+	}
+	
+	@Get
+	@Path("/aula/{aula.id}")
+	public Aula editar(Aula aula){
+		incluirRecursosNaResult();
+		return dao.carrega(aula.getId());
+	}
+	
+	@Put
+	@Path("/aula/{aula.id}")
+	public void alterar(Aula aula){
+		Aula aulaBanco = dao.carrega(aula.getId());
+		aulaBanco.setProfessor(aula.getProfessor());
+		aulaBanco.setSala(aula.getSala());
+		aulaBanco.setTipoAula(aula.getTipoAula());
+		aulaBanco.setTimestamp(aula.getTimestamp());
+		
+		dao.atualiza(aulaBanco);
+		result.redirectTo(this).listarAulasOcorrendoAgora();
+	}
+	
+	@Delete
+	@Path("/aula/{aula.id}")
+	public void deletar(Aula aula){
+		dao.deletar(aula.getId());
+		result.redirectTo(this).listarAulasOcorrendoAgora();
+	}
+	
+	// TODO Validar restrições para alterar qualquer dado da aula
 
 	private void incluirRecursosNaResult(){
 		TipoAula[] tipoAulas = TipoAula.values();
+		List<Professor> listaProfessor = professorDao.listaTudo();
 		List<Sala> listaSala = salaDao.listaTudo();
 		StatusAula[] statusAulas = StatusAula.values();
+		StatusAulaAluno[] statusAulaAlunos = StatusAulaAluno.values();
+		result.include("professorList", listaProfessor);
 		result.include("salaList", listaSala);
 		result.include("tipoAulas", tipoAulas);
 		result.include("statusAulas", statusAulas);
+		result.include("statusAulaAlunos", statusAulaAlunos);
 	}
 	
 }

@@ -5,23 +5,25 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.prisila.modelo.constante.StatusAula;
+import com.prisila.modelo.constante.StatusAulaAluno;
 
 @Entity
 public class AulaMatricula implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	@Id
+	@GeneratedValue
+	private Long id;
 	@ManyToOne
 	private Aula aula;
-	@Id
 	@ManyToOne
 	private Matricula matricula;
 	@Enumerated(EnumType.ORDINAL)
-	private StatusAula statusAula;
+	private StatusAulaAluno statusAulaAluno;
 	
 	public Aula getAula() {
 		return aula;
@@ -39,12 +41,20 @@ public class AulaMatricula implements Serializable {
 		this.matricula = matricula;
 	}
 
-	public StatusAula getStatusAula() {
-		return statusAula;
+	public StatusAulaAluno getStatusAulaAluno() {
+		return statusAulaAluno;
 	}
 
-	public void setStatusAula(StatusAula statusAula) {
-		this.statusAula = statusAula;
+	public void setStatusAulaAluno(StatusAulaAluno statusAulaAluno) {
+		this.statusAulaAluno = statusAulaAluno;
 	}
-	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 }

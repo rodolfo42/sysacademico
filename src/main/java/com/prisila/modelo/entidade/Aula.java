@@ -1,6 +1,11 @@
 package com.prisila.modelo.entidade;
 
+import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -8,16 +13,21 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.prisila.key.Key;
 import com.prisila.modelo.constante.DiaDaSemana;
+import com.prisila.modelo.constante.StatusAula;
 import com.prisila.modelo.constante.TipoAula;
+import com.prisila.util.PropertiesUtil;
 
 @Entity
-public class Aula implements Cloneable{
+public class Aula implements Cloneable, Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -27,12 +37,22 @@ public class Aula implements Cloneable{
 	private Sala sala;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar timestamp;
+	@Transient
+	private Calendar timestampFim;
 	@Enumerated(EnumType.ORDINAL)
 	private TipoAula tipoAula;
 	@Transient
 	private long timestampLong;
 	@Transient
 	private DiaDaSemana diaDaSemana;
+	@Transient
+	private static int DURACAO_AULA = Key.ZERO;
+	@Enumerated(EnumType.ORDINAL)
+	private StatusAula statusAula; 
+	@OneToMany(mappedBy="aula")
+	private List<AulaMatricula> listaAulaMatricula;
+	@ManyToOne
+	private Curso curso;
 	
 	
 	public Long getId() {
@@ -94,6 +114,63 @@ public class Aula implements Cloneable{
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		return super.clone();
+	}
+	
+	public static final int getDuracaoAula(){
+		if (DURACAO_AULA == Key.ZERO){
+			PropertiesUtil propertiesUtil = new PropertiesUtil();
+			DURACAO_AULA = Integer.parseInt(propertiesUtil.getProperty(Key.DURACAO_AULA));
+		}
+		
+		return DURACAO_AULA;
+	}
+
+	public Calendar getTimestampFim() {
+		if (timestampFim == null){
+			timestampFim = (Calendar) timestamp.clone();
+			timestampFim.add(Calendar.MINUTE, getDuracaoAula());
+		}
+		return timestampFim;
+	}
+
+	public List<AulaMatricula> getListaAulaMatricula() {
+		return listaAulaMatricula;
+	}
+
+	public void setListaAulaMatricula(List<AulaMatricula> listaAulaMatricula) {
+		this.listaAulaMatricula = listaAulaMatricula;
+	}
+
+	public StatusAula getStatusAula() {
+		return statusAula;
+	}
+
+	public void setStatusAula(StatusAula statusAula) {
+		this.statusAula = statusAula;
+	}
+
+	public Curso getCurso() {
+		return curso;
+	}
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}
+
+	public void setTimestampTexto(String timestampTexto) {
+		Calendar calendar = Calendar.getInstance();
+		Date date;
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		try {
+			date = simpleDateFormat.parse(timestampTexto);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			date = new Date();
+		}
+		
+		calendar.setTime(date);
+		this.timestamp = calendar;
 	}
 	
 }
