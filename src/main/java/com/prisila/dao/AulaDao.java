@@ -18,12 +18,20 @@ public class AulaDao extends Dao<Aula> {
 		super(session);
 	}
 	
+	/**
+	 * Método que busca uma aula através de alguns dados:<br>
+	 * - Timestamp<br>
+	 * - Professor<br>
+	 * - Sala
+	 * @param aula
+	 * @return aula, se ela não for encontrada, retorna <u>null</u>
+	 */
 	public Aula buscarUma(Aula aula){
 		adicionarCriterion(Restrictions.eq("timestamp", aula.getTimestamp()));
-		adicionarCriterion(Restrictions.eq("tipoAula", aula.getTipoAula()));
 		adicionarCriterion(Restrictions.or(
 				Restrictions.eq("professor.id", aula.getProfessor().getId()), 
-				Restrictions.eq("sala.id", aula.getSala().getId())));
+				Restrictions.eq("sala.id", aula.getSala().getId()))
+		);
 		return buscarUm();
 	}
 	

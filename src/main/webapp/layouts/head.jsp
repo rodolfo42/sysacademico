@@ -4,6 +4,7 @@
 <link rel="stylesheet" type="text/css" href="<c:url value="/css/geral.css" />" />
 
 <script type="text/javascript" src="<c:url value="/js/jquery.min.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/js/jquery.validate.min.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/bootstrap/js/bootstrap.min.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/js/jquery.maskedinput.min.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/js/geral.js"/>"></script>

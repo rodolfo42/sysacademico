@@ -1,5 +1,7 @@
 package com.prisila.controller;
 
+import static br.com.caelum.vraptor.view.Results.json;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -8,6 +10,7 @@ import java.util.List;
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
+import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
@@ -59,6 +62,12 @@ public class AulaController extends Controller {
 		this.aulaMatriculaDao = aulaMatriculaDao;
 		this.matriculaDao = matriculaDao;
 		this.validator = validator;
+	}
+	
+	@Path("/aula")
+	@Post
+	public void salvar(Aula aula){		
+		dao.salvar(aula);
 	}
 	
 	@Get
@@ -227,6 +236,93 @@ public class AulaController extends Controller {
 	public void deletar(Aula aula){
 		dao.deletar(aula.getId());
 		result.redirectTo(this).listarAulasOcorrendoAgora();
+	}
+	
+	/**
+	 * Verifica se existe alguma aula marcada com base nos seguintes dados:
+	 * <br>- Timestamp (Data e Hora)
+	 * <br>- Professor
+	 * <br>- Sala
+	 * <br>Para poder liberar esta aula para uma reposição de outra aula perdida
+	 * @param aulaReposicao
+	 */
+	@Get
+	@Path("/aula/reposicao.json")
+	public void getAulaReposicaoJson(Aula aulaReposicao, AulaMatricula aulaMatricula){
+		
+		boolean isJaExisteAula = dao.buscarUma(aulaReposicao) != null;
+		result.use(json()).from(isJaExisteAula).serialize();
+	}
+	
+	@Put
+	@Path("/aulaMatricula/{aulaMatricula.id}")
+	public void alterar(final AulaMatricula aulaMatricula){
+		
+		aulaMatriculaDao.atualiza(aulaMatricula);
+	}
+	
+	@Put
+	@Path("/aulaMatricula/motivoAusencia/{aulaMatricula.id}")
+	public void salvaMotivoAusenciaRedirecionaParaTela(final AulaMatricula aulaMatricula){
+		salvaMotivoAusencia(aulaMatricula);
+		
+		setMensagem(result, new Mensagem(TipoMensagem.SUCCESS, "Motivo de ausência salvo"));
+		result.redirectTo(this).listarAulasOcorrendoAgora();
+	}
+
+	private AulaMatricula salvaMotivoAusencia(final AulaMatricula aulaMatricula) {
+		AulaMatricula aulaMatriculaBanco = aulaMatriculaDao.carrega(aulaMatricula.getId());
+		
+		aulaMatriculaBanco.setMotivoAusencia(aulaMatricula.getMotivoAusencia());
+		alterar(aulaMatriculaBanco);
+		
+		return aulaMatriculaBanco;
+	}
+	
+	@Post
+	@Path("/aulaMatricula/reposicao/{aulaMatricula.id}")
+	public void marcarReposicao(final Aula aulaReposicao, AulaMatricula aulaMatricula){
+		aulaMatricula = salvaMotivoAusencia(aulaMatricula);
+		
+		try {
+			Aula aula = criarAulaReposicao(aulaReposicao, aulaMatricula);
+			
+			criarAulaMatriculaReposicao(aulaMatricula.getMatricula(), aula);
+			
+			setMensagem(result, new Mensagem(TipoMensagem.SUCCESS, "Reposição marcada com sucesso"));
+		} catch (CloneNotSupportedException e) {
+			setMensagem(result, new Mensagem(TipoMensagem.ERROR, "Não foi possível marcar a reposição"));
+			e.printStackTrace();
+		}
+		
+		result.redirectTo(this).listarAulasOcorrendoAgora();
+	}
+
+	private void criarAulaMatriculaReposicao(Matricula matriculaReposicao, Aula aulaReposicao) {
+		AulaMatricula aulaMatriculaReposicao = new AulaMatricula();
+		aulaMatriculaReposicao.setAula(aulaReposicao);
+		aulaMatriculaReposicao.setMatricula(matriculaReposicao);
+		aulaMatriculaReposicao.setStatusAulaAluno(StatusAulaAluno.AULA_NAO_REALIZADA);
+		aulaMatriculaDao.salvar(aulaMatriculaReposicao);
+	}
+
+	private Aula criarAulaReposicao(final Aula aulaReposicao, AulaMatricula aulaMatricula) throws CloneNotSupportedException {
+		Aula aula = aulaMatricula.getAula().clone();
+		Aula aulaProcurada;
+		
+		aula.setReposicao(true);
+		aula.setTimestamp(aulaReposicao.getTimestamp());
+		aula.setProfessor(aulaReposicao.getProfessor());
+		aula.setSala(aulaReposicao.getSala());
+		aula.setListaAulaMatricula(new ArrayList<AulaMatricula>());
+		aulaProcurada = dao.buscarUma(aula);
+		
+		if (aulaProcurada == null){
+			salvar(aula);
+		}else{
+			aula = aulaProcurada;
+		}
+		return aula;
 	}
 	
 	// TODO Validar restrições para alterar qualquer dado da aula

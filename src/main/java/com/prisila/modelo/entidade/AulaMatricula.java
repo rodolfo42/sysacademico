@@ -24,6 +24,7 @@ public class AulaMatricula implements Serializable {
 	private Matricula matricula;
 	@Enumerated(EnumType.ORDINAL)
 	private StatusAulaAluno statusAulaAluno;
+	private String motivoAusencia;
 	
 	public Aula getAula() {
 		return aula;
@@ -55,6 +56,14 @@ public class AulaMatricula implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public void setMotivoAusencia(String motivoAusencia) {
+		this.motivoAusencia = motivoAusencia;
+	}
+
+	public String getMotivoAusencia() {
+		return motivoAusencia;
 	}
 
 }

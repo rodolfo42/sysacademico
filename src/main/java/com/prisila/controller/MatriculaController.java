@@ -150,13 +150,13 @@ public class MatriculaController extends Controller {
 				aula.setCurso(matricula.getCurso());
 				
 				for (Calendar dataParaMarcar : esquemaAula.getAulasDoMes()) {
-					aulaParaMarcar = (Aula) aula.clone();
+					aulaParaMarcar = aula.clone();
 					aulaParaMarcar.setTimestamp(dataParaMarcar);
 					
 					aulaNoBanco = aulaDao.buscarUma(aulaParaMarcar);
 					if (aulaNoBanco == null){
 						listaAulasParaMarcar.add(aulaParaMarcar);
-						aulaDao.salvar(aulaParaMarcar);
+						aulaController.salvar(aulaParaMarcar);
 					}else{
 						listaAulasParaMarcar.add(aulaNoBanco);
 					}

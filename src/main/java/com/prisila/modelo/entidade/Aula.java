@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -53,7 +54,9 @@ public class Aula implements Cloneable, Serializable{
 	private List<AulaMatricula> listaAulaMatricula;
 	@ManyToOne
 	private Curso curso;
-	
+	@Column(name="ic_reposicao")	
+	private boolean reposicao;
+	private String motivoAusenciaProfessor;
 	
 	public Long getId() {
 		return id;
@@ -112,8 +115,8 @@ public class Aula implements Cloneable, Serializable{
 	}
 
 	@Override
-	public Object clone() throws CloneNotSupportedException {
-		return super.clone();
+	public Aula clone() throws CloneNotSupportedException {
+		return (Aula) super.clone();
 	}
 	
 	public static final int getDuracaoAula(){
@@ -171,6 +174,22 @@ public class Aula implements Cloneable, Serializable{
 		
 		calendar.setTime(date);
 		this.timestamp = calendar;
+	}
+
+	public void setReposicao(boolean reposicao) {
+		this.reposicao = reposicao;
+	}
+
+	public boolean isReposicao() {
+		return reposicao;
+	}
+
+	public void setMotivoAusenciaProfessor(String motivoAusenciaProfessor) {
+		this.motivoAusenciaProfessor = motivoAusenciaProfessor;
+	}
+
+	public String getMotivoAusenciaProfessor() {
+		return motivoAusenciaProfessor;
 	}
 	
 }
