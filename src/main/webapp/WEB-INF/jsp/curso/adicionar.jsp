@@ -5,16 +5,13 @@
 <body>
 	<form action="<c:url value="/cursos/adicionar"/>" method="POST">
 		<fieldset>
-			<legend>Adicionar Curso</legend>
+			<legend>Curso</legend>
 			<label for="nome">Nome</label>
 			<input id="nome" type="text" name="curso.nome" />
 			<label for="duracaoAula">Duração da Aula</label>
 			<input id="duracaoAula" class="input-mini" type="text" name="curso.duracaoAula" /> <small class="muted">Em minutos</small>
 		</fieldset>
-		<div class="form-actions">
-			<button type="submit" class="btn btn-primary">Enviar</button>
-			<a href="<c:url value="/cursos/listar" />" class="btn btn-small">voltar</a>
-		</div>
+		<button type="submit" class="btn">Enviar</button>
 	</form>
 	<script type="text/javascript">
 		$(function(){

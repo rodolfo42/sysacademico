@@ -18,7 +18,7 @@
 				<li><a rel="tooltip" data-placement="bottom" title="Ir para a página inicial" href="<c:url value="/" />">Início</a>
 				</li>
 				<li class="dropdown">
-					<a id="dLabel" rel="tooltip" data-placement="bottom" title="Gerenciar e efetuar matrículas" data-toggle="dropdown"
+					<a id="dLabel" rel="tooltip" data-placement="bottom" title="Gerenciar Alunos" data-toggle="dropdown"
 						class="dropdown-toggle" href="javascript:void(0);">Alunos <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 						<li><a href="<c:url value="/alunos/cadastrar" />">Cadastrar aluno</a></li>
@@ -26,17 +26,25 @@
 					</ul>
 				</li>
 				<li class="dropdown">
-					<a id="dLabel2" rel="tooltip" data-placement="bottom" title="Gerenciar e efetuar matrículas" data-toggle="dropdown"
+					<a id="dLabel2" rel="tooltip" data-placement="bottom" title="Gerenciar e Efetuar Matrículas" data-toggle="dropdown"
 						class="dropdown-toggle" href="javascript:void(0);">Matrículas <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel2">
 						<li><a href="<c:url value="/matricula/cadastrar" />">Nova matrícula</a></li>
 						<li><a href="<c:url value="/matriculas/listar" />">Buscar matrícula</a></li>
 					</ul>
 				</li>
-				<li><a rel="tooltip" data-placement="bottom" title="Marcação de aulas" href="<c:url value="/aulas" />">Aulas</a>
+				<li><a rel="tooltip" data-placement="bottom" title="Marcação de Aulas" href="<c:url value="/aulas" />">Aulas</a>
 				</li>
 				<li><a rel="tooltip" data-placement="bottom" title="Cadastro de professores"
 					href="<c:url value="/professores" />">Professores</a>
+				</li>
+				<li class="dropdown">
+					<a id="dLabel3" rel="tooltip" data-placement="bottom" title="Gerenciar Cursos" data-toggle="dropdown"
+						class="dropdown-toggle" href="javascript:void(0);">Cursos <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel2">
+						<li><a href="<c:url value="/cursos/adicionar" />">Novo Curso</a></li>
+						<li><a href="<c:url value="/cursos/listar" />">Listar Cursos</a></li>
+					</ul>
 				</li>
 				<li class="divider-vertical"></li>
 				
