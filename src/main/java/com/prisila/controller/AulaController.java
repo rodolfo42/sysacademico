@@ -18,6 +18,7 @@ import br.com.caelum.vraptor.Validator;
 
 import com.prisila.dao.AulaDao;
 import com.prisila.dao.AulaMatriculaDao;
+import com.prisila.dao.CursoDao;
 import com.prisila.dao.MatriculaDao;
 import com.prisila.dao.ProfessorDao;
 import com.prisila.dao.SalaDao;
@@ -44,16 +45,15 @@ public class AulaController extends Controller {
 	private final SalaDao salaDao;
 	private final AulaMatriculaDao aulaMatriculaDao;
 	private final MatriculaDao matriculaDao;
+	private final CursoDao cursoDao;
 	private final Result result;
 	private MatriculaSessao matriculaSessao;
-	private long duracaoAulaEmMilisegundos;
-	private static final int valorConversorSegundos = 60;
-	private static final int valorConversorMilisegundos = 1000;
+	private long duracaoAulaEmMilisegundos;	
 	private final Validator validator; 
 	
 	public AulaController(AulaDao dao, ProfessorDao professorDao, SalaDao salaDao, Result result, 
 			MatriculaSessao matriculaSessao, AulaMatriculaDao aulaMatriculaDao, MatriculaDao matriculaDao,
-			Validator validator) {
+			CursoDao cursoDao, Validator validator) {
 		this.dao = dao;
 		this.professorDao = professorDao;
 		this.result = result;
@@ -61,6 +61,7 @@ public class AulaController extends Controller {
 		this.salaDao = salaDao;
 		this.aulaMatriculaDao = aulaMatriculaDao;
 		this.matriculaDao = matriculaDao;
+		this.cursoDao = cursoDao;
 		this.validator = validator;
 	}
 	
@@ -72,12 +73,13 @@ public class AulaController extends Controller {
 	
 	@Get
 	public List<Professor> buscaHorariosDisponiveis(Curso curso) {
-		List<Professor> lista;
-		lista = professorDao.buscaHorariosDisponiveis(curso);
-		return filtraSugestaoHorariosParaAula(lista);
+		List<Professor> lista = professorDao.buscaHorariosDisponiveis(curso);
+		curso = cursoDao.carrega(curso.getId());
+		
+		return filtraSugestaoHorariosParaAula(lista, curso);
 	}
 	
-	private List<Professor> filtraSugestaoHorariosParaAula(List<Professor> listaProfessorHorarios) {
+	private List<Professor> filtraSugestaoHorariosParaAula(List<Professor> listaProfessorHorarios, Curso curso) {
 		List<Professor> professores = new ArrayList<Professor>();
 		Professor novoProfessor = null;
 		List<HorarioProfessor> horarios = new ArrayList<HorarioProfessor>();
@@ -85,7 +87,7 @@ public class AulaController extends Controller {
 		long auxSomador;
 		boolean temHorarioParaProfessor;
 		
-		duracaoAulaEmMilisegundos = converteMinutosParaMilisegundos(Aula.getDuracaoAula());
+		duracaoAulaEmMilisegundos = curso.getDuracaoAulaMilisegundos();
 		
 		for (Professor professor : listaProfessorHorarios) {
 			Collections.sort(professor.getListaHorarioProfessor());
@@ -112,10 +114,6 @@ public class AulaController extends Controller {
 			}
 		}
 		return professores;
-	}
-	
-	private long converteMinutosParaMilisegundos(int valorMinutos) {
-		return (valorMinutos * valorConversorSegundos) * valorConversorMilisegundos;
 	}
 	
 	@Get
@@ -184,10 +182,11 @@ public class AulaController extends Controller {
 		List<Aula> aulasDeHojeComecadasAntesDaHoraAtual = dao.getAulasOcorrendoAgora();
 		List<Aula> aulasOcorrendoAgora = new ArrayList<Aula>();
 		
-		int duracaoAula = Aula.getDuracaoAula();
+		int duracaoAula;
 		Calendar horaAula;
 		for (Aula aula : aulasDeHojeComecadasAntesDaHoraAtual) {
 			horaAula = aula.getTimestamp();
+			duracaoAula = aula.getCurso().getDuracaoAula();
 			horaAula.add(Calendar.MINUTE, duracaoAula);
 			
 			if (horaAula.after(horaAtual)){

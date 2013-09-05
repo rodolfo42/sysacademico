@@ -336,6 +336,7 @@ public class MatriculaController extends Controller {
 		Matricula matricula = getMatriculaNaSessao();
 		
 		incluirRecursosNaResult();
+		
 		return aulaController.buscaHorariosDisponiveis(matricula.getCurso());
 	}
 	

@@ -9,6 +9,7 @@
 			<tr>
 				<th>Id</th>
 				<th>Nome</th>
+				<th>Duração da Aula</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -17,6 +18,7 @@
 				<tr>
 					<td>${curso.id}</td>
 					<td>${curso.nome}</td>
+					<td>${curso.duracaoAula} <small>minutos</small></td>
 					<td>
 						<a href="<c:url value="/cursos/${curso.id}" />">editar</a>
 					</td>

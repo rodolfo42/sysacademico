@@ -45,9 +45,7 @@ public class Aula implements Cloneable, Serializable{
 	@Transient
 	private long timestampLong;
 	@Transient
-	private DiaDaSemana diaDaSemana;
-	@Transient
-	private static int DURACAO_AULA = Key.ZERO;
+	private DiaDaSemana diaDaSemana;	
 	@Enumerated(EnumType.ORDINAL)
 	private StatusAula statusAula; 
 	@OneToMany(mappedBy="aula")
@@ -119,19 +117,10 @@ public class Aula implements Cloneable, Serializable{
 		return (Aula) super.clone();
 	}
 	
-	public static final int getDuracaoAula(){
-		if (DURACAO_AULA == Key.ZERO){
-			PropertiesUtil propertiesUtil = new PropertiesUtil();
-			DURACAO_AULA = Integer.parseInt(propertiesUtil.getProperty(Key.DURACAO_AULA));
-		}
-		
-		return DURACAO_AULA;
-	}
-
 	public Calendar getTimestampFim() {
 		if (timestampFim == null){
 			timestampFim = (Calendar) timestamp.clone();
-			timestampFim.add(Calendar.MINUTE, getDuracaoAula());
+			timestampFim.add(Calendar.MINUTE, curso.getDuracaoAula());
 		}
 		return timestampFim;
 	}
