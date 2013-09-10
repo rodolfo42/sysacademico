@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 
 import com.prisila.exception.TechnicalException;
 import com.prisila.modelo.constante.DiaDaSemana;
+import com.prisila.modelo.constante.PeriodoMarcarAula;
 import com.prisila.modelo.constante.TipoAula;
 
 @Entity
@@ -45,7 +46,7 @@ public class EsquemaAula {
 		this.diaDaSemana = diaDaSemana;
 	}
 	
-	public List<Calendar> getAulasDoMes() throws TechnicalException{
+	public List<Calendar> getAulasParaMarcar(PeriodoMarcarAula periodoMarcarAula) throws TechnicalException{
 		final int segundos = 0;
 		final int semanaSeguinte = 1;
 		Calendar calendarTimestamp = Calendar.getInstance();
@@ -61,7 +62,7 @@ public class EsquemaAula {
 			throw new TechnicalException("diaDaSemana está null!");
 		}
 		
-		List<Calendar> listaCalendarDeAulasNoMes = new ArrayList<Calendar>();
+		List<Calendar> listaAulasMarcar = new ArrayList<Calendar>();
 		
 		calendar.set(Calendar.DAY_OF_WEEK, diaDaSemana.getCodigo());
 		calendar.add(Calendar.WEEK_OF_MONTH, semanaSeguinte);
@@ -70,17 +71,18 @@ public class EsquemaAula {
 		calendar.set(Calendar.SECOND, segundos);
 		int mesMarcacaoAulas = calendar.get(Calendar.MONTH);
 		
-		boolean isMesmoMes = mesMarcacaoAulas == calendar.get(Calendar.MONTH);
-		
-		while (isMesmoMes){
-			listaCalendarDeAulasNoMes.add(calendar);
-			calendarSemana = (Calendar) calendar.clone();
-			calendarSemana.add(Calendar.WEEK_OF_MONTH, 1);
-			calendar = calendarSemana;
-			isMesmoMes = mesMarcacaoAulas == calendar.get(Calendar.MONTH);
+		for (int i = 0; i < periodoMarcarAula.getNumeroMeses(); i++) {
+			
+			while (mesMarcacaoAulas == calendar.get(Calendar.MONTH)){
+				listaAulasMarcar.add(calendar);
+				calendarSemana = (Calendar) calendar.clone();
+				calendarSemana.add(Calendar.WEEK_OF_MONTH, semanaSeguinte);
+				calendar = calendarSemana;
+			}
+			mesMarcacaoAulas = calendar.get(Calendar.MONTH);
 		}
-		System.out.println("Aulas para marcar >>> "+listaCalendarDeAulasNoMes.size());
-		return listaCalendarDeAulasNoMes;
+		
+		return listaAulasMarcar;
 	}
 	
 	public Long getId() {

@@ -19,11 +19,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import com.prisila.key.Key;
 import com.prisila.modelo.constante.DiaDaSemana;
 import com.prisila.modelo.constante.StatusAula;
 import com.prisila.modelo.constante.TipoAula;
-import com.prisila.util.PropertiesUtil;
 
 @Entity
 public class Aula implements Cloneable, Serializable{

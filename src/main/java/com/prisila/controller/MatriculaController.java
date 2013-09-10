@@ -26,6 +26,7 @@ import com.prisila.dao.ResponsavelDao;
 import com.prisila.dao.SalaDao;
 import com.prisila.exception.MatriculaInexistenteNaSessao;
 import com.prisila.exception.TechnicalException;
+import com.prisila.modelo.constante.PeriodoMarcarAula;
 import com.prisila.modelo.constante.StatusAulaAluno;
 import com.prisila.modelo.constante.TipoAula;
 import com.prisila.modelo.entidade.Aluno;
@@ -57,6 +58,7 @@ public class MatriculaController extends Controller {
 	private List<Aluno> alunoList;
 	private List<Responsavel> responsavelList;
 	private TipoAula[] tipoAulaList;
+	private PeriodoMarcarAula[] periodoMarcarAulas;
 	private List<Curso> cursoList;
 	private MatriculaSessao matriculaSessao;
 	private final AulaController aulaController;
@@ -127,7 +129,7 @@ public class MatriculaController extends Controller {
 	
 	@Post
 	@Path("/matriculas/finalizar")
-	public void finalizar(List<Aula> aulas) {
+	public void finalizar(List<Aula> aulas, PeriodoMarcarAula periodoMarcarAula) {
 		result.on(TechnicalException.class).forwardTo(this).esquemaAula();
 		
 		Matricula matricula = getMatriculaNaSessao();
@@ -139,6 +141,7 @@ public class MatriculaController extends Controller {
 		List<Aula> listaAulasParaMarcar = new ArrayList<Aula>();
 		
 		try {
+			
 			for (Aula aula : aulas) {
 				esquemaAula = new EsquemaAula(aula.getTipoAula(),
 											  aula.getProfessor(), 
@@ -147,9 +150,9 @@ public class MatriculaController extends Controller {
 											  aula.getDiaDaSemana());
 				
 				matricula.adicionaVinculo(esquemaAula);
-				aula.setCurso(matricula.getCurso());
-				
-				for (Calendar dataParaMarcar : esquemaAula.getAulasDoMes()) {
+				aula.setCurso(matricula.getCurso());				
+				for (Calendar dataParaMarcar : esquemaAula.getAulasParaMarcar(periodoMarcarAula)) {
+					
 					aulaParaMarcar = aula.clone();
 					aulaParaMarcar.setTimestamp(dataParaMarcar);
 					
@@ -346,10 +349,12 @@ public class MatriculaController extends Controller {
 		responsavelList = responsavelDao.listaTudo();
 		cursoList = cursoDao.listaTudo();
 		tipoAulaList = TipoAula.values();
+		periodoMarcarAulas = PeriodoMarcarAula.values();
 		result.include("alunoList", alunoList);
 		result.include("responsavelList", responsavelList);
 		result.include("cursoList", cursoList);
 		result.include("tipoAulaList", tipoAulaList);
+		result.include("periodoMarcarAulas", periodoMarcarAulas);
 		result.include("salaList", listaSala);
 	}
 	

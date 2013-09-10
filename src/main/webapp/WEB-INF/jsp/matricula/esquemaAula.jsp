@@ -50,9 +50,17 @@
 								</c:forEach>
 							</select>
 							
-						</div>
+						</div>												
 					</div>
 				</c:forEach>
+				<div class="row-fluid">
+					<label for="periodoMarcarAula">Período de Marcação de Aulas</label>
+					<select name="periodoMarcarAula" id="periodoMarcarAula">
+						<c:forEach items="${periodoMarcarAulas }" var="periodo">
+							<option value="${periodo}">${periodo.nome}</option>
+						</c:forEach>
+					</select>
+				</div>
 			</div>
 		</fieldset>
 		
