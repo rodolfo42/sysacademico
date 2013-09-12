@@ -49,7 +49,6 @@ public class AulaController extends Controller {
 	private final Result result;
 	private MatriculaSessao matriculaSessao;
 	private long duracaoAulaEmMilisegundos;	
-	private final Validator validator; 
 	
 	public AulaController(AulaDao dao, ProfessorDao professorDao, SalaDao salaDao, Result result, 
 			MatriculaSessao matriculaSessao, AulaMatriculaDao aulaMatriculaDao, MatriculaDao matriculaDao,
@@ -62,7 +61,6 @@ public class AulaController extends Controller {
 		this.aulaMatriculaDao = aulaMatriculaDao;
 		this.matriculaDao = matriculaDao;
 		this.cursoDao = cursoDao;
-		this.validator = validator;
 	}
 	
 	@Path("/aula")
