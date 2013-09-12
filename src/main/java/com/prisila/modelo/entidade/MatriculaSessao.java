@@ -2,10 +2,10 @@ package com.prisila.modelo.entidade;
 
 import java.io.Serializable;
 
-import com.prisila.exception.MatriculaInexistenteNaSessao;
-
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.SessionScoped;
+
+import com.prisila.exception.MatriculaInexistenteNaSessao;
 
 @SessionScoped
 @Component
@@ -17,7 +17,7 @@ public class MatriculaSessao implements Serializable {
 	
 	public Matricula getMatricula() throws MatriculaInexistenteNaSessao{
 		if (matricula == null){
-			throw new MatriculaInexistenteNaSessao("A matricula da sessão esta null");
+			throw new MatriculaInexistenteNaSessao("A matricula da sessao esta null");
 		}
 		
 		return matricula;
