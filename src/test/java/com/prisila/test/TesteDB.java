@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import com.prisila.modelo.constante.TipoAula;
 import com.prisila.modelo.entidade.Aluno;
 import com.prisila.modelo.entidade.Curso;
 import com.prisila.modelo.entidade.Matricula;

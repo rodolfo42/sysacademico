@@ -10,7 +10,7 @@ import com.prisila.dao.MatriculaDao;
 import com.prisila.dao.ResponsavelDao;
 import com.prisila.modelo.entidade.Matricula;
 
-public class MatriculaDAOTest extends DAOTest {
+public class MatriculaDaoTest extends DAOTest {
 	
 	MatriculaDao matriculaDao;
 	AlunoDao alunoDao;

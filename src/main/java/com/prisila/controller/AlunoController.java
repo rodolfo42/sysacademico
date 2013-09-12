@@ -13,7 +13,6 @@ import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.validator.ValidationMessage;
 
 import com.prisila.dao.AlunoDao;
-import com.prisila.dao.MatriculaDao;
 import com.prisila.dao.ResponsavelDao;
 import com.prisila.modelo.entidade.Aluno;
 import com.prisila.modelo.entidade.Responsavel;
@@ -25,15 +24,13 @@ public class AlunoController extends Controller {
 	
 	private final AlunoDao dao;
 	private final ResponsavelDao responsavelDao;
-	private final MatriculaDao matriculaDao;
 	private final Result result;
 	private List<Responsavel> respList;
 	private Validator validator;
 	
-	public AlunoController(AlunoDao dao, ResponsavelDao responsavelDao, MatriculaDao matriculaDao, Result result, Validator validator) {
+	public AlunoController(AlunoDao dao, ResponsavelDao responsavelDao, Result result, Validator validator) {
 		this.dao = dao;
 		this.responsavelDao = responsavelDao;
-		this.matriculaDao = matriculaDao;
 		this.result = result;
 		this.validator = validator;
 	}
